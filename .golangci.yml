@@ -1,0 +1,102 @@
+version: "2"
+
+linters:
+  default: all
+  disable:
+    - exhaustruct       # D-02: response structs have 10-20+ pointer fields
+    - depguard          # D-02: stdlib-only project
+    - testpackage       # D-02: same-package tests are the intentional pattern
+    - varnamelen        # D-02: Go idiom uses short names (ctx, err, req, s, c, t, r)
+    - nlreturn          # D-02: subjective whitespace rules
+    - wsl               # D-02: subjective whitespace rules (deprecated v4)
+    - wsl_v5            # D-02: subjective whitespace rules (v5)
+    - wrapcheck         # go-github pattern returns unwrapped stdlib errors
+    - tagliatelle       # 6 JSON tags use uppercase for API-mandated ACL format
+    - gochecknoglobals  # 6 package-level var slices for known JSON keys (immutable lookup tables)
+    - gochecknoinits    # no init functions; keep disabled per maratori
+    - ireturn           # only 1 method returns interface (DownloadAttachment -> io.ReadCloser)
+    - funcorder         # tracker.go places With* option functions before NewClient by design
+    - promlinter        # no Prometheus metrics
+    - spancheck         # no OpenTelemetry spans
+    - loggercheck       # no structured logging
+    - sloglint          # no slog usage
+    - rowserrcheck      # no database/sql
+    - sqlclosecheck     # no database/sql
+    - testifylint       # no testify (stdlib testing only)
+    - protogetter       # no protobuf
+    - unqueryvet        # no SQL queries
+    - lll               # long lines in service methods are function signatures, not complexity
+    - noinlineerr       # inline error handling (if err := ...; err != nil) is idiomatic Go
+    - paralleltest      # tests are sequential by design (shared httptest server)
+    - err113            # dynamic errors with fmt.Errorf are standard in Go libraries
+    - nonamedreturns    # no named returns in codebase; costless to disable
+    - exhaustive        # switch exhaustiveness on reflect.Kind/internal types is noise
+    - godox             # zero TODOs; will enable when CI enforces it
+    - gocritic          # strings.Cut suggestion would change working code for marginal benefit
+    - perfsprint        # fmt.Sprintf performance is irrelevant in API client library
+    - mnd               # time constants (24, 3600, 60) in Duration parsing are self-documenting
+    - intrange           # integer range loops are idiomatic Go; the for-int-range style is newer
+    - gosec             # G704 (SSRF) false positive: client.Do takes user-constructed requests by design
+    - modernize         # maps.Copy suggestion requires Go 1.21+; explicit loops are clear
+    - errname           # ErrorResponse is a public API type; renaming would break consumers (D-10)
+
+  settings:
+    cyclop:
+      max-complexity: 30
+    funlen:
+      lines: 100
+      statements: 50
+    gocognit:
+      min-complexity: 30
+    govet:
+      disable:
+        - fieldalignment
+    mnd:
+      ignored-functions:
+        - strconv.Atoi
+        - strconv.ParseInt
+        - strconv.ParseFloat
+    nakedret:
+      max-func-lines: 0
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+    errcheck:
+      check-type-assertions: true
+
+  exclusions:
+    presets:
+      - comments
+      - std-error-handling
+    rules:
+      - path: '_test\.go'
+        linters:
+          - bodyclose
+          - dupl
+          - errcheck
+          - funlen
+          - goconst
+          - gosec
+          - noctx
+          - mnd
+          - gocognit
+          - revive
+          - usestdlibvars
+          - testableexamples
+          - errorlint
+          - perfsprint
+          - gocyclo
+          - cyclop
+          - maintidx
+          - unused
+
+formatters:
+  enable:
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/slavkluev/go-yandex-tracker
+
+issues:
+  max-same-issues: 50
