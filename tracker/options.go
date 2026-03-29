@@ -94,6 +94,43 @@ type IssueRequest struct {
 
 	// Followers is a list of follower user IDs.
 	Followers []string `json:"followers,omitempty"`
+
+	// Tags is a list of issue tags.
+	Tags []string `json:"tags,omitempty"`
+
+	// Sprint is the sprint to assign the issue to.
+	// Can be a sprint ID (string) or an object with ID.
+	Sprint any `json:"sprint,omitempty"`
+
+	// Deadline is the issue deadline in YYYY-MM-DD format.
+	Deadline *string `json:"deadline,omitempty"`
+
+	// Start is the planned start date in YYYY-MM-DD format.
+	Start *string `json:"start,omitempty"`
+
+	// End is the planned end date in YYYY-MM-DD format.
+	End *string `json:"end,omitempty"`
+
+	// Components is a list of component IDs or keys.
+	Components []any `json:"components,omitempty"`
+
+	// AffectedVersions is a list of affected version IDs.
+	AffectedVersions []any `json:"affectedVersions,omitempty"`
+
+	// FixVersions is a list of fix version IDs.
+	FixVersions []any `json:"fixVersions,omitempty"`
+
+	// StoryPoints is the story point estimate.
+	StoryPoints *float64 `json:"storyPoints,omitempty"`
+
+	// OriginalEstimation is the original time estimate in ISO 8601 duration format (e.g., "PT1H30M").
+	OriginalEstimation *string `json:"originalEstimation,omitempty"`
+
+	// Estimation is the current time estimate in ISO 8601 duration format (e.g., "PT1H30M").
+	Estimation *string `json:"estimation,omitempty"`
+
+	// Spent is the time spent in ISO 8601 duration format (e.g., "PT1H30M").
+	Spent *string `json:"spent,omitempty"`
 }
 
 // TransitionRequest represents the request body for executing a

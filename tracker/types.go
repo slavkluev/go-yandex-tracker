@@ -209,26 +209,52 @@ type Resolution struct {
 // Known API fields are mapped to typed struct fields.
 // Any additional fields (custom queue fields) are captured in CustomFields.
 type Issue struct {
-	Self           *string          `json:"self,omitempty"`
-	ID             *string          `json:"id,omitempty"`
-	Key            *string          `json:"key,omitempty"`
-	Summary        *string          `json:"summary,omitempty"`
-	Description    *string          `json:"description,omitempty"`
-	Type           *IssueType       `json:"type,omitempty"`
-	Priority       *Priority        `json:"priority,omitempty"`
-	Status         *Status          `json:"status,omitempty"`
-	Queue          *Queue           `json:"queue,omitempty"`
-	Assignee       *User            `json:"assignee,omitempty"`
-	Followers      []*User          `json:"followers,omitempty"`
-	CreatedBy      *User            `json:"createdBy,omitempty"`
-	UpdatedBy      *User            `json:"updatedBy,omitempty"`
-	CreatedAt      *Timestamp       `json:"createdAt,omitempty"`
-	UpdatedAt      *Timestamp       `json:"updatedAt,omitempty"`
-	ResolvedAt     *Timestamp       `json:"resolvedAt,omitempty"`
-	Resolution     *Resolution      `json:"resolution,omitempty"`
-	ChecklistItems []*ChecklistItem `json:"checklistItems,omitempty"`
-	ChecklistDone  *int             `json:"checklistDone,omitempty"`
-	ChecklistTotal *int             `json:"checklistTotal,omitempty"`
+	Self                       *string          `json:"self,omitempty"`
+	ID                         *string          `json:"id,omitempty"`
+	Key                        *string          `json:"key,omitempty"`
+	Display                    *string          `json:"display,omitempty"`
+	Version                    *int             `json:"version,omitempty"`
+	Summary                    *string          `json:"summary,omitempty"`
+	Description                *string          `json:"description,omitempty"`
+	Type                       *IssueType       `json:"type,omitempty"`
+	Priority                   *Priority        `json:"priority,omitempty"`
+	Status                     *Status          `json:"status,omitempty"`
+	PreviousStatus             *Status          `json:"previousStatus,omitempty"`
+	Queue                      *Queue           `json:"queue,omitempty"`
+	Parent                     *Issue           `json:"parent,omitempty"`
+	Assignee                   *User            `json:"assignee,omitempty"`
+	Followers                  []*User          `json:"followers,omitempty"`
+	CreatedBy                  *User            `json:"createdBy,omitempty"`
+	UpdatedBy                  *User            `json:"updatedBy,omitempty"`
+	CreatedAt                  *Timestamp       `json:"createdAt,omitempty"`
+	UpdatedAt                  *Timestamp       `json:"updatedAt,omitempty"`
+	ResolvedAt                 *Timestamp       `json:"resolvedAt,omitempty"`
+	Resolution                 *Resolution      `json:"resolution,omitempty"`
+	Aliases                    []string         `json:"aliases,omitempty"`
+	Tags                       []string         `json:"tags,omitempty"`
+	Favorite                   *bool            `json:"favorite,omitempty"`
+	Votes                      *int             `json:"votes,omitempty"`
+	Sprint                     []any            `json:"sprint,omitempty"`
+	Project                    any              `json:"project,omitempty"`
+	Components                 []*Component     `json:"components,omitempty"`
+	AffectedVersions           []*QueueVersion  `json:"affectedVersions,omitempty"`
+	FixVersions                []*QueueVersion  `json:"fixVersions,omitempty"`
+	Deadline                   *string          `json:"deadline,omitempty"`
+	Start                      *string          `json:"start,omitempty"`
+	End                        *string          `json:"end,omitempty"`
+	StoryPoints                *float64         `json:"storyPoints,omitempty"`
+	OriginalEstimation         *Duration        `json:"originalEstimation,omitempty"`
+	Estimation                 *Duration        `json:"estimation,omitempty"`
+	Spent                      *Duration        `json:"spent,omitempty"`
+	ChecklistItems             []*ChecklistItem `json:"checklistItems,omitempty"`
+	ChecklistDone              *int             `json:"checklistDone,omitempty"`
+	ChecklistTotal             *int             `json:"checklistTotal,omitempty"`
+	LastCommentUpdatedAt       *Timestamp       `json:"lastCommentUpdatedAt,omitempty"`
+	StatusStartTime            *Timestamp       `json:"statusStartTime,omitempty"`
+	PendingReplyFrom           []*User          `json:"pendingReplyFrom,omitempty"`
+	PreviousStatusLastAssignee *User            `json:"previousStatusLastAssignee,omitempty"`
+	Boards                     []any            `json:"boards,omitempty"`
+	Access                     any              `json:"access,omitempty"`
 
 	// CustomFields holds any fields from the JSON response that do not
 	// correspond to known Issue struct fields. These are typically
@@ -239,11 +265,18 @@ type Issue struct {
 // issueKnownKeys lists the JSON keys that map to known Issue struct fields.
 // Keys not in this list are treated as custom fields.
 var issueKnownKeys = []string{
-	"self", "id", "key", "summary", "description",
-	"type", "priority", "status", "queue",
+	"self", "id", "key", "display", "version", "summary", "description",
+	"type", "priority", "status", "previousStatus", "queue", "parent",
 	"assignee", "followers", "createdBy", "updatedBy",
 	"createdAt", "updatedAt", "resolvedAt", "resolution",
+	"aliases", "tags", "favorite", "votes",
+	"sprint", "project", "components", "affectedVersions", "fixVersions",
+	"deadline", "start", "end", "storyPoints",
+	"originalEstimation", "estimation", "spent",
 	"checklistItems", "checklistDone", "checklistTotal",
+	"lastCommentUpdatedAt", "statusStartTime",
+	"pendingReplyFrom", "previousStatusLastAssignee",
+	"boards", "access",
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for Issue.
@@ -279,6 +312,39 @@ func (i *Issue) UnmarshalJSON(data []byte) error {
 	}
 
 	return nil
+}
+
+// MarshalJSON implements the json.Marshaler interface for Issue.
+// It serializes known struct fields and merges CustomFields into
+// the top-level JSON object.
+func (i Issue) MarshalJSON() ([]byte, error) {
+	type IssueAlias Issue
+	alias := IssueAlias(i)
+	alias.CustomFields = nil
+
+	data, err := json.Marshal(alias)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(i.CustomFields) == 0 {
+		return data, nil
+	}
+
+	var base map[string]json.RawMessage
+	if err := json.Unmarshal(data, &base); err != nil {
+		return nil, err
+	}
+
+	for k, v := range i.CustomFields {
+		raw, err := json.Marshal(v)
+		if err != nil {
+			return nil, err
+		}
+		base[k] = raw
+	}
+
+	return json.Marshal(base)
 }
 
 // Transition represents an issue status transition in Yandex Tracker.

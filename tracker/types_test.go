@@ -226,6 +226,285 @@ func TestIssue_UnmarshalJSON(t *testing.T) {
 			t.Errorf("CustomFields = %v, want nil", issue.CustomFields)
 		}
 	})
+
+	t.Run("extended fields", func(t *testing.T) {
+		data := []byte(`{
+			"self": "https://api.tracker.yandex.net/v3/issues/TREK-9844",
+			"id": "593cd211ef7e8a33",
+			"key": "TREK-9844",
+			"version": 7,
+			"lastCommentUpdatedAt": "2017-07-18T13:33:44.291+0000",
+			"summary": "subtask",
+			"parent": {
+				"self": "https://api.tracker.yandex.net/v3/issues/JUNE-2",
+				"id": "593cd0acef7e8a33",
+				"key": "JUNE-2",
+				"display": "Task"
+			},
+			"aliases": ["JUNE-3"],
+			"sprint": [
+				{
+					"self": "https://api.tracker.yandex.net/v3/sprints/53",
+					"id": "53",
+					"display": "sprint1"
+				}
+			],
+			"tags": ["backend", "urgent"],
+			"votes": 5,
+			"favorite": false,
+			"previousStatus": {
+				"self": "https://api.tracker.yandex.net/v3/statuses/2",
+				"id": "2",
+				"key": "resolved",
+				"display": "Resolved"
+			},
+			"statusStartTime": "2020-11-03T11:19:24.733+0000",
+			"pendingReplyFrom": [
+				{
+					"self": "https://api.tracker.yandex.net/v3/users/12",
+					"id": "12",
+					"display": "Full name"
+				}
+			],
+			"previousStatusLastAssignee": {
+				"self": "https://api.tracker.yandex.net/v3/users/12",
+				"id": "12",
+				"display": "Full name"
+			},
+			"deadline": "2025-06-03",
+			"start": "2025-01-01",
+			"end": "2025-12-31",
+			"storyPoints": 8.0,
+			"originalEstimation": "P5D",
+			"estimation": "P3DT4H",
+			"spent": "PT1H30M",
+			"project": {
+				"primary": {
+					"self": "https://api.tracker.yandex.net/v3/projects/1",
+					"id": "1",
+					"display": "Project"
+				},
+				"secondary": []
+			},
+			"components": [
+				{
+					"self": "https://api.tracker.yandex.net/v3/components/1",
+					"id": 1,
+					"name": "Backend"
+				}
+			],
+			"type": {
+				"self": "https://api.tracker.yandex.net/v3/issuetypes/2",
+				"id": "2",
+				"key": "task",
+				"display": "Issue"
+			},
+			"priority": {
+				"self": "https://api.tracker.yandex.net/v3/priorities/2",
+				"id": "2",
+				"key": "normal",
+				"display": "Normal"
+			},
+			"status": {
+				"self": "https://api.tracker.yandex.net/v3/statuses/1",
+				"id": "1",
+				"key": "open",
+				"display": "Open"
+			},
+			"queue": {
+				"self": "https://api.tracker.yandex.net/v3/queues/TREK",
+				"id": "111",
+				"key": "TREK",
+				"display": "Startrek"
+			}
+		}`)
+
+		var issue Issue
+		if err := json.Unmarshal(data, &issue); err != nil {
+			t.Fatalf("UnmarshalJSON returned error: %v", err)
+		}
+
+		if got := *issue.Version; got != 7 {
+			t.Errorf("Version = %d, want 7", got)
+		}
+		if issue.LastCommentUpdatedAt == nil {
+			t.Error("LastCommentUpdatedAt is nil")
+		}
+		if issue.Parent == nil {
+			t.Fatal("Parent is nil")
+		}
+		if got := *issue.Parent.Key; got != "JUNE-2" {
+			t.Errorf("Parent.Key = %q, want %q", got, "JUNE-2")
+		}
+		if got := *issue.Parent.Display; got != "Task" {
+			t.Errorf("Parent.Display = %q, want %q", got, "Task")
+		}
+		if len(issue.Aliases) != 1 || issue.Aliases[0] != "JUNE-3" {
+			t.Errorf("Aliases = %v, want [JUNE-3]", issue.Aliases)
+		}
+		if len(issue.Sprint) != 1 {
+			t.Errorf("Sprint length = %d, want 1", len(issue.Sprint))
+		}
+		if len(issue.Tags) != 2 || issue.Tags[0] != "backend" {
+			t.Errorf("Tags = %v, want [backend urgent]", issue.Tags)
+		}
+		if got := *issue.Votes; got != 5 {
+			t.Errorf("Votes = %d, want 5", got)
+		}
+		if got := *issue.Favorite; got != false {
+			t.Errorf("Favorite = %v, want false", got)
+		}
+		if issue.PreviousStatus == nil || *issue.PreviousStatus.Key != "resolved" {
+			t.Error("PreviousStatus not parsed correctly")
+		}
+		if issue.StatusStartTime == nil {
+			t.Error("StatusStartTime is nil")
+		}
+		if len(issue.PendingReplyFrom) != 1 {
+			t.Errorf("PendingReplyFrom length = %d, want 1", len(issue.PendingReplyFrom))
+		}
+		if issue.PreviousStatusLastAssignee == nil {
+			t.Error("PreviousStatusLastAssignee is nil")
+		}
+		if got := *issue.Deadline; got != "2025-06-03" {
+			t.Errorf("Deadline = %q, want %q", got, "2025-06-03")
+		}
+		if got := *issue.Start; got != "2025-01-01" {
+			t.Errorf("Start = %q, want %q", got, "2025-01-01")
+		}
+		if got := *issue.End; got != "2025-12-31" {
+			t.Errorf("End = %q, want %q", got, "2025-12-31")
+		}
+		if got := *issue.StoryPoints; got != 8.0 {
+			t.Errorf("StoryPoints = %v, want 8.0", got)
+		}
+		if issue.OriginalEstimation == nil {
+			t.Error("OriginalEstimation is nil")
+		}
+		if issue.Estimation == nil {
+			t.Error("Estimation is nil")
+		}
+		if issue.Spent == nil {
+			t.Error("Spent is nil")
+		}
+		if issue.Project == nil {
+			t.Error("Project is nil")
+		}
+		if len(issue.Components) != 1 || *issue.Components[0].Name != "Backend" {
+			t.Errorf("Components not parsed correctly: %v", issue.Components)
+		}
+
+		if issue.CustomFields != nil {
+			t.Errorf("CustomFields = %v, want nil (all fields should be known)", issue.CustomFields)
+		}
+	})
+}
+
+func TestIssue_MarshalJSON(t *testing.T) {
+	t.Run("without custom fields", func(t *testing.T) {
+		issue := Issue{
+			Key:     Ptr("QUEUE-1"),
+			Summary: Ptr("Test issue"),
+			Version: Ptr(3),
+			Tags:    []string{"tag1"},
+		}
+
+		data, err := json.Marshal(issue)
+		if err != nil {
+			t.Fatalf("MarshalJSON returned error: %v", err)
+		}
+
+		var raw map[string]any
+		if err := json.Unmarshal(data, &raw); err != nil {
+			t.Fatalf("Failed to unmarshal result: %v", err)
+		}
+
+		if raw["key"] != "QUEUE-1" {
+			t.Errorf("key = %v, want QUEUE-1", raw["key"])
+		}
+		if raw["summary"] != "Test issue" {
+			t.Errorf("summary = %v, want Test issue", raw["summary"])
+		}
+		if raw["version"] != float64(3) {
+			t.Errorf("version = %v, want 3", raw["version"])
+		}
+	})
+
+	t.Run("with custom fields", func(t *testing.T) {
+		issue := Issue{
+			Key:     Ptr("QUEUE-1"),
+			Summary: Ptr("Test issue"),
+			CustomFields: map[string]any{
+				"customField1": "value1",
+				"customField2": 42,
+			},
+		}
+
+		data, err := json.Marshal(issue)
+		if err != nil {
+			t.Fatalf("MarshalJSON returned error: %v", err)
+		}
+
+		var raw map[string]any
+		if err := json.Unmarshal(data, &raw); err != nil {
+			t.Fatalf("Failed to unmarshal result: %v", err)
+		}
+
+		if raw["key"] != "QUEUE-1" {
+			t.Errorf("key = %v, want QUEUE-1", raw["key"])
+		}
+		if raw["customField1"] != "value1" {
+			t.Errorf("customField1 = %v, want value1", raw["customField1"])
+		}
+		if raw["customField2"] != float64(42) {
+			t.Errorf("customField2 = %v, want 42", raw["customField2"])
+		}
+	})
+
+	t.Run("round-trip with custom fields", func(t *testing.T) {
+		data := []byte(`{
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1",
+			"id": "123",
+			"key": "QUEUE-1",
+			"summary": "Test issue",
+			"version": 5,
+			"tags": ["tag1", "tag2"],
+			"customField1": "value1",
+			"customField2": {"nested": true}
+		}`)
+
+		var issue Issue
+		if err := json.Unmarshal(data, &issue); err != nil {
+			t.Fatalf("UnmarshalJSON returned error: %v", err)
+		}
+
+		marshaled, err := json.Marshal(issue)
+		if err != nil {
+			t.Fatalf("MarshalJSON returned error: %v", err)
+		}
+
+		var result map[string]any
+		if err := json.Unmarshal(marshaled, &result); err != nil {
+			t.Fatalf("Failed to unmarshal result: %v", err)
+		}
+
+		if result["key"] != "QUEUE-1" {
+			t.Errorf("key = %v, want QUEUE-1", result["key"])
+		}
+		if result["version"] != float64(5) {
+			t.Errorf("version = %v, want 5", result["version"])
+		}
+		if result["customField1"] != "value1" {
+			t.Errorf("customField1 = %v, want value1", result["customField1"])
+		}
+		nested, ok := result["customField2"].(map[string]any)
+		if !ok {
+			t.Fatalf("customField2 is not a map: %T", result["customField2"])
+		}
+		if nested["nested"] != true {
+			t.Errorf("customField2.nested = %v, want true", nested["nested"])
+		}
+	})
 }
 
 func TestPtr(t *testing.T) {
