@@ -22,7 +22,7 @@ type IssueEditOptions struct {
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/create-issue
 func (s *IssuesService) Create(ctx context.Context, issue *IssueRequest) (*Issue, *Response, error) {
-	req, err := s.client.NewRequest("POST", "v2/issues/", issue)
+	req, err := s.client.NewRequest("POST", "v3/issues/", issue)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -40,7 +40,7 @@ func (s *IssuesService) Create(ctx context.Context, issue *IssueRequest) (*Issue
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-issue
 func (s *IssuesService) Get(ctx context.Context, issueKey string, opts *IssueGetOptions) (*Issue, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v", issueKey)
+	u := fmt.Sprintf("v3/issues/%v", issueKey)
 	u, err := addOptions(u, opts)
 	if err != nil {
 		return nil, nil, err
@@ -64,7 +64,7 @@ func (s *IssuesService) Get(ctx context.Context, issueKey string, opts *IssueGet
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/patch-issue
 func (s *IssuesService) Edit(ctx context.Context, issueKey string, issue *IssueRequest, opts *IssueEditOptions) (*Issue, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v", issueKey)
+	u := fmt.Sprintf("v3/issues/%v", issueKey)
 	u, err := addOptions(u, opts)
 	if err != nil {
 		return nil, nil, err
@@ -89,7 +89,7 @@ func (s *IssuesService) Edit(ctx context.Context, issueKey string, issue *IssueR
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/search-issues
 func (s *IssuesService) Search(ctx context.Context, search *IssueSearchRequest, opts *IssueSearchOptions) ([]*Issue, *Response, error) {
-	u := "v2/issues/_search"
+	u := "v3/issues/_search"
 	u, err := addOptions(u, opts)
 	if err != nil {
 		return nil, nil, err
@@ -115,7 +115,7 @@ func (s *IssuesService) Search(ctx context.Context, search *IssueSearchRequest, 
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/search-issues
 func (s *IssuesService) ScrollSearch(ctx context.Context, search *IssueSearchRequest, opts *ScrollSearchOptions) ([]*Issue, *Response, error) {
-	u := "v2/issues/_search"
+	u := "v3/issues/_search"
 	u, err := addOptions(u, opts)
 	if err != nil {
 		return nil, nil, err
@@ -140,7 +140,7 @@ func (s *IssuesService) ScrollSearch(ctx context.Context, search *IssueSearchReq
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/search-issues
 func (s *IssuesService) ScrollNext(ctx context.Context, search *IssueSearchRequest, scrollID, scrollToken string) ([]*Issue, *Response, error) {
-	u := fmt.Sprintf("v2/issues/_search?scrollId=%s&scrollToken=%s", scrollID, scrollToken)
+	u := fmt.Sprintf("v3/issues/_search?scrollId=%s&scrollToken=%s", scrollID, scrollToken)
 
 	req, err := s.client.NewRequest("POST", u, search)
 	if err != nil {
@@ -162,7 +162,7 @@ func (s *IssuesService) ScrollNext(ctx context.Context, search *IssueSearchReque
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/count-issues
 func (s *IssuesService) Count(ctx context.Context, search *IssueSearchRequest) (int, *Response, error) {
-	req, err := s.client.NewRequest("POST", "v2/issues/_count", search)
+	req, err := s.client.NewRequest("POST", "v3/issues/_count", search)
 	if err != nil {
 		return 0, nil, err
 	}
@@ -192,7 +192,7 @@ func (s *IssuesService) Count(ctx context.Context, search *IssueSearchRequest) (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/move-issue
 func (s *IssuesService) Move(ctx context.Context, issueKey string, opts *IssueMoveOptions, issue *IssueRequest) (*Issue, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/_move", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/_move", issueKey)
 	u, err := addOptions(u, opts)
 	if err != nil {
 		return nil, nil, err

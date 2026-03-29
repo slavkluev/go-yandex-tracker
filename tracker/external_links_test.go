@@ -11,19 +11,19 @@ import (
 func TestExternalLinksService_ListApplications(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/applications", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/applications", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[
 			{
-				"self": "https://api.tracker.yandex.net/v2/applications/app1",
+				"self": "https://api.tracker.yandex.net/v3/applications/app1",
 				"id": "app1",
 				"type": "github",
 				"name": "GitHub"
 			},
 			{
-				"self": "https://api.tracker.yandex.net/v2/applications/app2",
+				"self": "https://api.tracker.yandex.net/v3/applications/app2",
 				"id": "app2",
 				"type": "bitbucket",
 				"name": "Bitbucket"
@@ -42,13 +42,13 @@ func TestExternalLinksService_ListApplications(t *testing.T) {
 
 	want := []*ExternalApplication{
 		{
-			Self: Ptr("https://api.tracker.yandex.net/v2/applications/app1"),
+			Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1"),
 			ID:   Ptr("app1"),
 			Type: Ptr("github"),
 			Name: Ptr("GitHub"),
 		},
 		{
-			Self: Ptr("https://api.tracker.yandex.net/v2/applications/app2"),
+			Self: Ptr("https://api.tracker.yandex.net/v3/applications/app2"),
 			ID:   Ptr("app2"),
 			Type: Ptr("bitbucket"),
 			Name: Ptr("Bitbucket"),
@@ -63,38 +63,38 @@ func TestExternalLinksService_ListApplications(t *testing.T) {
 func TestExternalLinksService_ListLinks(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/remotelinks", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/remotelinks", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[
 			{
-				"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/remotelinks/101",
+				"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/remotelinks/101",
 				"id": 101,
 				"type": {
-					"self": "https://api.tracker.yandex.net/v2/linktypes/relates",
+					"self": "https://api.tracker.yandex.net/v3/linktypes/relates",
 					"id": "relates",
 					"key": "relates"
 				},
 				"direction": "outward",
 				"object": {
-					"self": "https://api.tracker.yandex.net/v2/applications/app1/objects/ext-1",
+					"self": "https://api.tracker.yandex.net/v3/applications/app1/objects/ext-1",
 					"id": "ext-1",
 					"key": "PR-42",
 					"application": {
-						"self": "https://api.tracker.yandex.net/v2/applications/app1",
+						"self": "https://api.tracker.yandex.net/v3/applications/app1",
 						"id": "app1",
 						"type": "github",
 						"name": "GitHub"
 					}
 				},
 				"createdBy": {
-					"self": "https://api.tracker.yandex.net/v2/users/11",
+					"self": "https://api.tracker.yandex.net/v3/users/11",
 					"id": "11",
 					"display": "Ivan Ivanov"
 				},
 				"updatedBy": {
-					"self": "https://api.tracker.yandex.net/v2/users/11",
+					"self": "https://api.tracker.yandex.net/v3/users/11",
 					"id": "11",
 					"display": "Ivan Ivanov"
 				}
@@ -113,32 +113,32 @@ func TestExternalLinksService_ListLinks(t *testing.T) {
 
 	want := []*ExternalLink{
 		{
-			Self: Ptr("https://api.tracker.yandex.net/v2/issues/QUEUE-1/remotelinks/101"),
+			Self: Ptr("https://api.tracker.yandex.net/v3/issues/QUEUE-1/remotelinks/101"),
 			ID:   Ptr(101),
 			Type: &ExternalLinkType{
-				Self: Ptr("https://api.tracker.yandex.net/v2/linktypes/relates"),
+				Self: Ptr("https://api.tracker.yandex.net/v3/linktypes/relates"),
 				ID:   Ptr("relates"),
 				Key:  Ptr("relates"),
 			},
 			Direction: Ptr("outward"),
 			Object: &ExternalLinkObject{
-				Self: Ptr("https://api.tracker.yandex.net/v2/applications/app1/objects/ext-1"),
+				Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1/objects/ext-1"),
 				ID:   Ptr("ext-1"),
 				Key:  Ptr("PR-42"),
 				Application: &ExternalApplication{
-					Self: Ptr("https://api.tracker.yandex.net/v2/applications/app1"),
+					Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1"),
 					ID:   Ptr("app1"),
 					Type: Ptr("github"),
 					Name: Ptr("GitHub"),
 				},
 			},
 			CreatedBy: &User{
-				Self:    Ptr("https://api.tracker.yandex.net/v2/users/11"),
+				Self:    Ptr("https://api.tracker.yandex.net/v3/users/11"),
 				ID:      Ptr("11"),
 				Display: Ptr("Ivan Ivanov"),
 			},
 			UpdatedBy: &User{
-				Self:    Ptr("https://api.tracker.yandex.net/v2/users/11"),
+				Self:    Ptr("https://api.tracker.yandex.net/v3/users/11"),
 				ID:      Ptr("11"),
 				Display: Ptr("Ivan Ivanov"),
 			},
@@ -159,7 +159,7 @@ func TestExternalLinksService_CreateLink(t *testing.T) {
 		Origin:       Ptr("app1"),
 	}
 
-	mux.HandleFunc("POST /v2/issues/{key}/remotelinks", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/remotelinks", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		// Verify request body.
@@ -185,20 +185,20 @@ func TestExternalLinksService_CreateLink(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/remotelinks/201",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/remotelinks/201",
 			"id": 201,
 			"type": {
-				"self": "https://api.tracker.yandex.net/v2/linktypes/relates",
+				"self": "https://api.tracker.yandex.net/v3/linktypes/relates",
 				"id": "relates",
 				"key": "relates"
 			},
 			"direction": "outward",
 			"object": {
-				"self": "https://api.tracker.yandex.net/v2/applications/app1/objects/ext-1",
+				"self": "https://api.tracker.yandex.net/v3/applications/app1/objects/ext-1",
 				"id": "ext-1",
 				"key": "PR-42",
 				"application": {
-					"self": "https://api.tracker.yandex.net/v2/applications/app1",
+					"self": "https://api.tracker.yandex.net/v3/applications/app1",
 					"id": "app1",
 					"type": "github",
 					"name": "GitHub"
@@ -214,20 +214,20 @@ func TestExternalLinksService_CreateLink(t *testing.T) {
 	}
 
 	want := &ExternalLink{
-		Self: Ptr("https://api.tracker.yandex.net/v2/issues/QUEUE-1/remotelinks/201"),
+		Self: Ptr("https://api.tracker.yandex.net/v3/issues/QUEUE-1/remotelinks/201"),
 		ID:   Ptr(201),
 		Type: &ExternalLinkType{
-			Self: Ptr("https://api.tracker.yandex.net/v2/linktypes/relates"),
+			Self: Ptr("https://api.tracker.yandex.net/v3/linktypes/relates"),
 			ID:   Ptr("relates"),
 			Key:  Ptr("relates"),
 		},
 		Direction: Ptr("outward"),
 		Object: &ExternalLinkObject{
-			Self: Ptr("https://api.tracker.yandex.net/v2/applications/app1/objects/ext-1"),
+			Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1/objects/ext-1"),
 			ID:   Ptr("ext-1"),
 			Key:  Ptr("PR-42"),
 			Application: &ExternalApplication{
-				Self: Ptr("https://api.tracker.yandex.net/v2/applications/app1"),
+				Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1"),
 				ID:   Ptr("app1"),
 				Type: Ptr("github"),
 				Name: Ptr("GitHub"),
@@ -243,7 +243,7 @@ func TestExternalLinksService_CreateLink(t *testing.T) {
 func TestExternalLinksService_DeleteLink(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("DELETE /v2/issues/{key}/remotelinks/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("DELETE /v3/issues/{key}/remotelinks/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "DELETE")
 		w.WriteHeader(http.StatusNoContent)
 	})

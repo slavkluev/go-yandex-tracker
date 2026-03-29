@@ -12,16 +12,16 @@ import (
 func TestIssuesService_ListWorklogs(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/worklog", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/worklog", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/worklog/1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/worklog/1",
 			"id": "1",
 			"comment": "Working on task",
 			"start": "2021-09-21T15:22:00.000+0000",
 			"duration": "P3W",
-			"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John Doe"}
+			"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John Doe"}
 		}]`)
 	})
 
@@ -63,7 +63,7 @@ func TestIssuesService_ListWorklogs(t *testing.T) {
 func TestIssuesService_CreateWorklog(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/worklog", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/worklog", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		var body map[string]any
@@ -83,12 +83,12 @@ func TestIssuesService_CreateWorklog(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/worklog/1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/worklog/1",
 			"id": "1",
 			"comment": "Coding session",
 			"start": "2021-09-21T15:00:00.000+0000",
 			"duration": "PT1H30M",
-			"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John Doe"}
+			"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John Doe"}
 		}`)
 	})
 
@@ -123,7 +123,7 @@ func TestIssuesService_CreateWorklog(t *testing.T) {
 func TestIssuesService_EditWorklog(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("PATCH /v2/issues/{key}/worklog/{worklogID}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("PATCH /v3/issues/{key}/worklog/{worklogID}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "PATCH")
 
 		var body map[string]any
@@ -137,12 +137,12 @@ func TestIssuesService_EditWorklog(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/worklog/abc123",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/worklog/abc123",
 			"id": "abc123",
 			"comment": "Updated session",
 			"start": "2021-09-21T15:00:00.000+0000",
 			"duration": "PT2H",
-			"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John Doe"}
+			"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John Doe"}
 		}`)
 	})
 
@@ -170,7 +170,7 @@ func TestIssuesService_EditWorklog(t *testing.T) {
 func TestIssuesService_DeleteWorklog(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("DELETE /v2/issues/{key}/worklog/{worklogID}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("DELETE /v3/issues/{key}/worklog/{worklogID}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "DELETE")
 		w.WriteHeader(http.StatusNoContent)
 	})

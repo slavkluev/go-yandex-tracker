@@ -13,7 +13,7 @@ func TestEntitiesService_ListAttachments(t *testing.T) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[{
-			"self": "https://api.tracker.yandex.net/v2/attachments/file-1",
+			"self": "https://api.tracker.yandex.net/v3/attachments/file-1",
 			"id": "file-1",
 			"name": "report.pdf",
 			"mimetype": "application/pdf",

@@ -12,7 +12,7 @@ import (
 func TestIssuesService_Create(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		var body map[string]any
@@ -25,7 +25,7 @@ func TestIssuesService_Create(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"self":"https://api.tracker.yandex.net/v2/issues/TEST-1","id":"1","key":"TEST-1","summary":"Test issue"}`)
+		fmt.Fprint(w, `{"self":"https://api.tracker.yandex.net/v3/issues/TEST-1","id":"1","key":"TEST-1","summary":"Test issue"}`)
 	})
 
 	issue, resp, err := client.Issues.Create(ctx, &IssueRequest{
@@ -40,7 +40,7 @@ func TestIssuesService_Create(t *testing.T) {
 	}
 
 	want := &Issue{
-		Self:    Ptr("https://api.tracker.yandex.net/v2/issues/TEST-1"),
+		Self:    Ptr("https://api.tracker.yandex.net/v3/issues/TEST-1"),
 		ID:      Ptr("1"),
 		Key:     Ptr("TEST-1"),
 		Summary: Ptr("Test issue"),
@@ -53,7 +53,7 @@ func TestIssuesService_Create(t *testing.T) {
 func TestIssuesService_Create_InvalidJSON(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprint(w, `{"errorMessages":["Invalid request"],"errors":{}}`)
@@ -70,11 +70,11 @@ func TestIssuesService_Create_InvalidJSON(t *testing.T) {
 func TestIssuesService_Get(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `{"self":"https://api.tracker.yandex.net/v2/issues/QUEUE-1","id":"1","key":"QUEUE-1","summary":"Test issue","description":"A test issue"}`)
+		fmt.Fprint(w, `{"self":"https://api.tracker.yandex.net/v3/issues/QUEUE-1","id":"1","key":"QUEUE-1","summary":"Test issue","description":"A test issue"}`)
 	})
 
 	issue, _, err := client.Issues.Get(ctx, "QUEUE-1", nil)
@@ -83,7 +83,7 @@ func TestIssuesService_Get(t *testing.T) {
 	}
 
 	want := &Issue{
-		Self:        Ptr("https://api.tracker.yandex.net/v2/issues/QUEUE-1"),
+		Self:        Ptr("https://api.tracker.yandex.net/v3/issues/QUEUE-1"),
 		ID:          Ptr("1"),
 		Key:         Ptr("QUEUE-1"),
 		Summary:     Ptr("Test issue"),
@@ -97,7 +97,7 @@ func TestIssuesService_Get(t *testing.T) {
 func TestIssuesService_Get_WithExpand(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 
 		expand := r.URL.Query().Get("expand")
@@ -120,7 +120,7 @@ func TestIssuesService_Get_WithExpand(t *testing.T) {
 func TestIssuesService_Get_NotFound(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprint(w, `{"errorMessages":["Object not found"],"errors":{}}`)
@@ -138,7 +138,7 @@ func TestIssuesService_Get_NotFound(t *testing.T) {
 func TestIssuesService_Edit(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("PATCH /v2/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("PATCH /v3/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "PATCH")
 
 		var body map[string]any
@@ -170,7 +170,7 @@ func TestIssuesService_Edit(t *testing.T) {
 func TestIssuesService_Edit_WithVersion(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("PATCH /v2/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("PATCH /v3/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "PATCH")
 
 		version := r.URL.Query().Get("version")
@@ -193,7 +193,7 @@ func TestIssuesService_Edit_WithVersion(t *testing.T) {
 func TestIssuesService_Search(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/_search", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/_search", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		var body map[string]any
@@ -230,7 +230,7 @@ func TestIssuesService_Search(t *testing.T) {
 func TestIssuesService_Search_WithPagination(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/_search", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/_search", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		page := r.URL.Query().Get("page")
@@ -259,7 +259,7 @@ func TestIssuesService_Search_WithPagination(t *testing.T) {
 func TestIssuesService_ScrollSearch(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/_search", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/_search", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		scrollType := r.URL.Query().Get("scrollType")
@@ -295,7 +295,7 @@ func TestIssuesService_ScrollSearch(t *testing.T) {
 func TestIssuesService_ScrollNext(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/_search", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/_search", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		scrollID := r.URL.Query().Get("scrollId")
@@ -333,7 +333,7 @@ func TestIssuesService_ScrollNext(t *testing.T) {
 func TestIssuesService_Count(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/_count", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/_count", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		var body map[string]any
@@ -360,7 +360,7 @@ func TestIssuesService_Count(t *testing.T) {
 func TestIssuesService_Count_Zero(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/_count", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/_count", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain")
 		fmt.Fprint(w, `0`)
 	})
@@ -379,7 +379,7 @@ func TestIssuesService_Count_Zero(t *testing.T) {
 func TestIssuesService_Move(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/_move", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/_move", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		queue := r.URL.Query().Get("queue")

@@ -11,14 +11,14 @@ import (
 func TestImportService_ImportIssue(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/_import", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/_import", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		testBody(t, r, `{"queue":"QUEUE","summary":"Imported issue","createdAt":"2017-08-29T12:34:41.740+0000","createdBy":"user1"}`)
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1",
 			"id": "1",
 			"key": "QUEUE-1",
 			"summary": "Imported issue"
@@ -47,17 +47,17 @@ func TestImportService_ImportIssue(t *testing.T) {
 func TestImportService_ImportComment(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/comments/_import", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/comments/_import", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		testBody(t, r, `{"text":"Imported comment","createdAt":"2017-08-29T12:34:41.740+0000","createdBy":"user1"}`)
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/comments/1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/comments/1",
 			"id": 1,
 			"text": "Imported comment",
-			"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "user1"},
+			"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "user1"},
 			"createdAt": "2017-08-29T12:34:41.740+0000"
 		}`)
 	})
@@ -83,18 +83,18 @@ func TestImportService_ImportComment(t *testing.T) {
 func TestImportService_ImportLink(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/links/_import", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/links/_import", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		testBody(t, r, `{"relationship":"relates","issue":"QUEUE-2","createdAt":"2017-08-29T12:34:41.740+0000","createdBy":"user1"}`)
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/links/1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/links/1",
 			"id": "1",
-			"type": {"self": "https://api.tracker.yandex.net/v2/linktypes/relates", "id": "relates", "inward": "relates", "outward": "relates"},
+			"type": {"self": "https://api.tracker.yandex.net/v3/linktypes/relates", "id": "relates", "inward": "relates", "outward": "relates"},
 			"direction": "outward",
-			"object": {"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-2", "id": "2", "key": "QUEUE-2", "summary": "Linked issue"}
+			"object": {"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-2", "id": "2", "key": "QUEUE-2", "summary": "Linked issue"}
 		}`)
 	})
 
@@ -123,7 +123,7 @@ func TestImportService_ImportLink(t *testing.T) {
 func TestImportService_ImportFile(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/attachments/_import", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/attachments/_import", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		// Verify query parameters
@@ -146,7 +146,7 @@ func TestImportService_ImportFile(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/attachments/1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/attachments/1",
 			"id": "1",
 			"name": "test.txt",
 			"mimetype": "text/plain",
@@ -175,7 +175,7 @@ func TestImportService_ImportFile(t *testing.T) {
 func TestImportService_ImportCommentFile(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/comments/{commentId}/attachments/_import", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/comments/{commentId}/attachments/_import", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		// Verify query parameters
@@ -198,7 +198,7 @@ func TestImportService_ImportCommentFile(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/comments/123/attachments/2",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/comments/123/attachments/2",
 			"id": "2",
 			"name": "comment-file.txt",
 			"mimetype": "text/plain",

@@ -18,7 +18,7 @@ func TestErrorResponse_Error(t *testing.T) {
 				URL: &url.URL{
 					Scheme: "https",
 					Host:   "api.tracker.yandex.net",
-					Path:   "/v2/issues/QUEUE-1",
+					Path:   "/v3/issues/QUEUE-1",
 				},
 			},
 		},
@@ -31,7 +31,7 @@ func TestErrorResponse_Error(t *testing.T) {
 	if !strings.Contains(msg, "GET") {
 		t.Errorf("Error() = %q, want to contain method GET", msg)
 	}
-	if !strings.Contains(msg, "/v2/issues/QUEUE-1") {
+	if !strings.Contains(msg, "/v3/issues/QUEUE-1") {
 		t.Errorf("Error() = %q, want to contain URL path", msg)
 	}
 	if !strings.Contains(msg, "404") {

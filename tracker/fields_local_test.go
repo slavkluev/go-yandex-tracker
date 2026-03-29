@@ -28,7 +28,7 @@ func TestFieldsService_ListLocal(t *testing.T) {
 				"order": 10,
 				"category": {"self": "https://api.tracker.yandex.net/v3/fields/categories/custom", "id": "custom", "display": "Custom"},
 				"type": "local",
-				"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
+				"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
 			},
 			{
 				"self": "https://api.tracker.yandex.net/v3/queues/TEST/localFields/localField2",
@@ -43,7 +43,7 @@ func TestFieldsService_ListLocal(t *testing.T) {
 				"order": 20,
 				"category": {"self": "https://api.tracker.yandex.net/v3/fields/categories/custom", "id": "custom", "display": "Custom"},
 				"type": "local",
-				"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
+				"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
 			}
 		]`)
 	})
@@ -72,7 +72,7 @@ func TestFieldsService_ListLocal(t *testing.T) {
 			Order:    Ptr(10),
 			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/custom"), ID: Ptr("custom"), Display: Ptr("Custom")},
 			Type:     Ptr("local"),
-			Queue:    &Queue{Self: Ptr("https://api.tracker.yandex.net/v2/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			Queue:    &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 		},
 		{
 			Self:     Ptr("https://api.tracker.yandex.net/v3/queues/TEST/localFields/localField2"),
@@ -87,7 +87,7 @@ func TestFieldsService_ListLocal(t *testing.T) {
 			Order:    Ptr(20),
 			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/custom"), ID: Ptr("custom"), Display: Ptr("Custom")},
 			Type:     Ptr("local"),
-			Queue:    &Queue{Self: Ptr("https://api.tracker.yandex.net/v2/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			Queue:    &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 		},
 	}
 
@@ -124,7 +124,7 @@ func TestFieldsService_GetLocal(t *testing.T) {
 			"order": 10,
 			"category": {"self": "https://api.tracker.yandex.net/v3/fields/categories/custom", "id": "custom", "display": "Custom"},
 			"type": "local",
-			"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
+			"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
 		}`)
 	})
 
@@ -148,7 +148,7 @@ func TestFieldsService_GetLocal(t *testing.T) {
 		Order:       Ptr(10),
 		Category:    &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/custom"), ID: Ptr("custom"), Display: Ptr("Custom")},
 		Type:        Ptr("local"),
-		Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v2/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+		Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 	}
 
 	if !reflect.DeepEqual(field, want) {
@@ -177,7 +177,7 @@ func TestFieldsService_CreateLocal(t *testing.T) {
 			"order": 50,
 			"category": {"self": "https://api.tracker.yandex.net/v3/fields/categories/custom", "id": "custom", "display": "Custom"},
 			"type": "local",
-			"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
+			"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
 		}`)
 	})
 
@@ -230,7 +230,7 @@ func TestFieldsService_EditLocal(t *testing.T) {
 			"order": 10,
 			"category": {"self": "https://api.tracker.yandex.net/v3/fields/categories/custom", "id": "custom", "display": "Custom"},
 			"type": "local",
-			"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
+			"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"}
 		}`)
 	})
 

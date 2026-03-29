@@ -12,7 +12,7 @@ import (
 func TestIssuesService_GetTransitions(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/transitions", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/transitions", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[{"id":"2","display":"Close","to":{"key":"closed"}}]`)
@@ -40,7 +40,7 @@ func TestIssuesService_GetTransitions(t *testing.T) {
 func TestIssuesService_GetTransitions_Empty(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/transitions", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/transitions", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[]`)
 	})
@@ -58,7 +58,7 @@ func TestIssuesService_GetTransitions_Empty(t *testing.T) {
 func TestIssuesService_ExecuteTransition(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/transitions/{id}/_execute", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/transitions/{id}/_execute", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		var body map[string]any
@@ -96,7 +96,7 @@ func TestIssuesService_ExecuteTransition(t *testing.T) {
 func TestIssuesService_ExecuteTransition_NilBody(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/transitions/{id}/_execute", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/transitions/{id}/_execute", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[{"id":"2","display":"Close","to":{"key":"closed"}}]`)

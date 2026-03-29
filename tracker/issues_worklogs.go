@@ -10,7 +10,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/issue-worklog
 func (s *IssuesService) ListWorklogs(ctx context.Context, issueKey string) ([]*Worklog, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/worklog", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/worklog", issueKey)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -30,7 +30,7 @@ func (s *IssuesService) ListWorklogs(ctx context.Context, issueKey string) ([]*W
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/new-worklog
 func (s *IssuesService) CreateWorklog(ctx context.Context, issueKey string, worklog *WorklogRequest) (*Worklog, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/worklog", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/worklog", issueKey)
 
 	req, err := s.client.NewRequest("POST", u, worklog)
 	if err != nil {
@@ -50,7 +50,7 @@ func (s *IssuesService) CreateWorklog(ctx context.Context, issueKey string, work
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/patch-worklog
 func (s *IssuesService) EditWorklog(ctx context.Context, issueKey, worklogID string, worklog *WorklogRequest) (*Worklog, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/worklog/%v", issueKey, worklogID)
+	u := fmt.Sprintf("v3/issues/%v/worklog/%v", issueKey, worklogID)
 
 	req, err := s.client.NewRequest("PATCH", u, worklog)
 	if err != nil {
@@ -71,7 +71,7 @@ func (s *IssuesService) EditWorklog(ctx context.Context, issueKey, worklogID str
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-worklog
 func (s *IssuesService) DeleteWorklog(ctx context.Context, issueKey, worklogID string) (*Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/worklog/%v", issueKey, worklogID)
+	u := fmt.Sprintf("v3/issues/%v/worklog/%v", issueKey, worklogID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

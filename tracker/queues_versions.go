@@ -9,7 +9,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-versions
 func (s *QueuesService) ListVersions(ctx context.Context, queueKey string) ([]*QueueVersion, *Response, error) {
-	u := fmt.Sprintf("v2/queues/%v/versions", queueKey)
+	u := fmt.Sprintf("v3/queues/%v/versions", queueKey)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -29,7 +29,7 @@ func (s *QueuesService) ListVersions(ctx context.Context, queueKey string) ([]*Q
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-tags
 func (s *QueuesService) ListTags(ctx context.Context, queueKey string) ([]string, *Response, error) {
-	u := fmt.Sprintf("v2/queues/%v/tags", queueKey)
+	u := fmt.Sprintf("v3/queues/%v/tags", queueKey)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {

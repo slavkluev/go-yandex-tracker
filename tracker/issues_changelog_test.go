@@ -10,7 +10,7 @@ import (
 func TestIssuesService_GetChangelog(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/changelog", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/changelog", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[{
@@ -50,7 +50,7 @@ func TestIssuesService_GetChangelog(t *testing.T) {
 func TestIssuesService_GetChangelog_WithOptions(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/changelog", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/changelog", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 
 		gotID := r.URL.Query().Get("id")
@@ -77,7 +77,7 @@ func TestIssuesService_GetChangelog_WithOptions(t *testing.T) {
 func TestIssuesService_GetChangelog_Empty(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/changelog", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/changelog", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[]`)
 	})

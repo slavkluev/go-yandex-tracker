@@ -9,7 +9,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/manage-access
 func (s *QueuesService) GetPermissions(ctx context.Context, queueKey string) (*QueuePermissions, *Response, error) {
-	u := fmt.Sprintf("v2/queues/%v/permissions", queueKey)
+	u := fmt.Sprintf("v3/queues/%v/permissions", queueKey)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -31,7 +31,7 @@ func (s *QueuesService) GetPermissions(ctx context.Context, queueKey string) (*Q
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/manage-access
 func (s *QueuesService) UpdatePermissions(ctx context.Context, queueKey string, perms *QueuePermissionsUpdateRequest) (*QueuePermissions, *Response, error) {
-	u := fmt.Sprintf("v2/queues/%v/permissions", queueKey)
+	u := fmt.Sprintf("v3/queues/%v/permissions", queueKey)
 
 	req, err := s.client.NewRequest("PATCH", u, perms)
 	if err != nil {
@@ -52,7 +52,7 @@ func (s *QueuesService) UpdatePermissions(ctx context.Context, queueKey string, 
 // "read", "grant". Returns the permissions structure if the user has the
 // permission; returns an error (403) if they do not.
 func (s *QueuesService) CheckPermission(ctx context.Context, queueKey, permissionCode string) (*QueuePermissions, *Response, error) {
-	u := fmt.Sprintf("v2/queues/%v/checkPermissions/%v", queueKey, permissionCode)
+	u := fmt.Sprintf("v3/queues/%v/checkPermissions/%v", queueKey, permissionCode)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {

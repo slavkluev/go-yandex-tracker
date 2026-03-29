@@ -9,7 +9,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-applications
 func (s *ExternalLinksService) ListApplications(ctx context.Context) ([]*ExternalApplication, *Response, error) {
-	req, err := s.client.NewRequest("GET", "v2/applications", nil)
+	req, err := s.client.NewRequest("GET", "v3/applications", nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -27,7 +27,7 @@ func (s *ExternalLinksService) ListApplications(ctx context.Context) ([]*Externa
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-external-links
 func (s *ExternalLinksService) ListLinks(ctx context.Context, issueKey string) ([]*ExternalLink, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/remotelinks", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/remotelinks", issueKey)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -48,7 +48,7 @@ func (s *ExternalLinksService) ListLinks(ctx context.Context, issueKey string) (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/add-external-link
 func (s *ExternalLinksService) CreateLink(ctx context.Context, issueKey string, link *ExternalLinkCreateRequest, opts *ExternalLinkCreateOptions) (*ExternalLink, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/remotelinks", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/remotelinks", issueKey)
 	u, err := addOptions(u, opts)
 	if err != nil {
 		return nil, nil, err
@@ -73,7 +73,7 @@ func (s *ExternalLinksService) CreateLink(ctx context.Context, issueKey string, 
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-external-link
 func (s *ExternalLinksService) DeleteLink(ctx context.Context, issueKey string, linkID int) (*Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/remotelinks/%v", issueKey, linkID)
+	u := fmt.Sprintf("v3/issues/%v/remotelinks/%v", issueKey, linkID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

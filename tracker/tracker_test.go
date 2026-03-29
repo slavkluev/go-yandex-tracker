@@ -191,13 +191,13 @@ func TestNewClient_BulkChangeServiceNotNil(t *testing.T) {
 
 func TestNewRequest_GET_NilBody(t *testing.T) {
 	c := NewClient(WithOAuthToken("test-token"))
-	req, err := c.NewRequest("GET", "v2/issues/QUEUE-1", nil)
+	req, err := c.NewRequest("GET", "v3/issues/QUEUE-1", nil)
 	if err != nil {
 		t.Fatalf("NewRequest returned error: %v", err)
 	}
 
 	// Check URL
-	wantURL := defaultBaseURL + "v2/issues/QUEUE-1"
+	wantURL := defaultBaseURL + "v3/issues/QUEUE-1"
 	if got := req.URL.String(); got != wantURL {
 		t.Errorf("URL = %q, want %q", got, wantURL)
 	}
@@ -219,7 +219,7 @@ func TestNewRequest_POST_WithBody(t *testing.T) {
 		Summary: Ptr("Test issue"),
 		Queue:   Ptr("TEST"),
 	}
-	req, err := c.NewRequest("POST", "v2/issues/", body)
+	req, err := c.NewRequest("POST", "v3/issues/", body)
 	if err != nil {
 		t.Fatalf("NewRequest returned error: %v", err)
 	}
@@ -248,7 +248,7 @@ func TestNewRequest_POST_WithBody(t *testing.T) {
 
 func TestNewRequest_OAuthHeader(t *testing.T) {
 	c := NewClient(WithOAuthToken("test-token"))
-	req, err := c.NewRequest("GET", "v2/issues/QUEUE-1", nil)
+	req, err := c.NewRequest("GET", "v3/issues/QUEUE-1", nil)
 	if err != nil {
 		t.Fatalf("NewRequest returned error: %v", err)
 	}
@@ -260,7 +260,7 @@ func TestNewRequest_OAuthHeader(t *testing.T) {
 
 func TestNewRequest_IAMHeader(t *testing.T) {
 	c := NewClient(WithIAMToken("test-iam-token"))
-	req, err := c.NewRequest("GET", "v2/issues/QUEUE-1", nil)
+	req, err := c.NewRequest("GET", "v3/issues/QUEUE-1", nil)
 	if err != nil {
 		t.Fatalf("NewRequest returned error: %v", err)
 	}
@@ -272,7 +272,7 @@ func TestNewRequest_IAMHeader(t *testing.T) {
 
 func TestNewRequest_OrgIDHeader(t *testing.T) {
 	c := NewClient(WithOrgID("org123"))
-	req, err := c.NewRequest("GET", "v2/issues/QUEUE-1", nil)
+	req, err := c.NewRequest("GET", "v3/issues/QUEUE-1", nil)
 	if err != nil {
 		t.Fatalf("NewRequest returned error: %v", err)
 	}
@@ -284,7 +284,7 @@ func TestNewRequest_OrgIDHeader(t *testing.T) {
 
 func TestNewRequest_CloudOrgIDHeader(t *testing.T) {
 	c := NewClient(WithCloudOrgID("cloud456"))
-	req, err := c.NewRequest("GET", "v2/issues/QUEUE-1", nil)
+	req, err := c.NewRequest("GET", "v3/issues/QUEUE-1", nil)
 	if err != nil {
 		t.Fatalf("NewRequest returned error: %v", err)
 	}
@@ -296,7 +296,7 @@ func TestNewRequest_CloudOrgIDHeader(t *testing.T) {
 
 func TestNewRequest_BothOrgHeaders(t *testing.T) {
 	c := NewClient(WithOrgID("org123"), WithCloudOrgID("cloud456"))
-	req, err := c.NewRequest("GET", "v2/issues/QUEUE-1", nil)
+	req, err := c.NewRequest("GET", "v3/issues/QUEUE-1", nil)
 	if err != nil {
 		t.Fatalf("NewRequest returned error: %v", err)
 	}
@@ -316,14 +316,14 @@ func TestDo_200_DecodesJSON(t *testing.T) {
 		Name string `json:"name"`
 	}
 
-	mux.HandleFunc("GET /v2/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/test", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(testResource{Key: "TEST-1", Name: "Test"})
 	})
 
-	req, _ := client.NewRequest("GET", "v2/test", nil)
+	req, _ := client.NewRequest("GET", "v3/test", nil)
 	var got testResource
 	resp, err := client.Do(context.Background(), req, &got)
 	if err != nil {
@@ -342,7 +342,7 @@ func TestDo_200_DecodesJSON(t *testing.T) {
 func TestDo_404_ReturnsErrorResponse(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/test", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(map[string]any{
@@ -351,7 +351,7 @@ func TestDo_404_ReturnsErrorResponse(t *testing.T) {
 		})
 	})
 
-	req, _ := client.NewRequest("GET", "v2/test", nil)
+	req, _ := client.NewRequest("GET", "v3/test", nil)
 	resp, err := client.Do(context.Background(), req, nil)
 	if err == nil {
 		t.Fatal("Do expected error for 404, got nil")
@@ -371,13 +371,13 @@ func TestDo_404_ReturnsErrorResponse(t *testing.T) {
 func TestDo_NilV_200_NoError(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("DELETE /v2/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("DELETE /v3/test", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "DELETE")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"status":"ok"}`))
 	})
 
-	req, _ := client.NewRequest("DELETE", "v2/test", nil)
+	req, _ := client.NewRequest("DELETE", "v3/test", nil)
 	resp, err := client.Do(context.Background(), req, nil)
 	if err != nil {
 		t.Fatalf("Do returned error: %v", err)
@@ -390,11 +390,11 @@ func TestDo_NilV_200_NoError(t *testing.T) {
 func TestDo_EmptyBody_NilV_NoError(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/test", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 
-	req, _ := client.NewRequest("POST", "v2/test", nil)
+	req, _ := client.NewRequest("POST", "v3/test", nil)
 	resp, err := client.Do(context.Background(), req, nil)
 	if err != nil {
 		t.Fatalf("Do returned error: %v", err)
@@ -410,14 +410,14 @@ func TestDo_PassesContext(t *testing.T) {
 	type contextKey string
 	var gotCtx bool
 
-	mux.HandleFunc("GET /v2/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/test", func(w http.ResponseWriter, r *http.Request) {
 		// The context is set on the request; we can verify the request has it
 		gotCtx = true
 		w.WriteHeader(http.StatusOK)
 	})
 
 	ctx := context.Background()
-	req, _ := client.NewRequest("GET", "v2/test", nil)
+	req, _ := client.NewRequest("GET", "v3/test", nil)
 	_, err := client.Do(ctx, req, nil)
 	if err != nil {
 		t.Fatalf("Do returned error: %v", err)
@@ -430,14 +430,14 @@ func TestDo_PassesContext(t *testing.T) {
 func TestDo_CancelledContext(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/test", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel() // Cancel immediately
 
-	req, _ := client.NewRequest("GET", "v2/test", nil)
+	req, _ := client.NewRequest("GET", "v3/test", nil)
 	_, err := client.Do(ctx, req, nil)
 	if err == nil {
 		t.Error("Do expected error for cancelled context, got nil")
@@ -447,12 +447,12 @@ func TestDo_CancelledContext(t *testing.T) {
 func TestBareDo_200_ReturnsRawResponse(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/test", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("raw body content"))
 	})
 
-	req, _ := client.NewRequest("GET", "v2/test", nil)
+	req, _ := client.NewRequest("GET", "v3/test", nil)
 	resp, err := client.BareDo(context.Background(), req)
 	if err != nil {
 		t.Fatalf("BareDo returned error: %v", err)
@@ -471,11 +471,11 @@ func TestBareDo_200_ReturnsRawResponse(t *testing.T) {
 func TestBareDo_404_ReturnsError(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/test", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	})
 
-	req, _ := client.NewRequest("GET", "v2/test", nil)
+	req, _ := client.NewRequest("GET", "v3/test", nil)
 	_, err := client.BareDo(context.Background(), req)
 	if err == nil {
 		t.Fatal("BareDo expected error for 404, got nil")
@@ -485,7 +485,7 @@ func TestBareDo_404_ReturnsError(t *testing.T) {
 func TestNewUploadRequest_CreatesMultipartRequest(t *testing.T) {
 	c := NewClient(WithOAuthToken("test-token"))
 	fileContent := "hello file content"
-	req, err := c.NewUploadRequest("POST", "v2/issues/QUEUE-1/attachments", "test.txt", strings.NewReader(fileContent))
+	req, err := c.NewUploadRequest("POST", "v3/issues/QUEUE-1/attachments", "test.txt", strings.NewReader(fileContent))
 	if err != nil {
 		t.Fatalf("NewUploadRequest returned error: %v", err)
 	}
@@ -522,7 +522,7 @@ func TestNewUploadRequest_CreatesMultipartRequest(t *testing.T) {
 
 func TestNewUploadRequest_SetsAuthHeaders_OAuth(t *testing.T) {
 	c := NewClient(WithOAuthToken("test-token"))
-	req, err := c.NewUploadRequest("POST", "v2/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
+	req, err := c.NewUploadRequest("POST", "v3/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
 	if err != nil {
 		t.Fatalf("NewUploadRequest returned error: %v", err)
 	}
@@ -534,7 +534,7 @@ func TestNewUploadRequest_SetsAuthHeaders_OAuth(t *testing.T) {
 
 func TestNewUploadRequest_SetsAuthHeaders_IAM(t *testing.T) {
 	c := NewClient(WithIAMToken("test-iam-token"))
-	req, err := c.NewUploadRequest("POST", "v2/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
+	req, err := c.NewUploadRequest("POST", "v3/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
 	if err != nil {
 		t.Fatalf("NewUploadRequest returned error: %v", err)
 	}
@@ -550,7 +550,7 @@ func TestNewUploadRequest_SetsOrgHeaders(t *testing.T) {
 		WithOrgID("org123"),
 		WithCloudOrgID("cloud456"),
 	)
-	req, err := c.NewUploadRequest("POST", "v2/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
+	req, err := c.NewUploadRequest("POST", "v3/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
 	if err != nil {
 		t.Fatalf("NewUploadRequest returned error: %v", err)
 	}
@@ -564,11 +564,11 @@ func TestNewUploadRequest_SetsOrgHeaders(t *testing.T) {
 
 func TestNewUploadRequest_ResolvesURL(t *testing.T) {
 	c := NewClient(WithOAuthToken("test-token"))
-	req, err := c.NewUploadRequest("POST", "v2/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
+	req, err := c.NewUploadRequest("POST", "v3/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
 	if err != nil {
 		t.Fatalf("NewUploadRequest returned error: %v", err)
 	}
-	wantURL := defaultBaseURL + "v2/issues/QUEUE-1/attachments"
+	wantURL := defaultBaseURL + "v3/issues/QUEUE-1/attachments"
 	if got := req.URL.String(); got != wantURL {
 		t.Errorf("URL = %q, want %q", got, wantURL)
 	}
@@ -579,7 +579,7 @@ func TestNewUploadRequest_NoTrailingSlash(t *testing.T) {
 		WithBaseURL("http://example.com/api"),
 		WithOAuthToken("test-token"),
 	)
-	_, err := c.NewUploadRequest("POST", "v2/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
+	_, err := c.NewUploadRequest("POST", "v3/issues/QUEUE-1/attachments", "test.txt", strings.NewReader("data"))
 	if err == nil {
 		t.Fatal("expected error for baseURL without trailing slash, got nil")
 	}

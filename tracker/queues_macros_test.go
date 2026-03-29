@@ -20,7 +20,7 @@ func TestQueuesService_ListMacros(t *testing.T) {
 				"id": 1,
 				"self": "https://api.tracker.yandex.net/v3/queues/TEST/macros/1",
 				"queue": {
-					"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+					"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 					"id": "100",
 					"key": "TEST",
 					"display": "Test Queue"
@@ -32,7 +32,7 @@ func TestQueuesService_ListMacros(t *testing.T) {
 				"id": 2,
 				"self": "https://api.tracker.yandex.net/v3/queues/TEST/macros/2",
 				"queue": {
-					"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+					"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 					"id": "100",
 					"key": "TEST",
 					"display": "Test Queue"
@@ -57,7 +57,7 @@ func TestQueuesService_ListMacros(t *testing.T) {
 			ID:   Ptr(1),
 			Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/1"),
 			Queue: &Queue{
-				Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 				ID:      Ptr("100"),
 				Key:     Ptr("TEST"),
 				Display: Ptr("Test Queue"),
@@ -69,7 +69,7 @@ func TestQueuesService_ListMacros(t *testing.T) {
 			ID:   Ptr(2),
 			Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/2"),
 			Queue: &Queue{
-				Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 				ID:      Ptr("100"),
 				Key:     Ptr("TEST"),
 				Display: Ptr("Test Queue"),
@@ -95,7 +95,7 @@ func TestQueuesService_GetMacro(t *testing.T) {
 			"id": 5,
 			"self": "https://api.tracker.yandex.net/v3/queues/TEST/macros/5",
 			"queue": {
-				"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+				"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 				"id": "100",
 				"key": "TEST",
 				"display": "Test Queue"
@@ -105,7 +105,7 @@ func TestQueuesService_GetMacro(t *testing.T) {
 			"issueUpdate": [
 				{
 					"field": {
-						"self": "https://api.tracker.yandex.net/v2/fields/status",
+						"self": "https://api.tracker.yandex.net/v3/fields/status",
 						"id": "status",
 						"display": "Status"
 					},
@@ -124,7 +124,7 @@ func TestQueuesService_GetMacro(t *testing.T) {
 		ID:   Ptr(5),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/5"),
 		Queue: &Queue{
-			Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 			ID:      Ptr("100"),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
@@ -134,7 +134,7 @@ func TestQueuesService_GetMacro(t *testing.T) {
 		IssueUpdate: []*MacroIssueUpdate{
 			{
 				Field: &MacroIssueUpdateField{
-					Self:    Ptr("https://api.tracker.yandex.net/v2/fields/status"),
+					Self:    Ptr("https://api.tracker.yandex.net/v3/fields/status"),
 					ID:      Ptr("status"),
 					Display: Ptr("Status"),
 				},
@@ -178,7 +178,7 @@ func TestQueuesService_CreateMacro(t *testing.T) {
 			"id": 10,
 			"self": "https://api.tracker.yandex.net/v3/queues/TEST/macros/10",
 			"queue": {
-				"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+				"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 				"id": "100",
 				"key": "TEST",
 				"display": "Test Queue"
@@ -197,7 +197,7 @@ func TestQueuesService_CreateMacro(t *testing.T) {
 		ID:   Ptr(10),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/10"),
 		Queue: &Queue{
-			Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 			ID:      Ptr("100"),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
@@ -236,7 +236,7 @@ func TestQueuesService_EditMacro(t *testing.T) {
 			"id": 5,
 			"self": "https://api.tracker.yandex.net/v3/queues/TEST/macros/5",
 			"queue": {
-				"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+				"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 				"id": "100",
 				"key": "TEST",
 				"display": "Test Queue"
@@ -255,7 +255,7 @@ func TestQueuesService_EditMacro(t *testing.T) {
 		ID:   Ptr(5),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/5"),
 		Queue: &Queue{
-			Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 			ID:      Ptr("100"),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),

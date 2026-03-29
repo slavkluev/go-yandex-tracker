@@ -10,7 +10,7 @@ import (
 func TestIssuesService_ListComments(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/comments", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/comments", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[{
@@ -45,7 +45,7 @@ func TestIssuesService_ListComments(t *testing.T) {
 func TestIssuesService_ListComments_WithOptions(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/comments", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/comments", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		q := r.URL.Query()
 		if got := q.Get("perPage"); got != "10" {
@@ -69,7 +69,7 @@ func TestIssuesService_ListComments_WithOptions(t *testing.T) {
 func TestIssuesService_CreateComment(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/comments", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/comments", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		testBody(t, r, `{"text":"New comment"}`)
 		w.Header().Set("Content-Type", "application/json")
@@ -102,7 +102,7 @@ func TestIssuesService_CreateComment(t *testing.T) {
 func TestIssuesService_EditComment(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("PATCH /v2/issues/{key}/comments/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("PATCH /v3/issues/{key}/comments/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "PATCH")
 		testBody(t, r, `{"text":"Updated comment"}`)
 		w.Header().Set("Content-Type", "application/json")
@@ -134,7 +134,7 @@ func TestIssuesService_EditComment(t *testing.T) {
 func TestIssuesService_DeleteComment(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("DELETE /v2/issues/{key}/comments/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("DELETE /v3/issues/{key}/comments/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "DELETE")
 		w.WriteHeader(http.StatusNoContent)
 	})

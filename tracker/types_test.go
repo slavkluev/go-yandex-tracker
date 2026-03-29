@@ -105,37 +105,37 @@ func TestTimestamp_MarshalJSON_RoundTrip(t *testing.T) {
 func TestIssue_UnmarshalJSON(t *testing.T) {
 	t.Run("known fields", func(t *testing.T) {
 		data := []byte(`{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1",
 			"id": "123",
 			"key": "QUEUE-1",
 			"summary": "Test issue",
 			"description": "A description",
 			"status": {
-				"self": "https://api.tracker.yandex.net/v2/statuses/1",
+				"self": "https://api.tracker.yandex.net/v3/statuses/1",
 				"id": "1",
 				"key": "open",
 				"display": "Open"
 			},
 			"priority": {
-				"self": "https://api.tracker.yandex.net/v2/priorities/1",
+				"self": "https://api.tracker.yandex.net/v3/priorities/1",
 				"id": "1",
 				"key": "normal",
 				"display": "Normal"
 			},
 			"type": {
-				"self": "https://api.tracker.yandex.net/v2/issuetypes/1",
+				"self": "https://api.tracker.yandex.net/v3/issuetypes/1",
 				"id": "1",
 				"key": "task",
 				"display": "Task"
 			},
 			"queue": {
-				"self": "https://api.tracker.yandex.net/v2/queues/QUEUE",
+				"self": "https://api.tracker.yandex.net/v3/queues/QUEUE",
 				"id": "1",
 				"key": "QUEUE",
 				"display": "Queue"
 			},
 			"assignee": {
-				"self": "https://api.tracker.yandex.net/v2/users/1",
+				"self": "https://api.tracker.yandex.net/v3/users/1",
 				"id": "1",
 				"display": "User 1"
 			}
@@ -177,7 +177,7 @@ func TestIssue_UnmarshalJSON(t *testing.T) {
 
 	t.Run("custom fields", func(t *testing.T) {
 		data := []byte(`{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1",
 			"id": "123",
 			"key": "QUEUE-1",
 			"summary": "Test issue",
@@ -211,7 +211,7 @@ func TestIssue_UnmarshalJSON(t *testing.T) {
 
 	t.Run("no custom fields", func(t *testing.T) {
 		data := []byte(`{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1",
 			"id": "123",
 			"key": "QUEUE-1",
 			"summary": "Test issue"
@@ -456,7 +456,7 @@ func TestMacro_JSON(t *testing.T) {
 		"id": 5,
 		"self": "https://api.tracker.yandex.net/v3/queues/TEST/macros/5",
 		"queue": {
-			"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+			"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 			"id": "100",
 			"key": "TEST",
 			"display": "Test Queue"
@@ -466,7 +466,7 @@ func TestMacro_JSON(t *testing.T) {
 		"issueUpdate": [
 			{
 				"field": {
-					"self": "https://api.tracker.yandex.net/v2/fields/status",
+					"self": "https://api.tracker.yandex.net/v3/fields/status",
 					"id": "status",
 					"display": "Status"
 				},
@@ -517,7 +517,7 @@ func TestMacro_JSON(t *testing.T) {
 func TestMacroIssueUpdate_JSON(t *testing.T) {
 	data := []byte(`{
 		"field": {
-			"self": "https://api.tracker.yandex.net/v2/fields/assignee",
+			"self": "https://api.tracker.yandex.net/v3/fields/assignee",
 			"id": "assignee",
 			"display": "Assignee"
 		},
@@ -554,7 +554,7 @@ func TestMacroIssueUpdate_JSON(t *testing.T) {
 
 func TestMacroIssueUpdateField_JSON(t *testing.T) {
 	data := []byte(`{
-		"self": "https://api.tracker.yandex.net/v2/fields/priority",
+		"self": "https://api.tracker.yandex.net/v3/fields/priority",
 		"id": "priority",
 		"display": "Priority"
 	}`)
@@ -563,7 +563,7 @@ func TestMacroIssueUpdateField_JSON(t *testing.T) {
 	if err := json.Unmarshal(data, &field); err != nil {
 		t.Fatalf("Unmarshal MacroIssueUpdateField: %v", err)
 	}
-	if field.Self == nil || *field.Self != "https://api.tracker.yandex.net/v2/fields/priority" {
+	if field.Self == nil || *field.Self != "https://api.tracker.yandex.net/v3/fields/priority" {
 		t.Errorf("Self = %v, want non-nil", field.Self)
 	}
 	if field.ID == nil || *field.ID != "priority" {

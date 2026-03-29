@@ -9,7 +9,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-transitions
 func (s *IssuesService) GetTransitions(ctx context.Context, issueKey string) ([]*Transition, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/transitions", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/transitions", issueKey)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -31,7 +31,7 @@ func (s *IssuesService) GetTransitions(ctx context.Context, issueKey string) ([]
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/new-transition
 func (s *IssuesService) ExecuteTransition(ctx context.Context, issueKey, transitionID string, transition *TransitionRequest) ([]*Transition, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/transitions/%v/_execute", issueKey, transitionID)
+	u := fmt.Sprintf("v3/issues/%v/transitions/%v/_execute", issueKey, transitionID)
 
 	req, err := s.client.NewRequest("POST", u, transition)
 	if err != nil {

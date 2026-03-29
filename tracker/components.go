@@ -10,7 +10,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-components
 func (s *ComponentsService) List(ctx context.Context) ([]*Component, *Response, error) {
-	req, err := s.client.NewRequest("GET", "v2/components", nil)
+	req, err := s.client.NewRequest("GET", "v3/components", nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -28,7 +28,7 @@ func (s *ComponentsService) List(ctx context.Context) ([]*Component, *Response, 
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/post-component
 func (s *ComponentsService) Create(ctx context.Context, component *ComponentRequest) (*Component, *Response, error) {
-	req, err := s.client.NewRequest("POST", "v2/components", component)
+	req, err := s.client.NewRequest("POST", "v3/components", component)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -45,7 +45,7 @@ func (s *ComponentsService) Create(ctx context.Context, component *ComponentRequ
 // Get fetches a component by its ID.
 // The componentID parameter is numeric (int) because Component.ID is *int.
 func (s *ComponentsService) Get(ctx context.Context, componentID int) (*Component, *Response, error) {
-	u := fmt.Sprintf("v2/components/%d", componentID)
+	u := fmt.Sprintf("v3/components/%d", componentID)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -66,7 +66,7 @@ func (s *ComponentsService) Get(ctx context.Context, componentID int) (*Componen
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/patch-component
 func (s *ComponentsService) Edit(ctx context.Context, componentID int, component *ComponentRequest) (*Component, *Response, error) {
-	u := fmt.Sprintf("v2/components/%d", componentID)
+	u := fmt.Sprintf("v3/components/%d", componentID)
 
 	req, err := s.client.NewRequest("PATCH", u, component)
 	if err != nil {
@@ -86,7 +86,7 @@ func (s *ComponentsService) Edit(ctx context.Context, componentID int, component
 // The componentID parameter is numeric (int) because Component.ID is *int.
 // Returns (*Response, error) since 204 responses have no body.
 func (s *ComponentsService) Delete(ctx context.Context, componentID int) (*Response, error) {
-	u := fmt.Sprintf("v2/components/%d", componentID)
+	u := fmt.Sprintf("v3/components/%d", componentID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

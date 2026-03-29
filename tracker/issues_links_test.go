@@ -10,7 +10,7 @@ import (
 func TestIssuesService_GetLinks(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/links", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/links", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[{
@@ -49,7 +49,7 @@ func TestIssuesService_GetLinks(t *testing.T) {
 func TestIssuesService_GetLinks_Empty(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/links", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/links", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[]`)
 	})
@@ -67,7 +67,7 @@ func TestIssuesService_GetLinks_Empty(t *testing.T) {
 func TestIssuesService_CreateLink(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/links", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/links", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		testBody(t, r, `{"relationship":"relates","issue":"TREK-2"}`)
 		w.Header().Set("Content-Type", "application/json")
@@ -105,7 +105,7 @@ func TestIssuesService_CreateLink(t *testing.T) {
 func TestIssuesService_DeleteLink(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("DELETE /v2/issues/{key}/links/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("DELETE /v3/issues/{key}/links/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "DELETE")
 		w.WriteHeader(http.StatusNoContent)
 	})

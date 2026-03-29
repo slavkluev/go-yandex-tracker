@@ -22,8 +22,8 @@ func TestBoardsService_Create(t *testing.T) {
 			"version": 1,
 			"name": "Sprint Board",
 			"columns": [{"self": "https://api.tracker.yandex.net/v3/boards/1/columns/1", "id": "1", "display": "Open"}],
-			"defaultQueue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
-			"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John"}
+			"defaultQueue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
+			"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John"}
 		}`)
 	})
 
@@ -65,8 +65,8 @@ func TestBoardsService_Get(t *testing.T) {
 			"version": 5,
 			"name": "Test Board",
 			"columns": [{"self": "https://api.tracker.yandex.net/v3/boards/1/columns/1", "id": "1", "display": "Open"}],
-			"defaultQueue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
-			"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John"}
+			"defaultQueue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
+			"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John"}
 		}`)
 	})
 
@@ -110,16 +110,16 @@ func TestBoardsService_List(t *testing.T) {
 				"id": 1,
 				"version": 1,
 				"name": "Board One",
-				"defaultQueue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
-				"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John"}
+				"defaultQueue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
+				"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John"}
 			},
 			{
 				"self": "https://api.tracker.yandex.net/v3/boards/2",
 				"id": 2,
 				"version": 3,
 				"name": "Board Two",
-				"defaultQueue": {"self": "https://api.tracker.yandex.net/v2/queues/DEV", "id": "2", "key": "DEV", "display": "Dev Queue"},
-				"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/2", "id": "2", "display": "Jane"}
+				"defaultQueue": {"self": "https://api.tracker.yandex.net/v3/queues/DEV", "id": "2", "key": "DEV", "display": "Dev Queue"},
+				"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/2", "id": "2", "display": "Jane"}
 			}
 		]`)
 	})
@@ -140,16 +140,16 @@ func TestBoardsService_List(t *testing.T) {
 			ID:           Ptr(1),
 			Version:      Ptr(1),
 			Name:         Ptr("Board One"),
-			DefaultQueue: &Queue{Self: Ptr("https://api.tracker.yandex.net/v2/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
-			CreatedBy:    &User{Self: Ptr("https://api.tracker.yandex.net/v2/users/1"), ID: Ptr("1"), Display: Ptr("John")},
+			DefaultQueue: &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			CreatedBy:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/1"), ID: Ptr("1"), Display: Ptr("John")},
 		},
 		{
 			Self:         Ptr("https://api.tracker.yandex.net/v3/boards/2"),
 			ID:           Ptr(2),
 			Version:      Ptr(3),
 			Name:         Ptr("Board Two"),
-			DefaultQueue: &Queue{Self: Ptr("https://api.tracker.yandex.net/v2/queues/DEV"), ID: Ptr("2"), Key: Ptr("DEV"), Display: Ptr("Dev Queue")},
-			CreatedBy:    &User{Self: Ptr("https://api.tracker.yandex.net/v2/users/2"), ID: Ptr("2"), Display: Ptr("Jane")},
+			DefaultQueue: &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/DEV"), ID: Ptr("2"), Key: Ptr("DEV"), Display: Ptr("Dev Queue")},
+			CreatedBy:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/2"), ID: Ptr("2"), Display: Ptr("Jane")},
 		},
 	}
 
@@ -172,8 +172,8 @@ func TestBoardsService_Edit(t *testing.T) {
 			"version": 6,
 			"name": "Updated Board",
 			"columns": [{"self": "https://api.tracker.yandex.net/v3/boards/1/columns/1", "id": "1", "display": "Open"}],
-			"defaultQueue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
-			"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John"}
+			"defaultQueue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
+			"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John"}
 		}`)
 	})
 

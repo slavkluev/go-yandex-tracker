@@ -11,7 +11,7 @@ func TestAutoAction_JSONRoundTrip(t *testing.T) {
 		ID:   Ptr("1"),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/autoactions/1"),
 		Queue: &Queue{
-			Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 			ID:      Ptr("100"),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),

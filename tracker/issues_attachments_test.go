@@ -12,17 +12,17 @@ import (
 func TestIssuesService_ListAttachments(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/attachments", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/attachments", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/attachments/1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/attachments/1",
 			"id": "1",
 			"name": "test.txt",
 			"content": "https://tracker.yandex.net/issues/QUEUE-1/attachments/1/test.txt",
 			"mimetype": "text/plain",
 			"size": 12345,
-			"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "Test User"},
+			"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "Test User"},
 			"createdAt": "2024-01-15T10:00:00.000+0000"
 		}]`)
 	})
@@ -55,7 +55,7 @@ func TestIssuesService_ListAttachments(t *testing.T) {
 func TestIssuesService_UploadAttachment(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/attachments/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/attachments/", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		ct := r.Header.Get("Content-Type")
@@ -80,7 +80,7 @@ func TestIssuesService_UploadAttachment(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1/attachments/1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1/attachments/1",
 			"id": "1",
 			"name": "test.txt",
 			"mimetype": "text/plain",
@@ -109,7 +109,7 @@ func TestIssuesService_UploadAttachment(t *testing.T) {
 func TestIssuesService_UploadAttachment_VerifyContent(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/attachments/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/attachments/", func(w http.ResponseWriter, r *http.Request) {
 		if err := r.ParseMultipartForm(10 << 20); err != nil {
 			t.Fatalf("ParseMultipartForm returned error: %v", err)
 		}
@@ -143,7 +143,7 @@ func TestIssuesService_UploadAttachment_VerifyContent(t *testing.T) {
 func TestIssuesService_DeleteAttachment(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("DELETE /v2/issues/{key}/attachments/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("DELETE /v3/issues/{key}/attachments/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "DELETE")
 		w.WriteHeader(http.StatusNoContent)
 	})
@@ -158,7 +158,7 @@ func TestIssuesService_DeleteAttachment(t *testing.T) {
 func TestIssuesService_UploadTempFile(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/attachments/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/attachments/", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		ct := r.Header.Get("Content-Type")
@@ -191,7 +191,7 @@ func TestIssuesService_UploadTempFile(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/attachments/2",
+			"self": "https://api.tracker.yandex.net/v3/attachments/2",
 			"id": "2",
 			"name": "temp.txt",
 			"mimetype": "text/plain",
@@ -220,7 +220,7 @@ func TestIssuesService_UploadTempFile(t *testing.T) {
 func TestIssuesService_DownloadAttachment(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/attachments/{id}/{filename}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/attachments/{id}/{filename}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "text/plain")
 		w.Header().Set("Content-Length", "11")
@@ -247,7 +247,7 @@ func TestIssuesService_DownloadAttachment(t *testing.T) {
 func TestIssuesService_DownloadAttachment_Headers(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/attachments/{id}/{filename}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/attachments/{id}/{filename}", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/pdf")
 		w.Header().Set("Content-Length", "11")
 		w.WriteHeader(http.StatusOK)
@@ -272,7 +272,7 @@ func TestIssuesService_DownloadAttachment_Headers(t *testing.T) {
 func TestIssuesService_DownloadAttachment_MustClose(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/attachments/{id}/{filename}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/attachments/{id}/{filename}", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("data"))
 	})

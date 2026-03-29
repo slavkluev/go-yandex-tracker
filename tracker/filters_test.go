@@ -11,17 +11,17 @@ import (
 func TestFiltersService_List(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/filters", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/filters", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[
 			{
-				"self": "https://api.tracker.yandex.net/v2/filters/1",
+				"self": "https://api.tracker.yandex.net/v3/filters/1",
 				"id": 1,
 				"name": "My Open Issues"
 			},
 			{
-				"self": "https://api.tracker.yandex.net/v2/filters/2",
+				"self": "https://api.tracker.yandex.net/v3/filters/2",
 				"id": 2,
 				"name": "Assigned to Me"
 			}
@@ -40,12 +40,12 @@ func TestFiltersService_List(t *testing.T) {
 
 	want := []*Filter{
 		{
-			Self: Ptr("https://api.tracker.yandex.net/v2/filters/1"),
+			Self: Ptr("https://api.tracker.yandex.net/v3/filters/1"),
 			ID:   Ptr(1),
 			Name: Ptr("My Open Issues"),
 		},
 		{
-			Self: Ptr("https://api.tracker.yandex.net/v2/filters/2"),
+			Self: Ptr("https://api.tracker.yandex.net/v3/filters/2"),
 			ID:   Ptr(2),
 			Name: Ptr("Assigned to Me"),
 		},
@@ -59,11 +59,11 @@ func TestFiltersService_List(t *testing.T) {
 func TestFiltersService_Get(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/filters/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/filters/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/filters/1",
+			"self": "https://api.tracker.yandex.net/v3/filters/1",
 			"id": 1,
 			"name": "My Open Issues",
 			"query": "Status: Open",
@@ -81,7 +81,7 @@ func TestFiltersService_Get(t *testing.T) {
 	}
 
 	want := &Filter{
-		Self:    Ptr("https://api.tracker.yandex.net/v2/filters/1"),
+		Self:    Ptr("https://api.tracker.yandex.net/v3/filters/1"),
 		ID:      Ptr(1),
 		Name:    Ptr("My Open Issues"),
 		Query:   Ptr("Status: Open"),
@@ -97,13 +97,13 @@ func TestFiltersService_Get(t *testing.T) {
 func TestFiltersService_Create(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/filters", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/filters", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		testBody(t, r, `{"name":"New Filter","query":"Status: Open"}`)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/filters/3",
+			"self": "https://api.tracker.yandex.net/v3/filters/3",
 			"id": 3,
 			"name": "New Filter",
 			"query": "Status: Open"
@@ -123,7 +123,7 @@ func TestFiltersService_Create(t *testing.T) {
 	}
 
 	want := &Filter{
-		Self:  Ptr("https://api.tracker.yandex.net/v2/filters/3"),
+		Self:  Ptr("https://api.tracker.yandex.net/v3/filters/3"),
 		ID:    Ptr(3),
 		Name:  Ptr("New Filter"),
 		Query: Ptr("Status: Open"),
@@ -137,12 +137,12 @@ func TestFiltersService_Create(t *testing.T) {
 func TestFiltersService_Update(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("PATCH /v2/filters/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("PATCH /v3/filters/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "PATCH")
 		testBody(t, r, `{"name":"Updated Filter"}`)
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/filters/1",
+			"self": "https://api.tracker.yandex.net/v3/filters/1",
 			"id": 1,
 			"name": "Updated Filter",
 			"query": "Status: Open"
@@ -158,7 +158,7 @@ func TestFiltersService_Update(t *testing.T) {
 	}
 
 	want := &Filter{
-		Self:  Ptr("https://api.tracker.yandex.net/v2/filters/1"),
+		Self:  Ptr("https://api.tracker.yandex.net/v3/filters/1"),
 		ID:    Ptr(1),
 		Name:  Ptr("Updated Filter"),
 		Query: Ptr("Status: Open"),
@@ -172,7 +172,7 @@ func TestFiltersService_Update(t *testing.T) {
 func TestFiltersService_Delete(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("DELETE /v2/filters/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("DELETE /v3/filters/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "DELETE")
 		w.WriteHeader(http.StatusNoContent)
 	})

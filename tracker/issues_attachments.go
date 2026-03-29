@@ -10,7 +10,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-attachments-list
 func (s *IssuesService) ListAttachments(ctx context.Context, issueKey string) ([]*Attachment, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/attachments", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/attachments", issueKey)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -32,7 +32,7 @@ func (s *IssuesService) ListAttachments(ctx context.Context, issueKey string) ([
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/post-attachment
 func (s *IssuesService) UploadAttachment(ctx context.Context, issueKey, filename string, file io.Reader) (*Attachment, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/attachments/", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/attachments/", issueKey)
 
 	req, err := s.client.NewUploadRequest("POST", u, filename, file)
 	if err != nil {
@@ -52,7 +52,7 @@ func (s *IssuesService) UploadAttachment(ctx context.Context, issueKey, filename
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-attachment
 func (s *IssuesService) DeleteAttachment(ctx context.Context, issueKey, attachmentID string) (*Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/attachments/%v", issueKey, attachmentID)
+	u := fmt.Sprintf("v3/issues/%v/attachments/%v", issueKey, attachmentID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {
@@ -74,7 +74,7 @@ func (s *IssuesService) DeleteAttachment(ctx context.Context, issueKey, attachme
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/temp-attachment
 func (s *IssuesService) UploadTempFile(ctx context.Context, filename string, file io.Reader) (*Attachment, *Response, error) {
-	u := "v2/attachments/"
+	u := "v3/attachments/"
 
 	req, err := s.client.NewUploadRequest("POST", u, filename, file)
 	if err != nil {
@@ -99,7 +99,7 @@ func (s *IssuesService) UploadTempFile(ctx context.Context, filename string, fil
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-attachment
 func (s *IssuesService) DownloadAttachment(ctx context.Context, issueKey, attachmentID, filename string) (io.ReadCloser, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/attachments/%v/%v", issueKey, attachmentID, filename)
+	u := fmt.Sprintf("v3/issues/%v/attachments/%v/%v", issueKey, attachmentID, filename)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {

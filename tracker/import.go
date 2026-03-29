@@ -15,7 +15,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-ticket
 func (s *ImportService) ImportIssue(ctx context.Context, issue *ImportIssueRequest) (*Issue, *Response, error) {
-	req, err := s.client.NewRequest("POST", "v2/issues/_import", issue)
+	req, err := s.client.NewRequest("POST", "v3/issues/_import", issue)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -36,7 +36,7 @@ func (s *ImportService) ImportIssue(ctx context.Context, issue *ImportIssueReque
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-comments
 func (s *ImportService) ImportComment(ctx context.Context, issueKey string, comment *ImportCommentRequest) (*Comment, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/comments/_import", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/comments/_import", issueKey)
 
 	req, err := s.client.NewRequest("POST", u, comment)
 	if err != nil {
@@ -58,7 +58,7 @@ func (s *ImportService) ImportComment(ctx context.Context, issueKey string, comm
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-links
 func (s *ImportService) ImportLink(ctx context.Context, issueKey string, link *ImportLinkRequest) (*IssueLink, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/links/_import", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/links/_import", issueKey)
 
 	req, err := s.client.NewRequest("POST", u, link)
 	if err != nil {
@@ -82,7 +82,7 @@ func (s *ImportService) ImportLink(ctx context.Context, issueKey string, link *I
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-attachments
 func (s *ImportService) ImportFile(ctx context.Context, issueKey string, opts *ImportFileOptions, filename string, file io.Reader) (*Attachment, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/attachments/_import", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/attachments/_import", issueKey)
 	u, err := addOptions(u, opts)
 	if err != nil {
 		return nil, nil, err
@@ -110,7 +110,7 @@ func (s *ImportService) ImportFile(ctx context.Context, issueKey string, opts *I
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-attachments
 func (s *ImportService) ImportCommentFile(ctx context.Context, issueKey string, commentID int, opts *ImportFileOptions, filename string, file io.Reader) (*Attachment, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/comments/%v/attachments/_import", issueKey, commentID)
+	u := fmt.Sprintf("v3/issues/%v/comments/%v/attachments/_import", issueKey, commentID)
 	u, err := addOptions(u, opts)
 	if err != nil {
 		return nil, nil, err

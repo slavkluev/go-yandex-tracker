@@ -12,7 +12,7 @@ import (
 func TestIssuesService_ListChecklistItems(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/issues/{key}/checklistItems", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/issues/{key}/checklistItems", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[{
@@ -52,7 +52,7 @@ func TestIssuesService_ListChecklistItems(t *testing.T) {
 func TestIssuesService_CreateChecklistItem(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/issues/{key}/checklistItems", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/issues/{key}/checklistItems", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 
 		var body ChecklistItemRequest
@@ -66,7 +66,7 @@ func TestIssuesService_CreateChecklistItem(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1",
 			"id": "100",
 			"key": "QUEUE-1",
 			"summary": "Test issue",
@@ -77,7 +77,7 @@ func TestIssuesService_CreateChecklistItem(t *testing.T) {
 					"textHtml": "<b>New item</b>",
 					"checked": false,
 					"assignee": {
-						"self": "https://api.tracker.yandex.net/v2/users/1",
+						"self": "https://api.tracker.yandex.net/v3/users/1",
 						"id": "1",
 						"display": "John Doe"
 					},
@@ -137,7 +137,7 @@ func TestIssuesService_CreateChecklistItem(t *testing.T) {
 func TestIssuesService_EditChecklistItem(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("PATCH /v2/issues/{key}/checklistItems/{itemID}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("PATCH /v3/issues/{key}/checklistItems/{itemID}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "PATCH")
 
 		var body ChecklistItemRequest
@@ -154,7 +154,7 @@ func TestIssuesService_EditChecklistItem(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1",
 			"id": "100",
 			"key": "QUEUE-1",
 			"summary": "Test issue",
@@ -200,13 +200,13 @@ func TestIssuesService_EditChecklistItem(t *testing.T) {
 func TestIssuesService_DeleteChecklistItem(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("DELETE /v2/issues/{key}/checklistItems/{itemID}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("DELETE /v3/issues/{key}/checklistItems/{itemID}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "DELETE")
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
+			"self": "https://api.tracker.yandex.net/v3/issues/QUEUE-1",
 			"id": "100",
 			"key": "QUEUE-1",
 			"summary": "Test issue",

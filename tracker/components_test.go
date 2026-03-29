@@ -11,28 +11,28 @@ import (
 func TestComponentsService_List(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/components", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/components", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `[
 			{
-				"self": "https://api.tracker.yandex.net/v2/components/1",
+				"self": "https://api.tracker.yandex.net/v3/components/1",
 				"id": 1,
 				"version": 1,
 				"name": "Backend",
-				"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
+				"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
 				"description": "Backend component",
-				"lead": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John"},
+				"lead": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John"},
 				"assignAuto": false
 			},
 			{
-				"self": "https://api.tracker.yandex.net/v2/components/2",
+				"self": "https://api.tracker.yandex.net/v3/components/2",
 				"id": 2,
 				"version": 1,
 				"name": "Frontend",
-				"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
+				"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
 				"description": "Frontend component",
-				"lead": {"self": "https://api.tracker.yandex.net/v2/users/2", "id": "2", "display": "Jane"},
+				"lead": {"self": "https://api.tracker.yandex.net/v3/users/2", "id": "2", "display": "Jane"},
 				"assignAuto": true
 			}
 		]`)
@@ -50,23 +50,23 @@ func TestComponentsService_List(t *testing.T) {
 
 	want := []*Component{
 		{
-			Self:        Ptr("https://api.tracker.yandex.net/v2/components/1"),
+			Self:        Ptr("https://api.tracker.yandex.net/v3/components/1"),
 			ID:          Ptr(1),
 			Version:     Ptr(1),
 			Name:        Ptr("Backend"),
-			Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v2/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 			Description: Ptr("Backend component"),
-			Lead:        &User{Self: Ptr("https://api.tracker.yandex.net/v2/users/1"), ID: Ptr("1"), Display: Ptr("John")},
+			Lead:        &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/1"), ID: Ptr("1"), Display: Ptr("John")},
 			AssignAuto:  Ptr(false),
 		},
 		{
-			Self:        Ptr("https://api.tracker.yandex.net/v2/components/2"),
+			Self:        Ptr("https://api.tracker.yandex.net/v3/components/2"),
 			ID:          Ptr(2),
 			Version:     Ptr(1),
 			Name:        Ptr("Frontend"),
-			Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v2/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 			Description: Ptr("Frontend component"),
-			Lead:        &User{Self: Ptr("https://api.tracker.yandex.net/v2/users/2"), ID: Ptr("2"), Display: Ptr("Jane")},
+			Lead:        &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/2"), ID: Ptr("2"), Display: Ptr("Jane")},
 			AssignAuto:  Ptr(true),
 		},
 	}
@@ -79,19 +79,19 @@ func TestComponentsService_List(t *testing.T) {
 func TestComponentsService_Create(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("POST /v2/components", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /v3/components", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "POST")
 		testBody(t, r, `{"name":"Backend","queue":"TEST","description":"Backend component","lead":"user1","assignAuto":false}`)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/components/1",
+			"self": "https://api.tracker.yandex.net/v3/components/1",
 			"id": 1,
 			"version": 1,
 			"name": "Backend",
-			"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
+			"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
 			"description": "Backend component",
-			"lead": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "User One"},
+			"lead": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "User One"},
 			"assignAuto": false
 		}`)
 	})
@@ -124,17 +124,17 @@ func TestComponentsService_Create(t *testing.T) {
 func TestComponentsService_Get(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/components/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/components/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/components/1",
+			"self": "https://api.tracker.yandex.net/v3/components/1",
 			"id": 1,
 			"version": 1,
 			"name": "Backend",
-			"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
+			"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
 			"description": "Backend component",
-			"lead": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John"},
+			"lead": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John"},
 			"assignAuto": false
 		}`)
 	})
@@ -158,18 +158,18 @@ func TestComponentsService_Get(t *testing.T) {
 func TestComponentsService_Edit(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("PATCH /v2/components/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("PATCH /v3/components/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "PATCH")
 		testBody(t, r, `{"name":"Updated"}`)
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `{
-			"self": "https://api.tracker.yandex.net/v2/components/1",
+			"self": "https://api.tracker.yandex.net/v3/components/1",
 			"id": 1,
 			"version": 2,
 			"name": "Updated",
-			"queue": {"self": "https://api.tracker.yandex.net/v2/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
+			"queue": {"self": "https://api.tracker.yandex.net/v3/queues/TEST", "id": "1", "key": "TEST", "display": "Test Queue"},
 			"description": "Backend component",
-			"lead": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John"},
+			"lead": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John"},
 			"assignAuto": false
 		}`)
 	})
@@ -195,7 +195,7 @@ func TestComponentsService_Edit(t *testing.T) {
 func TestComponentsService_Delete(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("DELETE /v2/components/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("DELETE /v3/components/{id}", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "DELETE")
 		w.WriteHeader(http.StatusNoContent)
 	})
@@ -214,7 +214,7 @@ func TestComponentsService_Get_NotFound(t *testing.T) {
 	client, mux := setup(t)
 	ctx := context.Background()
 
-	mux.HandleFunc("GET /v2/components/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/components/{id}", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprint(w, `{"errorMessages":["Object not found"],"errors":{}}`)

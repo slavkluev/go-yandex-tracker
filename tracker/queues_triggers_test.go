@@ -20,7 +20,7 @@ func TestQueuesService_ListTriggers(t *testing.T) {
 				"id": "1",
 				"self": "https://api.tracker.yandex.net/v3/queues/TEST/triggers/1",
 				"queue": {
-					"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+					"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 					"id": "100",
 					"key": "TEST",
 					"display": "Test Queue"
@@ -28,7 +28,7 @@ func TestQueuesService_ListTriggers(t *testing.T) {
 				"name": "Auto-close trigger",
 				"order": "0.0001",
 				"actions": [
-					{"type": "Transition", "id": "1", "status": {"self": "https://api.tracker.yandex.net/v2/statuses/closed", "key": "closed"}}
+					{"type": "Transition", "id": "1", "status": {"self": "https://api.tracker.yandex.net/v3/statuses/closed", "key": "closed"}}
 				],
 				"conditions": [
 					{"type": "Event.create"}
@@ -53,7 +53,7 @@ func TestQueuesService_ListTriggers(t *testing.T) {
 			ID:   Ptr("1"),
 			Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/triggers/1"),
 			Queue: &Queue{
-				Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 				ID:      Ptr("100"),
 				Key:     Ptr("TEST"),
 				Display: Ptr("Test Queue"),
@@ -64,7 +64,7 @@ func TestQueuesService_ListTriggers(t *testing.T) {
 				{
 					Type:   Ptr("Transition"),
 					ID:     Ptr("1"),
-					Status: &Status{Self: Ptr("https://api.tracker.yandex.net/v2/statuses/closed"), Key: Ptr("closed")},
+					Status: &Status{Self: Ptr("https://api.tracker.yandex.net/v3/statuses/closed"), Key: Ptr("closed")},
 				},
 			},
 			Conditions: []*AutomationCondition{
@@ -93,7 +93,7 @@ func TestQueuesService_GetTrigger(t *testing.T) {
 			"id": "1",
 			"self": "https://api.tracker.yandex.net/v3/queues/TEST/triggers/1",
 			"queue": {
-				"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+				"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 				"id": "100",
 				"key": "TEST",
 				"display": "Test Queue"
@@ -101,7 +101,7 @@ func TestQueuesService_GetTrigger(t *testing.T) {
 			"name": "Auto-close trigger",
 			"order": "0.0001",
 			"actions": [
-				{"type": "Transition", "id": "1", "status": {"self": "https://api.tracker.yandex.net/v2/statuses/closed", "key": "closed"}}
+				{"type": "Transition", "id": "1", "status": {"self": "https://api.tracker.yandex.net/v3/statuses/closed", "key": "closed"}}
 			],
 			"conditions": [
 				{"type": "Event.create"}
@@ -120,7 +120,7 @@ func TestQueuesService_GetTrigger(t *testing.T) {
 		ID:   Ptr("1"),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/triggers/1"),
 		Queue: &Queue{
-			Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 			ID:      Ptr("100"),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
@@ -131,7 +131,7 @@ func TestQueuesService_GetTrigger(t *testing.T) {
 			{
 				Type:   Ptr("Transition"),
 				ID:     Ptr("1"),
-				Status: &Status{Self: Ptr("https://api.tracker.yandex.net/v2/statuses/closed"), Key: Ptr("closed")},
+				Status: &Status{Self: Ptr("https://api.tracker.yandex.net/v3/statuses/closed"), Key: Ptr("closed")},
 			},
 		},
 		Conditions: []*AutomationCondition{
@@ -179,7 +179,7 @@ func TestQueuesService_CreateTrigger(t *testing.T) {
 			"id": "2",
 			"self": "https://api.tracker.yandex.net/v3/queues/TEST/triggers/2",
 			"queue": {
-				"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+				"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 				"id": "100",
 				"key": "TEST",
 				"display": "Test Queue"
@@ -206,7 +206,7 @@ func TestQueuesService_CreateTrigger(t *testing.T) {
 		ID:   Ptr("2"),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/triggers/2"),
 		Queue: &Queue{
-			Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 			ID:      Ptr("100"),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
@@ -263,7 +263,7 @@ func TestQueuesService_UpdateTrigger(t *testing.T) {
 			"id": "1",
 			"self": "https://api.tracker.yandex.net/v3/queues/TEST/triggers/1",
 			"queue": {
-				"self": "https://api.tracker.yandex.net/v2/queues/TEST",
+				"self": "https://api.tracker.yandex.net/v3/queues/TEST",
 				"id": "100",
 				"key": "TEST",
 				"display": "Test Queue"
@@ -271,7 +271,7 @@ func TestQueuesService_UpdateTrigger(t *testing.T) {
 			"name": "Updated trigger",
 			"order": "0.0001",
 			"actions": [
-				{"type": "Transition", "id": "1", "status": {"self": "https://api.tracker.yandex.net/v2/statuses/closed", "key": "closed"}}
+				{"type": "Transition", "id": "1", "status": {"self": "https://api.tracker.yandex.net/v3/statuses/closed", "key": "closed"}}
 			],
 			"conditions": [
 				{"type": "Event.create"}
@@ -290,7 +290,7 @@ func TestQueuesService_UpdateTrigger(t *testing.T) {
 		ID:   Ptr("1"),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/triggers/1"),
 		Queue: &Queue{
-			Self:    Ptr("https://api.tracker.yandex.net/v2/queues/TEST"),
+			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
 			ID:      Ptr("100"),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
@@ -301,7 +301,7 @@ func TestQueuesService_UpdateTrigger(t *testing.T) {
 			{
 				Type:   Ptr("Transition"),
 				ID:     Ptr("1"),
-				Status: &Status{Self: Ptr("https://api.tracker.yandex.net/v2/statuses/closed"), Key: Ptr("closed")},
+				Status: &Status{Self: Ptr("https://api.tracker.yandex.net/v3/statuses/closed"), Key: Ptr("closed")},
 			},
 		},
 		Conditions: []*AutomationCondition{

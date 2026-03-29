@@ -9,7 +9,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-checklist
 func (s *IssuesService) ListChecklistItems(ctx context.Context, issueKey string) ([]*ChecklistItem, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/checklistItems", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/checklistItems", issueKey)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -30,7 +30,7 @@ func (s *IssuesService) ListChecklistItems(ctx context.Context, issueKey string)
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/add-checklist-item
 func (s *IssuesService) CreateChecklistItem(ctx context.Context, issueKey string, item *ChecklistItemRequest) (*Issue, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/checklistItems", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/checklistItems", issueKey)
 
 	req, err := s.client.NewRequest("POST", u, item)
 	if err != nil {
@@ -51,7 +51,7 @@ func (s *IssuesService) CreateChecklistItem(ctx context.Context, issueKey string
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/edit-checklist
 func (s *IssuesService) EditChecklistItem(ctx context.Context, issueKey, checklistItemID string, item *ChecklistItemRequest) (*Issue, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/checklistItems/%v", issueKey, checklistItemID)
+	u := fmt.Sprintf("v3/issues/%v/checklistItems/%v", issueKey, checklistItemID)
 
 	req, err := s.client.NewRequest("PATCH", u, item)
 	if err != nil {
@@ -73,7 +73,7 @@ func (s *IssuesService) EditChecklistItem(ctx context.Context, issueKey, checkli
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-checklist-item
 func (s *IssuesService) DeleteChecklistItem(ctx context.Context, issueKey, checklistItemID string) (*Issue, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/checklistItems/%v", issueKey, checklistItemID)
+	u := fmt.Sprintf("v3/issues/%v/checklistItems/%v", issueKey, checklistItemID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

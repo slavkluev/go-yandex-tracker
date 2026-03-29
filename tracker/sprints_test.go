@@ -139,7 +139,7 @@ func TestSprintsService_Get(t *testing.T) {
 			"board": {"self": "https://api.tracker.yandex.net/v3/boards/1", "id": "1", "display": "Test Board"},
 			"status": "in_progress",
 			"archived": false,
-			"createdBy": {"self": "https://api.tracker.yandex.net/v2/users/1", "id": "1", "display": "John"},
+			"createdBy": {"self": "https://api.tracker.yandex.net/v3/users/1", "id": "1", "display": "John"},
 			"startDate": "2024-01-01",
 			"endDate": "2024-01-14"
 		}`)

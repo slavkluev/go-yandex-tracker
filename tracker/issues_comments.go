@@ -10,7 +10,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-comments
 func (s *IssuesService) ListComments(ctx context.Context, issueKey string, opts *CommentListOptions) ([]*Comment, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/comments", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/comments", issueKey)
 
 	u, err := addOptions(u, opts)
 	if err != nil {
@@ -35,7 +35,7 @@ func (s *IssuesService) ListComments(ctx context.Context, issueKey string, opts 
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/add-comment
 func (s *IssuesService) CreateComment(ctx context.Context, issueKey string, comment *CommentRequest) (*Comment, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/comments", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/comments", issueKey)
 
 	req, err := s.client.NewRequest("POST", u, comment)
 	if err != nil {
@@ -56,7 +56,7 @@ func (s *IssuesService) CreateComment(ctx context.Context, issueKey string, comm
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/edit-comment
 func (s *IssuesService) EditComment(ctx context.Context, issueKey string, commentID int, comment *CommentRequest) (*Comment, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/comments/%d", issueKey, commentID)
+	u := fmt.Sprintf("v3/issues/%v/comments/%d", issueKey, commentID)
 
 	req, err := s.client.NewRequest("PATCH", u, comment)
 	if err != nil {
@@ -78,7 +78,7 @@ func (s *IssuesService) EditComment(ctx context.Context, issueKey string, commen
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-comment
 func (s *IssuesService) DeleteComment(ctx context.Context, issueKey string, commentID int) (*Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/comments/%d", issueKey, commentID)
+	u := fmt.Sprintf("v3/issues/%v/comments/%d", issueKey, commentID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

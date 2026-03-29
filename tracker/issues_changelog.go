@@ -10,7 +10,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-changelog
 func (s *IssuesService) GetChangelog(ctx context.Context, issueKey string, opts *ChangelogOptions) ([]*Changelog, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/changelog", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/changelog", issueKey)
 
 	u, err := addOptions(u, opts)
 	if err != nil {

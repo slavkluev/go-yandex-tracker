@@ -10,13 +10,13 @@ import (
 func TestQueuesService_ListVersions(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/queues/{key}/versions", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/queues/{key}/versions", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode([]*QueueVersion{
 			{
-				Self:      Ptr("https://api.tracker.yandex.net/v2/queues/TEST/versions/1"),
+				Self:      Ptr("https://api.tracker.yandex.net/v3/queues/TEST/versions/1"),
 				ID:        Ptr("1"),
 				Name:      Ptr("v1.0"),
 				StartDate: Ptr("2024-01-01"),
@@ -25,7 +25,7 @@ func TestQueuesService_ListVersions(t *testing.T) {
 				Archived:  Ptr(false),
 			},
 			{
-				Self:     Ptr("https://api.tracker.yandex.net/v2/queues/TEST/versions/2"),
+				Self:     Ptr("https://api.tracker.yandex.net/v3/queues/TEST/versions/2"),
 				ID:       Ptr("2"),
 				Name:     Ptr("v2.0"),
 				Released: Ptr(true),
@@ -45,7 +45,7 @@ func TestQueuesService_ListVersions(t *testing.T) {
 
 	want := []*QueueVersion{
 		{
-			Self:      Ptr("https://api.tracker.yandex.net/v2/queues/TEST/versions/1"),
+			Self:      Ptr("https://api.tracker.yandex.net/v3/queues/TEST/versions/1"),
 			ID:        Ptr("1"),
 			Name:      Ptr("v1.0"),
 			StartDate: Ptr("2024-01-01"),
@@ -54,7 +54,7 @@ func TestQueuesService_ListVersions(t *testing.T) {
 			Archived:  Ptr(false),
 		},
 		{
-			Self:     Ptr("https://api.tracker.yandex.net/v2/queues/TEST/versions/2"),
+			Self:     Ptr("https://api.tracker.yandex.net/v3/queues/TEST/versions/2"),
 			ID:       Ptr("2"),
 			Name:     Ptr("v2.0"),
 			Released: Ptr(true),
@@ -70,7 +70,7 @@ func TestQueuesService_ListVersions(t *testing.T) {
 func TestQueuesService_ListTags(t *testing.T) {
 	client, mux := setup(t)
 
-	mux.HandleFunc("GET /v2/queues/{key}/tags", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /v3/queues/{key}/tags", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 
 		w.Header().Set("Content-Type", "application/json")

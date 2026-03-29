@@ -18,7 +18,7 @@ func TestEntitiesService_GetAccess(t *testing.T) {
 		fmt.Fprint(w, `{
 			"acl": {
 				"READ": {
-					"users": [{"self":"https://api.tracker.yandex.net/v2/users/111","id":"111"}],
+					"users": [{"self":"https://api.tracker.yandex.net/v3/users/111","id":"111"}],
 					"groups": [{"id":"1","display":"Group 1"}],
 					"roles": ["author"]
 				},
@@ -28,7 +28,7 @@ func TestEntitiesService_GetAccess(t *testing.T) {
 					"roles": ["assignee"]
 				},
 				"GRANT": {
-					"users": [{"self":"https://api.tracker.yandex.net/v2/users/111","id":"111"}],
+					"users": [{"self":"https://api.tracker.yandex.net/v3/users/111","id":"111"}],
 					"groups": [],
 					"roles": []
 				}
@@ -140,7 +140,7 @@ func TestEntitiesService_UpdateAccess(t *testing.T) {
 		fmt.Fprint(w, `{
 			"acl": {
 				"READ": {
-					"users": [{"self":"https://api.tracker.yandex.net/v2/users/user-1","id":"user-1"}],
+					"users": [{"self":"https://api.tracker.yandex.net/v3/users/user-1","id":"user-1"}],
 					"groups": [],
 					"roles": []
 				},

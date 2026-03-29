@@ -19,13 +19,13 @@ func TestBoardsService_ListColumns(t *testing.T) {
 				"self": "https://api.tracker.yandex.net/v3/boards/1/columns/1",
 				"id": 1,
 				"name": "Open",
-				"statuses": [{"self": "https://api.tracker.yandex.net/v2/statuses/1", "id": "1", "key": "open", "display": "Open"}]
+				"statuses": [{"self": "https://api.tracker.yandex.net/v3/statuses/1", "id": "1", "key": "open", "display": "Open"}]
 			},
 			{
 				"self": "https://api.tracker.yandex.net/v3/boards/1/columns/2",
 				"id": 2,
 				"name": "In Progress",
-				"statuses": [{"self": "https://api.tracker.yandex.net/v2/statuses/2", "id": "2", "key": "inProgress", "display": "In Progress"}]
+				"statuses": [{"self": "https://api.tracker.yandex.net/v3/statuses/2", "id": "2", "key": "inProgress", "display": "In Progress"}]
 			}
 		]`)
 	})
@@ -46,7 +46,7 @@ func TestBoardsService_ListColumns(t *testing.T) {
 			ID:   Ptr(1),
 			Name: Ptr("Open"),
 			Statuses: []*Status{
-				{Self: Ptr("https://api.tracker.yandex.net/v2/statuses/1"), ID: Ptr("1"), Key: Ptr("open"), Display: Ptr("Open")},
+				{Self: Ptr("https://api.tracker.yandex.net/v3/statuses/1"), ID: Ptr("1"), Key: Ptr("open"), Display: Ptr("Open")},
 			},
 		},
 		{
@@ -54,7 +54,7 @@ func TestBoardsService_ListColumns(t *testing.T) {
 			ID:   Ptr(2),
 			Name: Ptr("In Progress"),
 			Statuses: []*Status{
-				{Self: Ptr("https://api.tracker.yandex.net/v2/statuses/2"), ID: Ptr("2"), Key: Ptr("inProgress"), Display: Ptr("In Progress")},
+				{Self: Ptr("https://api.tracker.yandex.net/v3/statuses/2"), ID: Ptr("2"), Key: Ptr("inProgress"), Display: Ptr("In Progress")},
 			},
 		},
 	}
@@ -78,8 +78,8 @@ func TestBoardsService_CreateColumn(t *testing.T) {
 			"id": 3,
 			"name": "Done",
 			"statuses": [
-				{"self": "https://api.tracker.yandex.net/v2/statuses/3", "id": "3", "key": "closed", "display": "Closed"},
-				{"self": "https://api.tracker.yandex.net/v2/statuses/4", "id": "4", "key": "resolved", "display": "Resolved"}
+				{"self": "https://api.tracker.yandex.net/v3/statuses/3", "id": "3", "key": "closed", "display": "Closed"},
+				{"self": "https://api.tracker.yandex.net/v3/statuses/4", "id": "4", "key": "resolved", "display": "Resolved"}
 			]
 		}`)
 	})
@@ -118,7 +118,7 @@ func TestBoardsService_EditColumn(t *testing.T) {
 			"self": "https://api.tracker.yandex.net/v3/boards/1/columns/2",
 			"id": 2,
 			"name": "Updated",
-			"statuses": [{"self": "https://api.tracker.yandex.net/v2/statuses/2", "id": "2", "key": "inProgress", "display": "In Progress"}]
+			"statuses": [{"self": "https://api.tracker.yandex.net/v3/statuses/2", "id": "2", "key": "inProgress", "display": "In Progress"}]
 		}`)
 	})
 

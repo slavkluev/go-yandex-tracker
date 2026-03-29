@@ -9,7 +9,7 @@ import (
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-links
 func (s *IssuesService) GetLinks(ctx context.Context, issueKey string) ([]*IssueLink, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/links", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/links", issueKey)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -29,7 +29,7 @@ func (s *IssuesService) GetLinks(ctx context.Context, issueKey string) ([]*Issue
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/link-issue
 func (s *IssuesService) CreateLink(ctx context.Context, issueKey string, link *LinkRequest) (*IssueLink, *Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/links", issueKey)
+	u := fmt.Sprintf("v3/issues/%v/links", issueKey)
 
 	req, err := s.client.NewRequest("POST", u, link)
 	if err != nil {
@@ -50,7 +50,7 @@ func (s *IssuesService) CreateLink(ctx context.Context, issueKey string, link *L
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-link-issue
 func (s *IssuesService) DeleteLink(ctx context.Context, issueKey, linkID string) (*Response, error) {
-	u := fmt.Sprintf("v2/issues/%v/links/%v", issueKey, linkID)
+	u := fmt.Sprintf("v3/issues/%v/links/%v", issueKey, linkID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {
