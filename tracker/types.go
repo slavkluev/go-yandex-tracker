@@ -209,23 +209,26 @@ type Resolution struct {
 // Known API fields are mapped to typed struct fields.
 // Any additional fields (custom queue fields) are captured in CustomFields.
 type Issue struct {
-	Self        *string     `json:"self,omitempty"`
-	ID          *string     `json:"id,omitempty"`
-	Key         *string     `json:"key,omitempty"`
-	Summary     *string     `json:"summary,omitempty"`
-	Description *string     `json:"description,omitempty"`
-	Type        *IssueType  `json:"type,omitempty"`
-	Priority    *Priority   `json:"priority,omitempty"`
-	Status      *Status     `json:"status,omitempty"`
-	Queue       *Queue      `json:"queue,omitempty"`
-	Assignee    *User       `json:"assignee,omitempty"`
-	Followers   []*User     `json:"followers,omitempty"`
-	CreatedBy   *User       `json:"createdBy,omitempty"`
-	UpdatedBy   *User       `json:"updatedBy,omitempty"`
-	CreatedAt   *Timestamp  `json:"createdAt,omitempty"`
-	UpdatedAt   *Timestamp  `json:"updatedAt,omitempty"`
-	ResolvedAt  *Timestamp  `json:"resolvedAt,omitempty"`
-	Resolution  *Resolution `json:"resolution,omitempty"`
+	Self           *string          `json:"self,omitempty"`
+	ID             *string          `json:"id,omitempty"`
+	Key            *string          `json:"key,omitempty"`
+	Summary        *string          `json:"summary,omitempty"`
+	Description    *string          `json:"description,omitempty"`
+	Type           *IssueType       `json:"type,omitempty"`
+	Priority       *Priority        `json:"priority,omitempty"`
+	Status         *Status          `json:"status,omitempty"`
+	Queue          *Queue           `json:"queue,omitempty"`
+	Assignee       *User            `json:"assignee,omitempty"`
+	Followers      []*User          `json:"followers,omitempty"`
+	CreatedBy      *User            `json:"createdBy,omitempty"`
+	UpdatedBy      *User            `json:"updatedBy,omitempty"`
+	CreatedAt      *Timestamp       `json:"createdAt,omitempty"`
+	UpdatedAt      *Timestamp       `json:"updatedAt,omitempty"`
+	ResolvedAt     *Timestamp       `json:"resolvedAt,omitempty"`
+	Resolution     *Resolution      `json:"resolution,omitempty"`
+	ChecklistItems []*ChecklistItem `json:"checklistItems,omitempty"`
+	ChecklistDone  *int             `json:"checklistDone,omitempty"`
+	ChecklistTotal *int             `json:"checklistTotal,omitempty"`
 
 	// CustomFields holds any fields from the JSON response that do not
 	// correspond to known Issue struct fields. These are typically
@@ -240,6 +243,7 @@ var issueKnownKeys = []string{
 	"type", "priority", "status", "queue",
 	"assignee", "followers", "createdBy", "updatedBy",
 	"createdAt", "updatedAt", "resolvedAt", "resolution",
+	"checklistItems", "checklistDone", "checklistTotal",
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for Issue.

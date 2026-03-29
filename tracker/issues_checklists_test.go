@@ -69,7 +69,28 @@ func TestIssuesService_CreateChecklistItem(t *testing.T) {
 			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
 			"id": "100",
 			"key": "QUEUE-1",
-			"summary": "Test issue"
+			"summary": "Test issue",
+			"checklistItems": [
+				{
+					"id": "item-1",
+					"text": "New item",
+					"textHtml": "<b>New item</b>",
+					"checked": false,
+					"assignee": {
+						"self": "https://api.tracker.yandex.net/v2/users/1",
+						"id": "1",
+						"display": "John Doe"
+					},
+					"deadline": {
+						"date": "2025-01-15T00:00:00.000+0000",
+						"deadlineType": "date",
+						"isExceeded": false
+					},
+					"checklistItemType": "standard"
+				}
+			],
+			"checklistDone": 0,
+			"checklistTotal": 1
 		}`)
 	})
 
@@ -86,6 +107,30 @@ func TestIssuesService_CreateChecklistItem(t *testing.T) {
 	}
 	if got := *issue.Summary; got != "Test issue" {
 		t.Errorf("Issue.Summary = %q, want %q", got, "Test issue")
+	}
+	if len(issue.ChecklistItems) != 1 {
+		t.Fatalf("Issue.ChecklistItems length = %d, want 1", len(issue.ChecklistItems))
+	}
+	if got := *issue.ChecklistItems[0].ID; got != "item-1" {
+		t.Errorf("ChecklistItems[0].ID = %q, want %q", got, "item-1")
+	}
+	if got := *issue.ChecklistItems[0].Text; got != "New item" {
+		t.Errorf("ChecklistItems[0].Text = %q, want %q", got, "New item")
+	}
+	if got := *issue.ChecklistItems[0].Checked; got != false {
+		t.Errorf("ChecklistItems[0].Checked = %v, want false", got)
+	}
+	if got := *issue.ChecklistItems[0].Assignee.Display; got != "John Doe" {
+		t.Errorf("ChecklistItems[0].Assignee.Display = %q, want %q", got, "John Doe")
+	}
+	if got := *issue.ChecklistItems[0].Deadline.IsExceeded; got != false {
+		t.Errorf("ChecklistItems[0].Deadline.IsExceeded = %v, want false", got)
+	}
+	if got := *issue.ChecklistDone; got != 0 {
+		t.Errorf("Issue.ChecklistDone = %d, want 0", got)
+	}
+	if got := *issue.ChecklistTotal; got != 1 {
+		t.Errorf("Issue.ChecklistTotal = %d, want 1", got)
 	}
 }
 
@@ -112,7 +157,17 @@ func TestIssuesService_EditChecklistItem(t *testing.T) {
 			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
 			"id": "100",
 			"key": "QUEUE-1",
-			"summary": "Test issue"
+			"summary": "Test issue",
+			"checklistItems": [
+				{
+					"id": "item-1",
+					"text": "Updated item",
+					"checked": true,
+					"checklistItemType": "standard"
+				}
+			],
+			"checklistDone": 1,
+			"checklistTotal": 1
 		}`)
 	})
 
@@ -128,6 +183,18 @@ func TestIssuesService_EditChecklistItem(t *testing.T) {
 	if got := *issue.Key; got != "QUEUE-1" {
 		t.Errorf("Issue.Key = %q, want %q", got, "QUEUE-1")
 	}
+	if len(issue.ChecklistItems) != 1 {
+		t.Fatalf("Issue.ChecklistItems length = %d, want 1", len(issue.ChecklistItems))
+	}
+	if got := *issue.ChecklistItems[0].Checked; got != true {
+		t.Errorf("ChecklistItems[0].Checked = %v, want true", got)
+	}
+	if got := *issue.ChecklistDone; got != 1 {
+		t.Errorf("Issue.ChecklistDone = %d, want 1", got)
+	}
+	if got := *issue.ChecklistTotal; got != 1 {
+		t.Errorf("Issue.ChecklistTotal = %d, want 1", got)
+	}
 }
 
 func TestIssuesService_DeleteChecklistItem(t *testing.T) {
@@ -142,7 +209,17 @@ func TestIssuesService_DeleteChecklistItem(t *testing.T) {
 			"self": "https://api.tracker.yandex.net/v2/issues/QUEUE-1",
 			"id": "100",
 			"key": "QUEUE-1",
-			"summary": "Test issue"
+			"summary": "Test issue",
+			"checklistItems": [
+				{
+					"id": "item-2",
+					"text": "Remaining item",
+					"checked": false,
+					"checklistItemType": "standard"
+				}
+			],
+			"checklistDone": 0,
+			"checklistTotal": 1
 		}`)
 	})
 
@@ -157,5 +234,14 @@ func TestIssuesService_DeleteChecklistItem(t *testing.T) {
 	}
 	if got := *issue.Key; got != "QUEUE-1" {
 		t.Errorf("Issue.Key = %q, want %q", got, "QUEUE-1")
+	}
+	if len(issue.ChecklistItems) != 1 {
+		t.Fatalf("Issue.ChecklistItems length = %d, want 1", len(issue.ChecklistItems))
+	}
+	if got := *issue.ChecklistItems[0].ID; got != "item-2" {
+		t.Errorf("ChecklistItems[0].ID = %q, want %q", got, "item-2")
+	}
+	if got := *issue.ChecklistTotal; got != 1 {
+		t.Errorf("Issue.ChecklistTotal = %d, want 1", got)
 	}
 }
