@@ -7,7 +7,7 @@ import (
 
 // List returns all sprints for a board.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/get-sprints
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/get-sprints
 func (s *SprintsService) List(ctx context.Context, boardID int) ([]*Sprint, *Response, error) {
 	u := fmt.Sprintf("v3/boards/%d/sprints", boardID)
 
@@ -29,7 +29,7 @@ func (s *SprintsService) List(ctx context.Context, boardID int) ([]*Sprint, *Res
 // The board ID is specified in the request body (SprintCreateRequest.Board.ID),
 // not in the URL. The API endpoint is POST /v3/sprints.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/post-sprint
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/post-sprint
 func (s *SprintsService) Create(ctx context.Context, sprint *SprintCreateRequest) (*Sprint, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v3/sprints", sprint)
 	if err != nil {
@@ -47,7 +47,7 @@ func (s *SprintsService) Create(ctx context.Context, sprint *SprintCreateRequest
 
 // Get fetches a sprint by its ID.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/get-sprint
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/get-sprint
 func (s *SprintsService) Get(ctx context.Context, sprintID int) (*Sprint, *Response, error) {
 	u := fmt.Sprintf("v3/sprints/%d", sprintID)
 

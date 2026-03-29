@@ -12,7 +12,7 @@ import (
 // No client-side validation is performed on entityType; the API returns
 // appropriate errors for unsupported entity types.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/checklists/add-checklist-item
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/checklists/add-checklist
 func (s *EntitiesService) CreateChecklistItem(ctx context.Context, entityType EntityType, id string, item *ChecklistItemRequest) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/checklistItems", entityType, id)
 
@@ -37,7 +37,7 @@ func (s *EntitiesService) CreateChecklistItem(ctx context.Context, entityType En
 // No client-side validation is performed on entityType; the API returns
 // appropriate errors for unsupported entity types.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/checklists/edit-checklist-item
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/checklists/patch-checklist-item
 func (s *EntitiesService) EditChecklistItem(ctx context.Context, entityType EntityType, id, checklistItemID string, item *ChecklistItemRequest) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/checklistItems/%v", entityType, id, checklistItemID)
 
@@ -66,7 +66,7 @@ func (s *EntitiesService) EditChecklistItem(ctx context.Context, entityType Enti
 // No client-side validation is performed on entityType; the API returns
 // appropriate errors for unsupported entity types.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/checklists/move-checklist-item
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/checklists/move-checklist-item
 func (s *EntitiesService) MoveChecklistItem(ctx context.Context, entityType EntityType, id, checklistItemID string, move *ChecklistMoveRequest) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/checklistItems/%v/_move", entityType, id, checklistItemID)
 
@@ -92,7 +92,7 @@ func (s *EntitiesService) MoveChecklistItem(ctx context.Context, entityType Enti
 // No client-side validation is performed on entityType; the API returns
 // appropriate errors for unsupported entity types.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/checklists/delete-checklist-item
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/checklists/delete-checklist-item
 func (s *EntitiesService) DeleteChecklistItem(ctx context.Context, entityType EntityType, id, checklistItemID string) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/checklistItems/%v", entityType, id, checklistItemID)
 
@@ -121,7 +121,7 @@ func (s *EntitiesService) DeleteChecklistItem(ctx context.Context, entityType En
 // No client-side validation is performed on entityType; the API returns
 // appropriate errors for unsupported entity types.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/checklists/delete-checklist
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/checklists/delete-checklist
 func (s *EntitiesService) DeleteChecklist(ctx context.Context, entityType EntityType, id string) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/checklistItems", entityType, id)
 

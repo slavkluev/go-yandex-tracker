@@ -7,7 +7,7 @@ import (
 
 // ListApplications returns the list of external applications registered in Yandex Tracker.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/external-links/
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-applications
 func (s *ExternalLinksService) ListApplications(ctx context.Context) ([]*ExternalApplication, *Response, error) {
 	req, err := s.client.NewRequest("GET", "v2/applications", nil)
 	if err != nil {
@@ -25,7 +25,7 @@ func (s *ExternalLinksService) ListApplications(ctx context.Context) ([]*Externa
 
 // ListLinks returns the external links for an issue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/external-links/
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-external-links
 func (s *ExternalLinksService) ListLinks(ctx context.Context, issueKey string) ([]*ExternalLink, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/remotelinks", issueKey)
 
@@ -46,7 +46,7 @@ func (s *ExternalLinksService) ListLinks(ctx context.Context, issueKey string) (
 // CreateLink creates an external link on an issue.
 // The opts parameter allows specifying the backlink query parameter to create a reciprocal link.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/external-links/
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/add-external-link
 func (s *ExternalLinksService) CreateLink(ctx context.Context, issueKey string, link *ExternalLinkCreateRequest, opts *ExternalLinkCreateOptions) (*ExternalLink, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/remotelinks", issueKey)
 	u, err := addOptions(u, opts)
@@ -71,7 +71,7 @@ func (s *ExternalLinksService) CreateLink(ctx context.Context, issueKey string, 
 // DeleteLink deletes an external link from an issue.
 // The API returns 204 No Content on success.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/external-links/
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-external-link
 func (s *ExternalLinksService) DeleteLink(ctx context.Context, issueKey string, linkID int) (*Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/remotelinks/%v", issueKey, linkID)
 

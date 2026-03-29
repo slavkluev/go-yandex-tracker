@@ -7,7 +7,7 @@ import (
 
 // ListAttachments returns the list of attachments on an entity.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/attachments/get-all-attachments
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/attachments/get-all-attachments
 func (s *EntitiesService) ListAttachments(ctx context.Context, entityType EntityType, id string) ([]*Attachment, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/attachments", entityType, id)
 
@@ -33,7 +33,7 @@ func (s *EntitiesService) ListAttachments(ctx context.Context, entityType Entity
 // use a two-step pattern: upload a temp file, then attach it by ID.
 // The fileID is passed in the URL path and no request body is sent.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/attachments/add-attachment
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/attachments/add-attachment
 func (s *EntitiesService) AttachFile(ctx context.Context, entityType EntityType, id, fileID string) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/attachments/%v", entityType, id, fileID)
 
@@ -53,7 +53,7 @@ func (s *EntitiesService) AttachFile(ctx context.Context, entityType EntityType,
 
 // DeleteAttachment removes an attachment from an entity.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/attachments/delete-attachment
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/attachments/delete-attachment
 func (s *EntitiesService) DeleteAttachment(ctx context.Context, entityType EntityType, id, fileID string) (*Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/attachments/%v", entityType, id, fileID)
 

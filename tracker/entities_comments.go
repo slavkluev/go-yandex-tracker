@@ -8,7 +8,7 @@ import (
 // ListComments returns the comments for an entity.
 // Use CommentListOptions to paginate via cursor (ID of last entry) and perPage.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/comments/get-all-comments
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/comments/get-all-comments
 func (s *EntitiesService) ListComments(ctx context.Context, entityType EntityType, id string, opts *CommentListOptions) ([]*Comment, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/comments", entityType, id)
 
@@ -34,7 +34,7 @@ func (s *EntitiesService) ListComments(ctx context.Context, entityType EntityTyp
 // CreateComment adds a new comment to an entity.
 // Use EntityCommentCreateOptions to control notification behavior.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/comments/add-comment
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/comments/add-comment
 func (s *EntitiesService) CreateComment(ctx context.Context, entityType EntityType, id string, comment *CommentRequest, opts *EntityCommentCreateOptions) (*Comment, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/comments", entityType, id)
 
@@ -59,7 +59,7 @@ func (s *EntitiesService) CreateComment(ctx context.Context, entityType EntityTy
 
 // GetComment retrieves a single comment on an entity by its numeric ID.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/comments/get-comment
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/comments/get-comment
 func (s *EntitiesService) GetComment(ctx context.Context, entityType EntityType, id string, commentID int) (*Comment, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/comments/%d", entityType, id, commentID)
 
@@ -81,7 +81,7 @@ func (s *EntitiesService) GetComment(ctx context.Context, entityType EntityType,
 // The commentID parameter is numeric (int) because Comment.ID is *int.
 // Use EntityCommentCreateOptions to control notification behavior.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/comments/patch-comment
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/comments/patch-comment
 func (s *EntitiesService) EditComment(ctx context.Context, entityType EntityType, id string, commentID int, comment *CommentRequest, opts *EntityCommentCreateOptions) (*Comment, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/comments/%d", entityType, id, commentID)
 
@@ -108,7 +108,7 @@ func (s *EntitiesService) EditComment(ctx context.Context, entityType EntityType
 // The commentID parameter is numeric (int) because Comment.ID is *int.
 // Returns (*Response, error) since 204 responses have no body.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/comments/delete-comment
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/comments/delete-comment
 func (s *EntitiesService) DeleteComment(ctx context.Context, entityType EntityType, id string, commentID int) (*Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/comments/%d", entityType, id, commentID)
 

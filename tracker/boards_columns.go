@@ -7,7 +7,7 @@ import (
 
 // ListColumns returns all columns for a board.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/get-columns
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/get-columns
 func (s *BoardsService) ListColumns(ctx context.Context, boardID int) ([]*Column, *Response, error) {
 	u := fmt.Sprintf("v3/boards/%d/columns", boardID)
 
@@ -29,7 +29,7 @@ func (s *BoardsService) ListColumns(ctx context.Context, boardID int) ([]*Column
 // The version parameter is the current board version for optimistic locking,
 // sent as the If-Match header value.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/post-column
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/post-column
 func (s *BoardsService) CreateColumn(ctx context.Context, boardID int, version int, column *ColumnCreateRequest) (*Column, *Response, error) {
 	u := fmt.Sprintf("v3/boards/%d/columns/", boardID)
 
@@ -53,7 +53,7 @@ func (s *BoardsService) CreateColumn(ctx context.Context, boardID int, version i
 // The version parameter is the current board version for optimistic locking,
 // sent as the If-Match header value.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/patch-column
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/patch-column
 func (s *BoardsService) EditColumn(ctx context.Context, boardID int, columnID int, version int, column *ColumnEditRequest) (*Column, *Response, error) {
 	u := fmt.Sprintf("v3/boards/%d/columns/%d", boardID, columnID)
 
@@ -78,7 +78,7 @@ func (s *BoardsService) EditColumn(ctx context.Context, boardID int, columnID in
 // sent as the If-Match header value.
 // Returns (*Response, error) since 204 responses have no body.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/delete-column
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/delete-column
 func (s *BoardsService) DeleteColumn(ctx context.Context, boardID int, columnID int, version int) (*Response, error) {
 	u := fmt.Sprintf("v3/boards/%d/columns/%d", boardID, columnID)
 

@@ -7,7 +7,7 @@ import (
 
 // Create creates a new board.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/post-board
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/post-board
 func (s *BoardsService) Create(ctx context.Context, board *BoardCreateRequest) (*Board, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v3/boards/", board)
 	if err != nil {
@@ -25,7 +25,7 @@ func (s *BoardsService) Create(ctx context.Context, board *BoardCreateRequest) (
 
 // Get fetches a board by its ID.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/get-board
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/get-board
 func (s *BoardsService) Get(ctx context.Context, boardID int) (*Board, *Response, error) {
 	u := fmt.Sprintf("v3/boards/%d", boardID)
 
@@ -46,7 +46,7 @@ func (s *BoardsService) Get(ctx context.Context, boardID int) (*Board, *Response
 // List returns all boards.
 // The API does not support pagination for this endpoint; all boards are returned in a single response.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/get-boards
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/get-boards
 func (s *BoardsService) List(ctx context.Context) ([]*Board, *Response, error) {
 	req, err := s.client.NewRequest("GET", "v3/boards", nil)
 	if err != nil {
@@ -66,7 +66,7 @@ func (s *BoardsService) List(ctx context.Context) ([]*Board, *Response, error) {
 // The version parameter is required for optimistic locking and is sent
 // as the If-Match header value.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/patch-board
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/patch-board
 func (s *BoardsService) Edit(ctx context.Context, boardID int, version int, board *BoardEditRequest) (*Board, *Response, error) {
 	u := fmt.Sprintf("v3/boards/%d", boardID)
 
@@ -89,7 +89,7 @@ func (s *BoardsService) Edit(ctx context.Context, boardID int, version int, boar
 // Delete deletes a board by its ID.
 // Returns (*Response, error) since 204 responses have no body.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/delete-board
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/delete-board
 func (s *BoardsService) Delete(ctx context.Context, boardID int) (*Response, error) {
 	u := fmt.Sprintf("v3/boards/%d", boardID)
 

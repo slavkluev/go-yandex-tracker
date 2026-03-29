@@ -8,7 +8,7 @@ import (
 
 // ListAttachments returns a list of attachments on an issue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/get-attachments-list.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-attachments-list
 func (s *IssuesService) ListAttachments(ctx context.Context, issueKey string) ([]*Attachment, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/attachments", issueKey)
 
@@ -30,7 +30,7 @@ func (s *IssuesService) ListAttachments(ctx context.Context, issueKey string) ([
 // The filename is used in the multipart Content-Disposition header.
 // The file content is read from the provided io.Reader.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/post-attachment.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/post-attachment
 func (s *IssuesService) UploadAttachment(ctx context.Context, issueKey, filename string, file io.Reader) (*Attachment, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/attachments/", issueKey)
 
@@ -50,7 +50,7 @@ func (s *IssuesService) UploadAttachment(ctx context.Context, issueKey, filename
 
 // DeleteAttachment deletes an attachment from an issue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/delete-attachment.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-attachment
 func (s *IssuesService) DeleteAttachment(ctx context.Context, issueKey, attachmentID string) (*Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/attachments/%v", issueKey, attachmentID)
 
@@ -72,7 +72,7 @@ func (s *IssuesService) DeleteAttachment(ctx context.Context, issueKey, attachme
 // The filename is used in the multipart Content-Disposition header.
 // The file content is read from the provided io.Reader.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/temp-attachment.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/temp-attachment
 func (s *IssuesService) UploadTempFile(ctx context.Context, filename string, file io.Reader) (*Attachment, *Response, error) {
 	u := "v2/attachments/"
 
@@ -97,7 +97,7 @@ func (s *IssuesService) UploadTempFile(ctx context.Context, filename string, fil
 // The filename parameter is required in the URL path; the API returns 404
 // without it. Use the Attachment.Name field from a prior ListAttachments call.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/get-attachment.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-attachment
 func (s *IssuesService) DownloadAttachment(ctx context.Context, issueKey, attachmentID, filename string) (io.ReadCloser, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/attachments/%v/%v", issueKey, attachmentID, filename)
 

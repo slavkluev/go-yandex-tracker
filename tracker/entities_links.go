@@ -10,7 +10,7 @@ import (
 // []*EntityLinkResponse containing the link type and field values
 // of the linked entity.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/links/get-links
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/links/get-links
 func (s *EntitiesService) ListLinks(ctx context.Context, entityType EntityType, id string) ([]*EntityLinkResponse, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/links", entityType, id)
 
@@ -36,7 +36,7 @@ func (s *EntitiesService) ListLinks(ctx context.Context, entityType EntityType, 
 //
 // Returns the updated Entity reflecting the new links.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/links/add-links
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/links/add-links
 func (s *EntitiesService) CreateLink(ctx context.Context, entityType EntityType, id string, links []*EntityLink) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/links", entityType, id)
 
@@ -61,7 +61,7 @@ func (s *EntitiesService) CreateLink(ctx context.Context, entityType EntityType,
 //
 // The API returns HTTP 200 OK (not 204 No Content).
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/links/delete-link
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/links/delete-link
 func (s *EntitiesService) DeleteLink(ctx context.Context, entityType EntityType, id string, opts *EntityLinkDeleteOptions) (*Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/links", entityType, id)
 

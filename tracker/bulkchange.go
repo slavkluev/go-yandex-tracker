@@ -9,7 +9,7 @@ import (
 // The returned BulkChange contains the operation ID and initial status.
 // Use GetStatus to poll for completion.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/bulkchange/bulk-move-issues
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/bulkchange/bulk-move-issues
 func (s *BulkChangeService) Move(ctx context.Context, move *BulkMoveRequest) (*BulkChange, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v3/bulkchange/_move", move)
 	if err != nil {
@@ -29,7 +29,7 @@ func (s *BulkChangeService) Move(ctx context.Context, move *BulkMoveRequest) (*B
 // The returned BulkChange contains the operation ID and initial status.
 // Use GetStatus to poll for completion.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/bulkchange/bulk-update-issues
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/bulkchange/bulk-update-issues
 func (s *BulkChangeService) Update(ctx context.Context, update *BulkUpdateRequest) (*BulkChange, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v3/bulkchange/_update", update)
 	if err != nil {
@@ -49,7 +49,7 @@ func (s *BulkChangeService) Update(ctx context.Context, update *BulkUpdateReques
 // The returned BulkChange contains the operation ID and initial status.
 // Use GetStatus to poll for completion.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/bulkchange/bulk-transition
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/bulkchange/bulk-transition
 func (s *BulkChangeService) Transition(ctx context.Context, transition *BulkTransitionRequest) (*BulkChange, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v3/bulkchange/_transition", transition)
 	if err != nil {
@@ -68,7 +68,7 @@ func (s *BulkChangeService) Transition(ctx context.Context, transition *BulkTran
 // GetStatus retrieves the current status of a bulk change operation.
 // The bulkChangeID is a hex string (e.g., "593cd211ef7e8a33********").
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/bulkchange/bulk-move-info
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/bulkchange/bulk-move-info
 func (s *BulkChangeService) GetStatus(ctx context.Context, bulkChangeID string) (*BulkChange, *Response, error) {
 	u := fmt.Sprintf("v3/bulkchange/%v", bulkChangeID)
 

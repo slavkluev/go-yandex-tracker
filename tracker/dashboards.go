@@ -7,7 +7,7 @@ import (
 
 // Create creates a new dashboard.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/dashboards/create-dashboard
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/dashboards/create-dashboard
 func (s *DashboardsService) Create(ctx context.Context, dashboard *DashboardCreateRequest) (*Dashboard, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v3/dashboards/", dashboard)
 	if err != nil {
@@ -29,7 +29,7 @@ func (s *DashboardsService) Create(ctx context.Context, dashboard *DashboardCrea
 //
 // Currently the only documented widget type is "cycleTime".
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/dashboards/create-widget
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/dashboards/create-widget
 func (s *DashboardsService) CreateWidget(ctx context.Context, dashboardID int, widgetType string, widget *WidgetCreateRequest) (*Widget, *Response, error) {
 	u := fmt.Sprintf("v3/dashboards/%v/widgets/%v", dashboardID, widgetType)
 

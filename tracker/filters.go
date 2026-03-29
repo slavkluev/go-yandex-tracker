@@ -6,8 +6,6 @@ import (
 )
 
 // List returns all saved filters for the current user.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/filters/
 func (s *FiltersService) List(ctx context.Context) ([]*Filter, *Response, error) {
 	req, err := s.client.NewRequest("GET", "v2/filters", nil)
 	if err != nil {
@@ -24,8 +22,6 @@ func (s *FiltersService) List(ctx context.Context) ([]*Filter, *Response, error)
 }
 
 // Get fetches a saved filter by its numeric ID.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/filters/
 func (s *FiltersService) Get(ctx context.Context, filterID int) (*Filter, *Response, error) {
 	u := fmt.Sprintf("v2/filters/%v", filterID)
 
@@ -44,8 +40,6 @@ func (s *FiltersService) Get(ctx context.Context, filterID int) (*Filter, *Respo
 }
 
 // Create creates a new saved filter.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/filters/
 func (s *FiltersService) Create(ctx context.Context, filter *FilterRequest) (*Filter, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v2/filters", filter)
 	if err != nil {
@@ -62,8 +56,6 @@ func (s *FiltersService) Create(ctx context.Context, filter *FilterRequest) (*Fi
 }
 
 // Update updates an existing saved filter.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/filters/
 func (s *FiltersService) Update(ctx context.Context, filterID int, filter *FilterRequest) (*Filter, *Response, error) {
 	u := fmt.Sprintf("v2/filters/%v", filterID)
 
@@ -83,8 +75,6 @@ func (s *FiltersService) Update(ctx context.Context, filterID int, filter *Filte
 
 // Delete deletes a saved filter.
 // The API returns 204 No Content on success.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/filters/
 func (s *FiltersService) Delete(ctx context.Context, filterID int) (*Response, error) {
 	u := fmt.Sprintf("v2/filters/%v", filterID)
 

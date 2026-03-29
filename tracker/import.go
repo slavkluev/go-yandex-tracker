@@ -13,7 +13,7 @@ import (
 // Requires admin permissions in the target queue.
 // createdAt must not exceed current time; updatedAt must fall between createdAt and current time.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/import/import-ticket.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-ticket
 func (s *ImportService) ImportIssue(ctx context.Context, issue *ImportIssueRequest) (*Issue, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v2/issues/_import", issue)
 	if err != nil {
@@ -34,7 +34,7 @@ func (s *ImportService) ImportIssue(ctx context.Context, issue *ImportIssueReque
 //
 // Requires admin permissions in the target queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/import/import-comments.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-comments
 func (s *ImportService) ImportComment(ctx context.Context, issueKey string, comment *ImportCommentRequest) (*Comment, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/comments/_import", issueKey)
 
@@ -56,7 +56,7 @@ func (s *ImportService) ImportComment(ctx context.Context, issueKey string, comm
 //
 // Requires admin permissions in the target queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/import/import-links.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-links
 func (s *ImportService) ImportLink(ctx context.Context, issueKey string, link *ImportLinkRequest) (*IssueLink, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/links/_import", issueKey)
 
@@ -80,7 +80,7 @@ func (s *ImportService) ImportLink(ctx context.Context, issueKey string, link *I
 //
 // Requires admin permissions in the target queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/import/import-attachments.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-attachments
 func (s *ImportService) ImportFile(ctx context.Context, issueKey string, opts *ImportFileOptions, filename string, file io.Reader) (*Attachment, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/attachments/_import", issueKey)
 	u, err := addOptions(u, opts)
@@ -108,7 +108,7 @@ func (s *ImportService) ImportFile(ctx context.Context, issueKey string, opts *I
 //
 // Requires admin permissions in the target queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/import/import-attachments.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-attachments
 func (s *ImportService) ImportCommentFile(ctx context.Context, issueKey string, commentID int, opts *ImportFileOptions, filename string, file io.Reader) (*Attachment, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/comments/%v/attachments/_import", issueKey, commentID)
 	u, err := addOptions(u, opts)

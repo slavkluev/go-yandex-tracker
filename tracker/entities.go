@@ -7,7 +7,7 @@ import (
 
 // Create creates a new entity of the specified type.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/concepts/entities/create-entity
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/create-entity
 func (s *EntitiesService) Create(ctx context.Context, entityType EntityType, req *EntityCreateRequest) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v", entityType)
 
@@ -27,7 +27,7 @@ func (s *EntitiesService) Create(ctx context.Context, entityType EntityType, req
 
 // Get retrieves an entity by its ID.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/get-entity
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/get-entity
 func (s *EntitiesService) Get(ctx context.Context, entityType EntityType, id string, opts *EntityGetOptions) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v", entityType, id)
 	u, err := addOptions(u, opts)
@@ -51,7 +51,7 @@ func (s *EntitiesService) Get(ctx context.Context, entityType EntityType, id str
 
 // Update modifies an existing entity.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/concepts/entities/update-entity
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/update-entity
 func (s *EntitiesService) Update(ctx context.Context, entityType EntityType, id string, req *EntityUpdateRequest) (*Entity, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v", entityType, id)
 
@@ -71,7 +71,7 @@ func (s *EntitiesService) Update(ctx context.Context, entityType EntityType, id 
 
 // Delete removes an entity.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/concepts/entities/delete-entity
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/delete-entity
 func (s *EntitiesService) Delete(ctx context.Context, entityType EntityType, id string, opts *EntityDeleteOptions) (*Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v", entityType, id)
 	u, err := addOptions(u, opts)
@@ -90,7 +90,7 @@ func (s *EntitiesService) Delete(ctx context.Context, entityType EntityType, id 
 // Search searches for entities of the specified type.
 // The search uses POST with a request body for filters and query parameters for pagination.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/concepts/entities/search-entities
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/search-entities
 func (s *EntitiesService) Search(ctx context.Context, entityType EntityType, req *EntitySearchRequest, opts *EntitySearchOptions) (*EntitySearchResponse, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/_search", entityType)
 	u, err := addOptions(u, opts)
@@ -114,7 +114,7 @@ func (s *EntitiesService) Search(ctx context.Context, entityType EntityType, req
 
 // BulkChange performs a bulk change operation on entities of the specified type.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/concepts/entities/bulkchange-entities
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/bulkchange-entities
 func (s *EntitiesService) BulkChange(ctx context.Context, entityType EntityType, req *EntityBulkChangeRequest) (*BulkChange, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/bulkchange/_update", entityType)
 
@@ -135,7 +135,7 @@ func (s *EntitiesService) BulkChange(ctx context.Context, entityType EntityType,
 // GetEvents retrieves the event history for an entity.
 // Pagination is cursor-based using the From and Direction options, not page-based.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/ru/api-ref/entities/get-events-relative
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/get-events-relative
 func (s *EntitiesService) GetEvents(ctx context.Context, entityType EntityType, id string, opts *EntityEventsOptions) (*EntityEventsResponse, *Response, error) {
 	u := fmt.Sprintf("v3/entities/%v/%v/events/_relative", entityType, id)
 	u, err := addOptions(u, opts)

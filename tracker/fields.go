@@ -7,7 +7,7 @@ import (
 
 // List returns all global issue fields.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/get-global-fields.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-global-fields
 func (s *FieldsService) List(ctx context.Context) ([]*Field, *Response, error) {
 	req, err := s.client.NewRequest("GET", "v3/fields", nil)
 	if err != nil {
@@ -25,7 +25,7 @@ func (s *FieldsService) List(ctx context.Context) ([]*Field, *Response, error) {
 
 // Get fetches a single global issue field by its ID.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/get-global-field.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-issue-fields
 func (s *FieldsService) Get(ctx context.Context, fieldID string) (*Field, *Response, error) {
 	u := fmt.Sprintf("v3/fields/%v", fieldID)
 
@@ -45,7 +45,7 @@ func (s *FieldsService) Get(ctx context.Context, fieldID string) (*Field, *Respo
 
 // Create creates a new global issue field.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/create-global-field.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/create-field
 func (s *FieldsService) Create(ctx context.Context, field *FieldCreateRequest) (*Field, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v3/fields", field)
 	if err != nil {
@@ -64,7 +64,7 @@ func (s *FieldsService) Create(ctx context.Context, field *FieldCreateRequest) (
 // Edit updates an existing global issue field.
 // The opts parameter must include Version for optimistic locking.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/edit-global-field.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/patch-issue-field-name
 func (s *FieldsService) Edit(ctx context.Context, fieldID string, field *FieldEditRequest, opts *FieldEditOptions) (*Field, *Response, error) {
 	u := fmt.Sprintf("v3/fields/%v", fieldID)
 	u, err := addOptions(u, opts)

@@ -7,7 +7,7 @@ import (
 
 // GetPermissions returns the access permissions for a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/queues/get-permissions.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/manage-access
 func (s *QueuesService) GetPermissions(ctx context.Context, queueKey string) (*QueuePermissions, *Response, error) {
 	u := fmt.Sprintf("v2/queues/%v/permissions", queueKey)
 
@@ -29,7 +29,7 @@ func (s *QueuesService) GetPermissions(ctx context.Context, queueKey string) (*Q
 // The request body specifies which users, groups, and roles to add or remove
 // for each permission type (create, write, read, grant).
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/queues/change-permissions.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/manage-access
 func (s *QueuesService) UpdatePermissions(ctx context.Context, queueKey string, perms *QueuePermissionsUpdateRequest) (*QueuePermissions, *Response, error) {
 	u := fmt.Sprintf("v2/queues/%v/permissions", queueKey)
 
@@ -51,8 +51,6 @@ func (s *QueuesService) UpdatePermissions(ctx context.Context, queueKey string, 
 // on the queue. The permissionCode parameter is one of: "create", "write",
 // "read", "grant". Returns the permissions structure if the user has the
 // permission; returns an error (403) if they do not.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/queues/check-permissions.html
 func (s *QueuesService) CheckPermission(ctx context.Context, queueKey, permissionCode string) (*QueuePermissions, *Response, error) {
 	u := fmt.Sprintf("v2/queues/%v/checkPermissions/%v", queueKey, permissionCode)
 

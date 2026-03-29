@@ -683,7 +683,7 @@ type ImportFileOptions struct {
 
 // DashboardCreateRequest represents the body for creating a dashboard.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/dashboards/create-dashboard
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/dashboards/create-dashboard
 type DashboardCreateRequest struct {
 	Name   *string         `json:"name,omitempty"`
 	Layout *string         `json:"layout,omitempty"`
@@ -704,7 +704,7 @@ type DashboardOwner struct {
 // Description is the only required field. All remaining widget-type-specific
 // parameters should be set in the Parameters map.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/dashboards/create-widget
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/dashboards/create-widget
 type WidgetCreateRequest struct {
 	Description *string        `json:"-"`
 	Parameters  map[string]any `json:"-"`

@@ -7,7 +7,7 @@ import (
 
 // ListMacros returns all macros for a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/get-macros.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/get-macroses
 func (s *QueuesService) ListMacros(ctx context.Context, queueKey string) ([]*Macro, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/macros", queueKey)
 
@@ -27,7 +27,7 @@ func (s *QueuesService) ListMacros(ctx context.Context, queueKey string) ([]*Mac
 
 // GetMacro returns a single macro by its numeric ID within a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/get-macro.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/get-macros
 func (s *QueuesService) GetMacro(ctx context.Context, queueKey string, macroID int) (*Macro, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/macros/%v", queueKey, macroID)
 
@@ -48,7 +48,7 @@ func (s *QueuesService) GetMacro(ctx context.Context, queueKey string, macroID i
 // CreateMacro creates a new macro in a queue.
 // The API returns 201 Created on success.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/create-macro.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/post-macros
 func (s *QueuesService) CreateMacro(ctx context.Context, queueKey string, macro *MacroCreateRequest) (*Macro, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/macros", queueKey)
 
@@ -68,7 +68,7 @@ func (s *QueuesService) CreateMacro(ctx context.Context, queueKey string, macro 
 
 // EditMacro updates an existing macro in a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/change-macro.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/patch-macros
 func (s *QueuesService) EditMacro(ctx context.Context, queueKey string, macroID int, macro *MacroEditRequest) (*Macro, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/macros/%v", queueKey, macroID)
 
@@ -89,7 +89,7 @@ func (s *QueuesService) EditMacro(ctx context.Context, queueKey string, macroID 
 // DeleteMacro deletes a macro from a queue.
 // The API returns 204 No Content on success.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/delete-macro.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/delete-macros
 func (s *QueuesService) DeleteMacro(ctx context.Context, queueKey string, macroID int) (*Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/macros/%v", queueKey, macroID)
 

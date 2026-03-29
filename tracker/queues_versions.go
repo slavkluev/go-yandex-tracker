@@ -7,7 +7,7 @@ import (
 
 // ListVersions returns all versions defined in a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/queues/get-versions.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-versions
 func (s *QueuesService) ListVersions(ctx context.Context, queueKey string) ([]*QueueVersion, *Response, error) {
 	u := fmt.Sprintf("v2/queues/%v/versions", queueKey)
 
@@ -27,7 +27,7 @@ func (s *QueuesService) ListVersions(ctx context.Context, queueKey string) ([]*Q
 
 // ListTags returns all tags used in a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/queues/get-tags.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-tags
 func (s *QueuesService) ListTags(ctx context.Context, queueKey string) ([]string, *Response, error) {
 	u := fmt.Sprintf("v2/queues/%v/tags", queueKey)
 

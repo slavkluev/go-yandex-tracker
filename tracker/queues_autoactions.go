@@ -6,8 +6,6 @@ import (
 )
 
 // ListAutoActions returns all auto-actions for a queue.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/get-autoactions.html
 func (s *QueuesService) ListAutoActions(ctx context.Context, queueKey string) ([]*AutoAction, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/autoactions", queueKey)
 
@@ -27,7 +25,7 @@ func (s *QueuesService) ListAutoActions(ctx context.Context, queueKey string) ([
 
 // GetAutoAction returns a single auto-action by its ID within a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/get-autoaction.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-autoaction
 func (s *QueuesService) GetAutoAction(ctx context.Context, queueKey string, autoActionID int) (*AutoAction, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/autoactions/%v", queueKey, autoActionID)
 
@@ -47,7 +45,7 @@ func (s *QueuesService) GetAutoAction(ctx context.Context, queueKey string, auto
 
 // CreateAutoAction creates a new auto-action in a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/create-autoaction.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/create-autoaction
 func (s *QueuesService) CreateAutoAction(ctx context.Context, queueKey string, autoAction *AutoActionCreateRequest) (*AutoAction, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/autoactions", queueKey)
 
@@ -66,8 +64,6 @@ func (s *QueuesService) CreateAutoAction(ctx context.Context, queueKey string, a
 }
 
 // UpdateAutoAction updates an existing auto-action in a queue.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/update-autoaction.html
 func (s *QueuesService) UpdateAutoAction(ctx context.Context, queueKey string, autoActionID int, autoAction *AutoActionUpdateRequest) (*AutoAction, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/autoactions/%v", queueKey, autoActionID)
 

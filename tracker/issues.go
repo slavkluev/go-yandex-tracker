@@ -20,7 +20,7 @@ type IssueEditOptions struct {
 
 // Create creates a new issue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/create-issue.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/create-issue
 func (s *IssuesService) Create(ctx context.Context, issue *IssueRequest) (*Issue, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v2/issues/", issue)
 	if err != nil {
@@ -38,7 +38,7 @@ func (s *IssuesService) Create(ctx context.Context, issue *IssueRequest) (*Issue
 
 // Get fetches an issue by its key or ID.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/get-issue.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-issue
 func (s *IssuesService) Get(ctx context.Context, issueKey string, opts *IssueGetOptions) (*Issue, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v", issueKey)
 	u, err := addOptions(u, opts)
@@ -62,7 +62,7 @@ func (s *IssuesService) Get(ctx context.Context, issueKey string, opts *IssueGet
 
 // Edit updates an existing issue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/patch-issue.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/patch-issue
 func (s *IssuesService) Edit(ctx context.Context, issueKey string, issue *IssueRequest, opts *IssueEditOptions) (*Issue, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v", issueKey)
 	u, err := addOptions(u, opts)
@@ -87,7 +87,7 @@ func (s *IssuesService) Edit(ctx context.Context, issueKey string, issue *IssueR
 // Search finds issues matching the specified criteria.
 // Results are returned using page-based pagination controlled by IssueSearchOptions.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/search-issues.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/search-issues
 func (s *IssuesService) Search(ctx context.Context, search *IssueSearchRequest, opts *IssueSearchOptions) ([]*Issue, *Response, error) {
 	u := "v2/issues/_search"
 	u, err := addOptions(u, opts)
@@ -113,7 +113,7 @@ func (s *IssuesService) Search(ctx context.Context, search *IssueSearchRequest, 
 // Use ScrollNext to retrieve subsequent pages.
 // The Response will contain ScrollID and ScrollToken for continuation.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/search-issues.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/search-issues
 func (s *IssuesService) ScrollSearch(ctx context.Context, search *IssueSearchRequest, opts *ScrollSearchOptions) ([]*Issue, *Response, error) {
 	u := "v2/issues/_search"
 	u, err := addOptions(u, opts)
@@ -137,6 +137,8 @@ func (s *IssuesService) ScrollSearch(ctx context.Context, search *IssueSearchReq
 
 // ScrollNext retrieves the next page of scroll search results.
 // Pass the scrollID and scrollToken from the previous Response.
+//
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/search-issues
 func (s *IssuesService) ScrollNext(ctx context.Context, search *IssueSearchRequest, scrollID, scrollToken string) ([]*Issue, *Response, error) {
 	u := fmt.Sprintf("v2/issues/_search?scrollId=%s&scrollToken=%s", scrollID, scrollToken)
 
@@ -158,7 +160,7 @@ func (s *IssuesService) ScrollNext(ctx context.Context, search *IssueSearchReque
 // The Yandex Tracker API returns a plain integer in the response body
 // (not JSON), so this method uses BareDo and parses the integer manually.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/count-issues.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/count-issues
 func (s *IssuesService) Count(ctx context.Context, search *IssueSearchRequest) (int, *Response, error) {
 	req, err := s.client.NewRequest("POST", "v2/issues/_count", search)
 	if err != nil {
@@ -188,7 +190,7 @@ func (s *IssuesService) Count(ctx context.Context, search *IssueSearchRequest) (
 // The target queue is specified in opts.Queue (required).
 // An optional issue parameter can override fields during the move.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/move-issue.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/move-issue
 func (s *IssuesService) Move(ctx context.Context, issueKey string, opts *IssueMoveOptions, issue *IssueRequest) (*Issue, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/_move", issueKey)
 	u, err := addOptions(u, opts)

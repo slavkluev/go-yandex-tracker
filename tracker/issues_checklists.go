@@ -7,7 +7,7 @@ import (
 
 // ListChecklistItems returns the checklist items for an issue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/get-checklist.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-checklist
 func (s *IssuesService) ListChecklistItems(ctx context.Context, issueKey string) ([]*ChecklistItem, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/checklistItems", issueKey)
 
@@ -28,7 +28,7 @@ func (s *IssuesService) ListChecklistItems(ctx context.Context, issueKey string)
 // CreateChecklistItem creates a new checklist item on an issue.
 // The API returns the full updated Issue, not the created checklist item.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/add-checklist-item.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/add-checklist-item
 func (s *IssuesService) CreateChecklistItem(ctx context.Context, issueKey string, item *ChecklistItemRequest) (*Issue, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/checklistItems", issueKey)
 
@@ -49,7 +49,7 @@ func (s *IssuesService) CreateChecklistItem(ctx context.Context, issueKey string
 // EditChecklistItem updates a checklist item on an issue.
 // The API returns the full updated Issue, not the edited checklist item.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/edit-checklist.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/edit-checklist
 func (s *IssuesService) EditChecklistItem(ctx context.Context, issueKey, checklistItemID string, item *ChecklistItemRequest) (*Issue, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/checklistItems/%v", issueKey, checklistItemID)
 
@@ -71,7 +71,7 @@ func (s *IssuesService) EditChecklistItem(ctx context.Context, issueKey, checkli
 // Unlike most delete methods, the API returns HTTP 200 with the full
 // updated Issue, not HTTP 204 No Content.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/delete-checklist-item.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-checklist-item
 func (s *IssuesService) DeleteChecklistItem(ctx context.Context, issueKey, checklistItemID string) (*Issue, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/checklistItems/%v", issueKey, checklistItemID)
 

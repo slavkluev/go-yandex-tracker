@@ -6,8 +6,6 @@ import (
 )
 
 // ListTriggers returns all triggers for a queue.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/get-triggers.html
 func (s *QueuesService) ListTriggers(ctx context.Context, queueKey string) ([]*Trigger, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/triggers", queueKey)
 
@@ -27,7 +25,7 @@ func (s *QueuesService) ListTriggers(ctx context.Context, queueKey string) ([]*T
 
 // GetTrigger returns a single trigger by its ID within a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/get-trigger.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-trigger
 func (s *QueuesService) GetTrigger(ctx context.Context, queueKey string, triggerID int) (*Trigger, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/triggers/%v", queueKey, triggerID)
 
@@ -47,7 +45,7 @@ func (s *QueuesService) GetTrigger(ctx context.Context, queueKey string, trigger
 
 // CreateTrigger creates a new trigger in a queue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/create-trigger.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/create-trigger
 func (s *QueuesService) CreateTrigger(ctx context.Context, queueKey string, trigger *TriggerCreateRequest) (*Trigger, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/triggers", queueKey)
 
@@ -68,7 +66,7 @@ func (s *QueuesService) CreateTrigger(ctx context.Context, queueKey string, trig
 // UpdateTrigger updates an existing trigger in a queue.
 // The opts parameter must include Version for optimistic locking.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/api-ref/queues/change-trigger.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/change-trigger
 func (s *QueuesService) UpdateTrigger(ctx context.Context, queueKey string, triggerID int, opts *TriggerUpdateOptions, trigger *TriggerUpdateRequest) (*Trigger, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/triggers/%v", queueKey, triggerID)
 	u, err := addOptions(u, opts)

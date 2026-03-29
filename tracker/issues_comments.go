@@ -8,7 +8,7 @@ import (
 // ListComments returns the comments for an issue.
 // Use CommentListOptions to paginate via cursor (ID of last entry) and perPage.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/get-comments.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-comments
 func (s *IssuesService) ListComments(ctx context.Context, issueKey string, opts *CommentListOptions) ([]*Comment, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/comments", issueKey)
 
@@ -33,7 +33,7 @@ func (s *IssuesService) ListComments(ctx context.Context, issueKey string, opts 
 
 // CreateComment adds a new comment to an issue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/add-comment.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/add-comment
 func (s *IssuesService) CreateComment(ctx context.Context, issueKey string, comment *CommentRequest) (*Comment, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/comments", issueKey)
 
@@ -54,7 +54,7 @@ func (s *IssuesService) CreateComment(ctx context.Context, issueKey string, comm
 // EditComment updates an existing comment on an issue.
 // The commentID parameter is numeric (int) because Comment.ID is *int.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/edit-comment.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/edit-comment
 func (s *IssuesService) EditComment(ctx context.Context, issueKey string, commentID int, comment *CommentRequest) (*Comment, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/comments/%d", issueKey, commentID)
 
@@ -76,7 +76,7 @@ func (s *IssuesService) EditComment(ctx context.Context, issueKey string, commen
 // The commentID parameter is numeric (int) because Comment.ID is *int.
 // Returns (*Response, error) since 204 responses have no body.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/delete-comment.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-comment
 func (s *IssuesService) DeleteComment(ctx context.Context, issueKey string, commentID int) (*Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/comments/%d", issueKey, commentID)
 

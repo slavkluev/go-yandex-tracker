@@ -6,6 +6,8 @@ import (
 )
 
 // GetLinks returns the links for an issue.
+//
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-links
 func (s *IssuesService) GetLinks(ctx context.Context, issueKey string) ([]*IssueLink, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/links", issueKey)
 
@@ -25,7 +27,7 @@ func (s *IssuesService) GetLinks(ctx context.Context, issueKey string) ([]*Issue
 
 // CreateLink creates a link between two issues.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/patch-issue-link-issue.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/link-issue
 func (s *IssuesService) CreateLink(ctx context.Context, issueKey string, link *LinkRequest) (*IssueLink, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/links", issueKey)
 
@@ -46,7 +48,7 @@ func (s *IssuesService) CreateLink(ctx context.Context, issueKey string, link *L
 // DeleteLink deletes a link from an issue.
 // Returns (*Response, error) since 204 responses have no body.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/delete-link-issue.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-link-issue
 func (s *IssuesService) DeleteLink(ctx context.Context, issueKey, linkID string) (*Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/links/%v", issueKey, linkID)
 

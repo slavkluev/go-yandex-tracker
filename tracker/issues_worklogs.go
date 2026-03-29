@@ -8,7 +8,7 @@ import (
 // ListWorklogs returns the worklog entries for an issue.
 // The API does not support pagination for worklog listings.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/issue-worklog.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/issue-worklog
 func (s *IssuesService) ListWorklogs(ctx context.Context, issueKey string) ([]*Worklog, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/worklog", issueKey)
 
@@ -28,7 +28,7 @@ func (s *IssuesService) ListWorklogs(ctx context.Context, issueKey string) ([]*W
 
 // CreateWorklog adds a worklog entry to an issue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/new-worklog.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/new-worklog
 func (s *IssuesService) CreateWorklog(ctx context.Context, issueKey string, worklog *WorklogRequest) (*Worklog, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/worklog", issueKey)
 
@@ -48,7 +48,7 @@ func (s *IssuesService) CreateWorklog(ctx context.Context, issueKey string, work
 
 // EditWorklog updates a worklog entry on an issue.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/patch-worklog.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/patch-worklog
 func (s *IssuesService) EditWorklog(ctx context.Context, issueKey, worklogID string, worklog *WorklogRequest) (*Worklog, *Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/worklog/%v", issueKey, worklogID)
 
@@ -69,7 +69,7 @@ func (s *IssuesService) EditWorklog(ctx context.Context, issueKey, worklogID str
 // DeleteWorklog deletes a worklog entry from an issue.
 // The API returns HTTP 204 No Content on success.
 //
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/concepts/issues/delete-worklog.html
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-worklog
 func (s *IssuesService) DeleteWorklog(ctx context.Context, issueKey, worklogID string) (*Response, error) {
 	u := fmt.Sprintf("v2/issues/%v/worklog/%v", issueKey, worklogID)
 
