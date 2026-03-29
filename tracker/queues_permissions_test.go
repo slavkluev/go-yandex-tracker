@@ -7,60 +7,6 @@ import (
 	"testing"
 )
 
-func TestQueuesService_GetPermissions(t *testing.T) {
-	client, mux := setup(t)
-
-	mux.HandleFunc("GET /v3/queues/{key}/permissions", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
-
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(QueuePermissions{
-			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST/permissions"),
-			Version: Ptr(1),
-			Create: &PermissionGroup{
-				Users: []*PermissionUser{
-					{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
-				},
-				Roles: []*PermissionRole{
-					{Self: Ptr("https://api.tracker.yandex.net/v3/roles/queue-lead"), ID: Ptr("queue-lead"), Display: Ptr("Queue Lead")},
-				},
-			},
-			Write: &PermissionGroup{
-				Users: []*PermissionUser{
-					{Self: Ptr("https://api.tracker.yandex.net/v3/users/456"), ID: Ptr("456"), Display: Ptr("Jane Smith")},
-				},
-			},
-		})
-	})
-
-	perms, _, err := client.Queues.GetPermissions(ctx, "TEST")
-	if err != nil {
-		t.Fatalf("Queues.GetPermissions returned error: %v", err)
-	}
-
-	want := &QueuePermissions{
-		Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST/permissions"),
-		Version: Ptr(1),
-		Create: &PermissionGroup{
-			Users: []*PermissionUser{
-				{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
-			},
-			Roles: []*PermissionRole{
-				{Self: Ptr("https://api.tracker.yandex.net/v3/roles/queue-lead"), ID: Ptr("queue-lead"), Display: Ptr("Queue Lead")},
-			},
-		},
-		Write: &PermissionGroup{
-			Users: []*PermissionUser{
-				{Self: Ptr("https://api.tracker.yandex.net/v3/users/456"), ID: Ptr("456"), Display: Ptr("Jane Smith")},
-			},
-		},
-	}
-
-	if !reflect.DeepEqual(perms, want) {
-		t.Errorf("Queues.GetPermissions returned %+v, want %+v", perms, want)
-	}
-}
-
 func TestQueuesService_UpdatePermissions(t *testing.T) {
 	client, mux := setup(t)
 
@@ -111,43 +57,5 @@ func TestQueuesService_UpdatePermissions(t *testing.T) {
 
 	if !reflect.DeepEqual(perms, want) {
 		t.Errorf("Queues.UpdatePermissions returned %+v, want %+v", perms, want)
-	}
-}
-
-func TestQueuesService_CheckPermission(t *testing.T) {
-	client, mux := setup(t)
-
-	mux.HandleFunc("GET /v3/queues/{key}/checkPermissions/{code}", func(w http.ResponseWriter, r *http.Request) {
-		testMethod(t, r, "GET")
-
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(QueuePermissions{
-			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST/permissions"),
-			Version: Ptr(1),
-			Create: &PermissionGroup{
-				Users: []*PermissionUser{
-					{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
-				},
-			},
-		})
-	})
-
-	perms, _, err := client.Queues.CheckPermission(ctx, "TEST", "create")
-	if err != nil {
-		t.Fatalf("Queues.CheckPermission returned error: %v", err)
-	}
-
-	want := &QueuePermissions{
-		Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST/permissions"),
-		Version: Ptr(1),
-		Create: &PermissionGroup{
-			Users: []*PermissionUser{
-				{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
-			},
-		},
-	}
-
-	if !reflect.DeepEqual(perms, want) {
-		t.Errorf("Queues.CheckPermission returned %+v, want %+v", perms, want)
 	}
 }

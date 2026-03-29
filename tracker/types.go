@@ -1186,17 +1186,6 @@ type MacroIssueUpdateField struct {
 	Display *string `json:"display,omitempty"`
 }
 
-// Filter represents a saved filter in Yandex Tracker.
-type Filter struct {
-	Self    *string        `json:"self,omitempty"`
-	ID      *int           `json:"id,omitempty"`
-	Name    *string        `json:"name,omitempty"`
-	Filter  map[string]any `json:"filter,omitempty"`
-	Query   *string        `json:"query,omitempty"`
-	Sorts   any            `json:"sorts,omitempty"`
-	GroupBy *string        `json:"groupBy,omitempty"`
-}
-
 // ExternalApplication represents an external application registered in Yandex Tracker.
 type ExternalApplication struct {
 	Self *string `json:"self,omitempty"`

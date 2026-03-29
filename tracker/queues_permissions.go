@@ -5,26 +5,6 @@ import (
 	"fmt"
 )
 
-// GetPermissions returns the access permissions for a queue.
-//
-// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/manage-access
-func (s *QueuesService) GetPermissions(ctx context.Context, queueKey string) (*QueuePermissions, *Response, error) {
-	u := fmt.Sprintf("v3/queues/%v/permissions", queueKey)
-
-	req, err := s.client.NewRequest("GET", u, nil)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	perms := new(QueuePermissions)
-	resp, err := s.client.Do(ctx, req, perms)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return perms, resp, nil
-}
-
 // UpdatePermissions updates the access permissions for a queue.
 // The request body specifies which users, groups, and roles to add or remove
 // for each permission type (create, write, read, grant).
@@ -45,25 +25,4 @@ func (s *QueuesService) UpdatePermissions(ctx context.Context, queueKey string, 
 	}
 
 	return result, resp, nil
-}
-
-// CheckPermission checks whether the current user has a specific permission
-// on the queue. The permissionCode parameter is one of: "create", "write",
-// "read", "grant". Returns the permissions structure if the user has the
-// permission; returns an error (403) if they do not.
-func (s *QueuesService) CheckPermission(ctx context.Context, queueKey, permissionCode string) (*QueuePermissions, *Response, error) {
-	u := fmt.Sprintf("v3/queues/%v/checkPermissions/%v", queueKey, permissionCode)
-
-	req, err := s.client.NewRequest("GET", u, nil)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	perms := new(QueuePermissions)
-	resp, err := s.client.Do(ctx, req, perms)
-	if err != nil {
-		return nil, resp, err
-	}
-
-	return perms, resp, nil
 }

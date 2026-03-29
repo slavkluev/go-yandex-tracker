@@ -579,15 +579,6 @@ type MacroEditRequest struct {
 	IssueUpdate any     `json:"issueUpdate,omitempty"`
 }
 
-// FilterRequest represents the body for creating or updating a saved filter.
-type FilterRequest struct {
-	Name    *string        `json:"name,omitempty"`
-	Filter  map[string]any `json:"filter,omitempty"`
-	Query   *string        `json:"query,omitempty"`
-	Sorts   any            `json:"sorts,omitempty"`
-	GroupBy *string        `json:"groupBy,omitempty"`
-}
-
 // ExternalLinkCreateRequest represents the body for creating an external link on an issue.
 type ExternalLinkCreateRequest struct {
 	Relationship *string `json:"relationship,omitempty"`

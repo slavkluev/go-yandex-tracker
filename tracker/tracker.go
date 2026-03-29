@@ -87,10 +87,6 @@ type Client struct {
 	// (projects, portfolios, goals) of the Yandex Tracker API.
 	Entities *EntitiesService
 
-	// Filters handles communication with the saved filter related methods
-	// of the Yandex Tracker API.
-	Filters *FiltersService
-
 	// ExternalLinks handles communication with the external application link related methods
 	// of the Yandex Tracker API.
 	ExternalLinks *ExternalLinksService
@@ -159,10 +155,6 @@ type SprintsService service
 // EntitiesService handles communication with the entity related methods
 // (projects, portfolios, goals) of the Yandex Tracker API.
 type EntitiesService service
-
-// FiltersService handles communication with the saved filter related methods
-// of the Yandex Tracker API.
-type FiltersService service
 
 // ExternalLinksService handles communication with the external application link related methods
 // of the Yandex Tracker API.
@@ -262,7 +254,6 @@ func (c *Client) initialize() {
 	c.Boards = (*BoardsService)(&c.common)
 	c.Sprints = (*SprintsService)(&c.common)
 	c.Entities = (*EntitiesService)(&c.common)
-	c.Filters = (*FiltersService)(&c.common)
 	c.ExternalLinks = (*ExternalLinksService)(&c.common)
 	c.Import = (*ImportService)(&c.common)
 	c.Dashboards = (*DashboardsService)(&c.common)

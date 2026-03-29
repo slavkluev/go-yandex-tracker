@@ -98,9 +98,7 @@ for _, m := range macros {
 | `EditMacro` | Edit a macro |
 | `DeleteMacro` | Delete a macro |
 | **Permissions** | |
-| `GetPermissions` | Get queue permissions |
 | `UpdatePermissions` | Update queue permissions |
-| `CheckPermission` | Check a specific permission |
 | **Triggers** | |
 | `ListTriggers` | List triggers in a queue |
 | `GetTrigger` | Get a trigger by ID |

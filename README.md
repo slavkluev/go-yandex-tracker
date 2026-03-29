@@ -72,7 +72,7 @@ fmt.Println(*issue.Key)
 | Service | Description | Methods |
 |---------|-------------|---------|
 | [Issues](docs/issues.md) | Create, read, update, search issues; comments, attachments, worklogs, links, transitions, checklists | 31 |
-| [Queues](docs/queues.md) | Queue management; triggers, auto-actions, macros, access | 23 |
+| [Queues](docs/queues.md) | Queue management; triggers, auto-actions, macros, access | 21 |
 | [Fields](docs/fields.md) | Issue field categories and configurations | 8 |
 | [Components](docs/components.md) | Queue component management | 5 |
 
@@ -83,7 +83,6 @@ fmt.Println(*issue.Key)
 | [Projects](docs/projects.md) | Projects, portfolios, and goals (entities) | 25 |
 | [Boards](docs/boards.md) | Agile boards and columns | 9 |
 | [Sprints](docs/sprints.md) | Sprint management | 3 |
-| [Filters](docs/filters.md) | Saved search filters | 5 |
 
 ### Import and Automation
 
