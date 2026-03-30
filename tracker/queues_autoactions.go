@@ -26,7 +26,7 @@ func (s *QueuesService) ListAutoActions(ctx context.Context, queueKey string) ([
 // GetAutoAction returns a single auto-action by its ID within a queue.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-autoaction
-func (s *QueuesService) GetAutoAction(ctx context.Context, queueKey string, autoActionID int) (*AutoAction, *Response, error) {
+func (s *QueuesService) GetAutoAction(ctx context.Context, queueKey string, autoActionID string) (*AutoAction, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/autoactions/%v", queueKey, autoActionID)
 
 	req, err := s.client.NewRequest("GET", u, nil)
@@ -64,7 +64,7 @@ func (s *QueuesService) CreateAutoAction(ctx context.Context, queueKey string, a
 }
 
 // UpdateAutoAction updates an existing auto-action in a queue.
-func (s *QueuesService) UpdateAutoAction(ctx context.Context, queueKey string, autoActionID int, autoAction *AutoActionUpdateRequest) (*AutoAction, *Response, error) {
+func (s *QueuesService) UpdateAutoAction(ctx context.Context, queueKey string, autoActionID string, autoAction *AutoActionUpdateRequest) (*AutoAction, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/autoactions/%v", queueKey, autoActionID)
 
 	req, err := s.client.NewRequest("PATCH", u, autoAction)

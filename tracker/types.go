@@ -94,9 +94,9 @@ func newResponse(r *http.Response) *Response {
 // Note: User.ID (*string, json:"id") is for embedded references.
 // User.UID (*int, json:"uid") is for full responses. These are different JSON keys.
 type User struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 
 	// Full resource fields (from GET /v3/myself, /v3/users)
 	UID                  *int       `json:"uid,omitempty"`
@@ -122,17 +122,17 @@ type User struct {
 // populated. When embedded in other resources, only Self, ID, Key, and
 // Display are populated.
 type Status struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Key     *string `json:"key,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Key     *string     `json:"key,omitempty"`
+	Display *string     `json:"display,omitempty"`
 
 	// Full resource fields (from GET /v3/statuses)
-	Version     *int    `json:"version,omitempty"`
-	Name        *string `json:"name,omitempty"`
-	Description *string `json:"description,omitempty"`
-	Order       *int    `json:"order,omitempty"`
-	Type        *string `json:"type,omitempty"`
+	Version     *FlexString `json:"version,omitempty"`
+	Name        *string     `json:"name,omitempty"`
+	Description *string     `json:"description,omitempty"`
+	Order       *int        `json:"order,omitempty"`
+	Type        *string     `json:"type,omitempty"`
 }
 
 // Queue represents a Yandex Tracker queue.
@@ -140,19 +140,19 @@ type Status struct {
 // When embedded in other resources (e.g., Issue), only Self, ID, Key,
 // and Display are populated; other fields are nil.
 type Queue struct {
-	Self            *string    `json:"self,omitempty"`
-	ID              *string    `json:"id,omitempty"`
-	Key             *string    `json:"key,omitempty"`
-	Display         *string    `json:"display,omitempty"`
-	Version         *int       `json:"version,omitempty"`
-	Name            *string    `json:"name,omitempty"`
-	Description     *string    `json:"description,omitempty"`
-	Lead            *User      `json:"lead,omitempty"`
-	AssignAuto      *bool      `json:"assignAuto,omitempty"`
-	AllowExternals  *bool      `json:"allowExternals,omitempty"`
-	DenyVoting      *bool      `json:"denyVoting,omitempty"`
-	DefaultType     *IssueType `json:"defaultType,omitempty"`
-	DefaultPriority *Priority  `json:"defaultPriority,omitempty"`
+	Self            *string     `json:"self,omitempty"`
+	ID              *FlexString `json:"id,omitempty"`
+	Key             *string     `json:"key,omitempty"`
+	Display         *string     `json:"display,omitempty"`
+	Version         *FlexString `json:"version,omitempty"`
+	Name            *string     `json:"name,omitempty"`
+	Description     *string     `json:"description,omitempty"`
+	Lead            *User       `json:"lead,omitempty"`
+	AssignAuto      *bool       `json:"assignAuto,omitempty"`
+	AllowExternals  *bool       `json:"allowExternals,omitempty"`
+	DenyVoting      *bool       `json:"denyVoting,omitempty"`
+	DefaultType     *IssueType  `json:"defaultType,omitempty"`
+	DefaultPriority *Priority   `json:"defaultPriority,omitempty"`
 }
 
 // Priority represents an issue priority in Yandex Tracker.
@@ -160,15 +160,15 @@ type Queue struct {
 // populated. When embedded in other resources, only Self, ID, Key, and
 // Display are populated.
 type Priority struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Key     *string `json:"key,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Key     *string     `json:"key,omitempty"`
+	Display *string     `json:"display,omitempty"`
 
 	// Full resource fields (from GET /v3/priorities)
-	Version *int    `json:"version,omitempty"`
-	Name    *string `json:"name,omitempty"`
-	Order   *int    `json:"order,omitempty"`
+	Version *FlexString `json:"version,omitempty"`
+	Name    *string     `json:"name,omitempty"`
+	Order   *int        `json:"order,omitempty"`
 }
 
 // IssueType represents the type of a Yandex Tracker issue.
@@ -176,16 +176,16 @@ type Priority struct {
 // populated. When embedded in other resources, only Self, ID, Key, and
 // Display are populated.
 type IssueType struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Key     *string `json:"key,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Key     *string     `json:"key,omitempty"`
+	Display *string     `json:"display,omitempty"`
 
 	// Full resource fields (from GET /v3/issuetypes)
-	Version     *int    `json:"version,omitempty"`
-	Name        *string `json:"name,omitempty"`
-	Description *string `json:"description,omitempty"`
-	Deleted     *bool   `json:"deleted,omitempty"`
+	Version     *FlexString `json:"version,omitempty"`
+	Name        *string     `json:"name,omitempty"`
+	Description *string     `json:"description,omitempty"`
+	Deleted     *bool       `json:"deleted,omitempty"`
 }
 
 // Resolution represents the resolution of a Yandex Tracker issue.
@@ -193,16 +193,16 @@ type IssueType struct {
 // populated. When embedded in other resources, only Self, ID, Key, and
 // Display are populated.
 type Resolution struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Key     *string `json:"key,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Key     *string     `json:"key,omitempty"`
+	Display *string     `json:"display,omitempty"`
 
 	// Full resource fields (from GET /v3/resolutions)
-	Version     *int    `json:"version,omitempty"`
-	Name        *string `json:"name,omitempty"`
-	Description *string `json:"description,omitempty"`
-	Order       *int    `json:"order,omitempty"`
+	Version     *FlexString `json:"version,omitempty"`
+	Name        *string     `json:"name,omitempty"`
+	Description *string     `json:"description,omitempty"`
+	Order       *int        `json:"order,omitempty"`
 }
 
 // Issue represents a Yandex Tracker issue.
@@ -210,10 +210,10 @@ type Resolution struct {
 // Any additional fields (custom queue fields) are captured in CustomFields.
 type Issue struct {
 	Self                       *string          `json:"self,omitempty"`
-	ID                         *string          `json:"id,omitempty"`
+	ID                         *FlexString      `json:"id,omitempty"`
 	Key                        *string          `json:"key,omitempty"`
 	Display                    *string          `json:"display,omitempty"`
-	Version                    *int             `json:"version,omitempty"`
+	Version                    *FlexString      `json:"version,omitempty"`
 	Summary                    *string          `json:"summary,omitempty"`
 	Description                *string          `json:"description,omitempty"`
 	Type                       *IssueType       `json:"type,omitempty"`
@@ -349,16 +349,16 @@ func (i Issue) MarshalJSON() ([]byte, error) {
 
 // Transition represents an issue status transition in Yandex Tracker.
 type Transition struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
-	To      *Status `json:"to,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
+	To      *Status     `json:"to,omitempty"`
 }
 
 // Changelog represents a change history entry for an issue.
 type Changelog struct {
 	Self      *string           `json:"self,omitempty"`
-	ID        *string           `json:"id,omitempty"`
+	ID        *FlexString       `json:"id,omitempty"`
 	Issue     *Issue            `json:"issue,omitempty"`
 	UpdatedAt *Timestamp        `json:"updatedAt,omitempty"`
 	UpdatedBy *User             `json:"updatedBy,omitempty"`
@@ -376,7 +376,7 @@ type ChangelogEvent struct {
 // IssueLink represents a link between two issues.
 type IssueLink struct {
 	Self      *string        `json:"self,omitempty"`
-	ID        *string        `json:"id,omitempty"`
+	ID        *FlexString    `json:"id,omitempty"`
 	Type      *IssueLinkType `json:"type,omitempty"`
 	Direction *string        `json:"direction,omitempty"`
 	Object    *Issue         `json:"object,omitempty"`
@@ -388,10 +388,10 @@ type IssueLink struct {
 
 // IssueLinkType represents the type of a link between issues.
 type IssueLinkType struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Inward  *string `json:"inward,omitempty"`
-	Outward *string `json:"outward,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Inward  *string     `json:"inward,omitempty"`
+	Outward *string     `json:"outward,omitempty"`
 }
 
 // Duration represents an ISO 8601 duration value (e.g., "PT1H30M", "P5D").
@@ -567,11 +567,11 @@ func (d Duration) MarshalJSON() ([]byte, error) {
 }
 
 // Comment represents a comment on a Yandex Tracker issue.
-// Note: Comment.ID is *int (numeric), NOT *string. The LongID field provides
-// the string-format ID.
+// Note: Comment.ID is *FlexString, which accepts both JSON numbers and strings.
+// The LongID field provides the string-format ID.
 type Comment struct {
 	Self        *string       `json:"self,omitempty"`
-	ID          *int          `json:"id,omitempty"`
+	ID          *FlexString   `json:"id,omitempty"`
 	LongID      *string       `json:"longId,omitempty"`
 	Text        *string       `json:"text,omitempty"`
 	TextHTML    *string       `json:"textHtml,omitempty"`
@@ -580,7 +580,7 @@ type Comment struct {
 	UpdatedBy   *User         `json:"updatedBy,omitempty"`
 	CreatedAt   *Timestamp    `json:"createdAt,omitempty"`
 	UpdatedAt   *Timestamp    `json:"updatedAt,omitempty"`
-	Version     *int          `json:"version,omitempty"`
+	Version     *FlexString   `json:"version,omitempty"`
 	Type        *string       `json:"type,omitempty"`
 	Transport   *string       `json:"transport,omitempty"`
 }
@@ -588,7 +588,7 @@ type Comment struct {
 // Attachment represents a file attached to a Yandex Tracker issue or comment.
 type Attachment struct {
 	Self      *string             `json:"self,omitempty"`
-	ID        *string             `json:"id,omitempty"`
+	ID        *FlexString         `json:"id,omitempty"`
 	Name      *string             `json:"name,omitempty"`
 	Content   *string             `json:"content,omitempty"`
 	Thumbnail *string             `json:"thumbnail,omitempty"`
@@ -606,7 +606,7 @@ type AttachmentMetadata struct {
 
 // ChecklistItem represents an item in a Yandex Tracker issue checklist.
 type ChecklistItem struct {
-	ID                *string            `json:"id,omitempty"`
+	ID                *FlexString        `json:"id,omitempty"`
 	Text              *string            `json:"text,omitempty"`
 	TextHTML          *string            `json:"textHtml,omitempty"`
 	Checked           *bool              `json:"checked,omitempty"`
@@ -624,37 +624,37 @@ type ChecklistDeadline struct {
 
 // Worklog represents a time tracking entry for a Yandex Tracker issue.
 type Worklog struct {
-	Self      *string    `json:"self,omitempty"`
-	ID        *string    `json:"id,omitempty"`
-	Version   *string    `json:"version,omitempty"`
-	Issue     *Issue     `json:"issue,omitempty"`
-	Comment   *string    `json:"comment,omitempty"`
-	CreatedBy *User      `json:"createdBy,omitempty"`
-	UpdatedBy *User      `json:"updatedBy,omitempty"`
-	CreatedAt *Timestamp `json:"createdAt,omitempty"`
-	UpdatedAt *Timestamp `json:"updatedAt,omitempty"`
-	Start     *Timestamp `json:"start,omitempty"`
-	Duration  *Duration  `json:"duration,omitempty"`
+	Self      *string     `json:"self,omitempty"`
+	ID        *FlexString `json:"id,omitempty"`
+	Version   *FlexString `json:"version,omitempty"`
+	Issue     *Issue      `json:"issue,omitempty"`
+	Comment   *string     `json:"comment,omitempty"`
+	CreatedBy *User       `json:"createdBy,omitempty"`
+	UpdatedBy *User       `json:"updatedBy,omitempty"`
+	CreatedAt *Timestamp  `json:"createdAt,omitempty"`
+	UpdatedAt *Timestamp  `json:"updatedAt,omitempty"`
+	Start     *Timestamp  `json:"start,omitempty"`
+	Duration  *Duration   `json:"duration,omitempty"`
 }
 
 // QueueVersion represents a version defined in a Yandex Tracker queue.
 type QueueVersion struct {
-	Self        *string `json:"self,omitempty"`
-	ID          *string `json:"id,omitempty"`
-	Version     *int    `json:"version,omitempty"`
-	Queue       *Queue  `json:"queue,omitempty"`
-	Name        *string `json:"name,omitempty"`
-	Description *string `json:"description,omitempty"`
-	StartDate   *string `json:"startDate,omitempty"`
-	DueDate     *string `json:"dueDate,omitempty"`
-	Released    *bool   `json:"released,omitempty"`
-	Archived    *bool   `json:"archived,omitempty"`
+	Self        *string     `json:"self,omitempty"`
+	ID          *FlexString `json:"id,omitempty"`
+	Version     *FlexString `json:"version,omitempty"`
+	Queue       *Queue      `json:"queue,omitempty"`
+	Name        *string     `json:"name,omitempty"`
+	Description *string     `json:"description,omitempty"`
+	StartDate   *string     `json:"startDate,omitempty"`
+	DueDate     *string     `json:"dueDate,omitempty"`
+	Released    *bool       `json:"released,omitempty"`
+	Archived    *bool       `json:"archived,omitempty"`
 }
 
 // QueuePermissions represents the access permissions for a queue.
 type QueuePermissions struct {
 	Self    *string          `json:"self,omitempty"`
-	Version *int             `json:"version,omitempty"`
+	Version *FlexString      `json:"version,omitempty"`
 	Create  *PermissionGroup `json:"create,omitempty"`
 	Write   *PermissionGroup `json:"write,omitempty"`
 	Read    *PermissionGroup `json:"read,omitempty"`
@@ -671,35 +671,35 @@ type PermissionGroup struct {
 
 // PermissionUser represents a user in a permission group.
 type PermissionUser struct {
-	Self        *string `json:"self,omitempty"`
-	ID          *string `json:"id,omitempty"`
-	Display     *string `json:"display,omitempty"`
-	CloudUID    *string `json:"cloudUid,omitempty"`
-	PassportUID *string `json:"passportUid,omitempty"`
+	Self        *string     `json:"self,omitempty"`
+	ID          *FlexString `json:"id,omitempty"`
+	Display     *string     `json:"display,omitempty"`
+	CloudUID    *string     `json:"cloudUid,omitempty"`
+	PassportUID *string     `json:"passportUid,omitempty"`
 }
 
 // PermissionGroupRef represents a group reference in a permission group.
 type PermissionGroupRef struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // PermissionRole represents a role in a permission group.
 type PermissionRole struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // Field represents an issue field in Yandex Tracker (global or local).
 type Field struct {
 	Self            *string          `json:"self,omitempty"`
-	ID              *string          `json:"id,omitempty"`
+	ID              *FlexString      `json:"id,omitempty"`
 	Name            *string          `json:"name,omitempty"`
 	Description     *string          `json:"description,omitempty"`
 	Key             *string          `json:"key,omitempty"`
-	Version         *int             `json:"version,omitempty"`
+	Version         *FlexString      `json:"version,omitempty"`
 	Schema          *FieldSchema     `json:"schema,omitempty"`
 	Readonly        *bool            `json:"readonly,omitempty"`
 	Options         *bool            `json:"options,omitempty"`
@@ -722,9 +722,9 @@ type FieldSchema struct {
 
 // FieldCategory represents a field category reference.
 type FieldCategory struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // OptionsProvider describes the dropdown options configuration for a field.
@@ -747,14 +747,14 @@ type FieldName struct {
 
 // Component represents a queue component in Yandex Tracker.
 type Component struct {
-	Self        *string `json:"self,omitempty"`
-	ID          *int    `json:"id,omitempty"`
-	Version     *int    `json:"version,omitempty"`
-	Name        *string `json:"name,omitempty"`
-	Queue       *Queue  `json:"queue,omitempty"`
-	Description *string `json:"description,omitempty"`
-	Lead        *User   `json:"lead,omitempty"`
-	AssignAuto  *bool   `json:"assignAuto,omitempty"`
+	Self        *string     `json:"self,omitempty"`
+	ID          *FlexString `json:"id,omitempty"`
+	Version     *FlexString `json:"version,omitempty"`
+	Name        *string     `json:"name,omitempty"`
+	Queue       *Queue      `json:"queue,omitempty"`
+	Description *string     `json:"description,omitempty"`
+	Lead        *User       `json:"lead,omitempty"`
+	AssignAuto  *bool       `json:"assignAuto,omitempty"`
 }
 
 // BulkChange represents the status of an asynchronous bulk change operation.
@@ -762,23 +762,23 @@ type Component struct {
 // and GET /v3/bulkchange/{id} (200 OK).
 // Note: BulkChange.ID is *string (hex string like "593cd211ef7e8a33********"), not *int.
 type BulkChange struct {
-	Self                  *string    `json:"self,omitempty"`
-	ID                    *string    `json:"id,omitempty"`
-	CreatedBy             *User      `json:"createdBy,omitempty"`
-	CreatedAt             *Timestamp `json:"createdAt,omitempty"`
-	Status                *string    `json:"status,omitempty"`
-	StatusText            *string    `json:"statusText,omitempty"`
-	ExecutionChunkPercent *int       `json:"executionChunkPercent,omitempty"`
-	ExecutionIssuePercent *int       `json:"executionIssuePercent,omitempty"`
-	TotalIssues           *int       `json:"totalIssues,omitempty"`
-	TotalCompletedIssues  *int       `json:"totalCompletedIssues,omitempty"`
+	Self                  *string     `json:"self,omitempty"`
+	ID                    *FlexString `json:"id,omitempty"`
+	CreatedBy             *User       `json:"createdBy,omitempty"`
+	CreatedAt             *Timestamp  `json:"createdAt,omitempty"`
+	Status                *string     `json:"status,omitempty"`
+	StatusText            *string     `json:"statusText,omitempty"`
+	ExecutionChunkPercent *int        `json:"executionChunkPercent,omitempty"`
+	ExecutionIssuePercent *int        `json:"executionIssuePercent,omitempty"`
+	TotalIssues           *int        `json:"totalIssues,omitempty"`
+	TotalCompletedIssues  *int        `json:"totalCompletedIssues,omitempty"`
 }
 
 // Board represents an agile board in Yandex Tracker.
 type Board struct {
 	Self               *string             `json:"self,omitempty"`
-	ID                 *int                `json:"id,omitempty"`
-	Version            *int                `json:"version,omitempty"`
+	ID                 *FlexString         `json:"id,omitempty"`
+	Version            *FlexString         `json:"version,omitempty"`
 	Name               *string             `json:"name,omitempty"`
 	Columns            []*BoardColumnRef   `json:"columns,omitempty"`
 	Filter             map[string]any      `json:"filter,omitempty"`
@@ -798,28 +798,28 @@ type Board struct {
 
 // BoardColumnRef is a lightweight column reference embedded in Board responses.
 type BoardColumnRef struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // Country represents a country reference in board responses.
 type Country struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // EstimateField represents an estimate field reference in board responses.
 type EstimateField struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // Calendar represents a calendar reference in board responses.
 type Calendar struct {
-	ID *int `json:"id,omitempty"`
+	ID *FlexString `json:"id,omitempty"`
 }
 
 // AutoFilterSettings represents automatic filter settings on a board.
@@ -829,46 +829,44 @@ type AutoFilterSettings struct {
 }
 
 // Column represents a column on an agile board in Yandex Tracker.
-// Note: Column.ID is *int (numeric) from the full column response.
-// This differs from BoardColumnRef.ID which is *string in embedded board responses.
 type Column struct {
-	Self     *string   `json:"self,omitempty"`
-	ID       *int      `json:"id,omitempty"`
-	Name     *string   `json:"name,omitempty"`
-	Statuses []*Status `json:"statuses,omitempty"`
+	Self     *string     `json:"self,omitempty"`
+	ID       *FlexString `json:"id,omitempty"`
+	Name     *string     `json:"name,omitempty"`
+	Statuses []*Status   `json:"statuses,omitempty"`
 }
 
 // Sprint represents an agile sprint in Yandex Tracker.
 // Note: Sprint startDate/endDate are plain "YYYY-MM-DD" strings (*string),
 // while startDateTime/endDateTime use the full Timestamp format.
 type Sprint struct {
-	Self          *string    `json:"self,omitempty"`
-	ID            *int       `json:"id,omitempty"`
-	Version       *int       `json:"version,omitempty"`
-	Name          *string    `json:"name,omitempty"`
-	Board         *BoardRef  `json:"board,omitempty"`
-	Status        *string    `json:"status,omitempty"`
-	Archived      *bool      `json:"archived,omitempty"`
-	CreatedBy     *User      `json:"createdBy,omitempty"`
-	CreatedAt     *Timestamp `json:"createdAt,omitempty"`
-	StartDate     *string    `json:"startDate,omitempty"`
-	EndDate       *string    `json:"endDate,omitempty"`
-	StartDateTime *Timestamp `json:"startDateTime,omitempty"`
-	EndDateTime   *Timestamp `json:"endDateTime,omitempty"`
+	Self          *string     `json:"self,omitempty"`
+	ID            *FlexString `json:"id,omitempty"`
+	Version       *FlexString `json:"version,omitempty"`
+	Name          *string     `json:"name,omitempty"`
+	Board         *BoardRef   `json:"board,omitempty"`
+	Status        *string     `json:"status,omitempty"`
+	Archived      *bool       `json:"archived,omitempty"`
+	CreatedBy     *User       `json:"createdBy,omitempty"`
+	CreatedAt     *Timestamp  `json:"createdAt,omitempty"`
+	StartDate     *string     `json:"startDate,omitempty"`
+	EndDate       *string     `json:"endDate,omitempty"`
+	StartDateTime *Timestamp  `json:"startDateTime,omitempty"`
+	EndDateTime   *Timestamp  `json:"endDateTime,omitempty"`
 }
 
 // BoardRef is a lightweight board reference embedded in Sprint responses.
 type BoardRef struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // Entity represents a Yandex Tracker entity (project, portfolio, or goal).
 type Entity struct {
 	Self       *string       `json:"self,omitempty"`
-	ID         *string       `json:"id,omitempty"`
-	Version    *int          `json:"version,omitempty"`
+	ID         *FlexString   `json:"id,omitempty"`
+	Version    *FlexString   `json:"version,omitempty"`
 	ShortID    *int          `json:"shortId,omitempty"`
 	EntityType *string       `json:"entityType,omitempty"`
 	CreatedBy  *User         `json:"createdBy,omitempty"`
@@ -959,7 +957,7 @@ type EntityEventsResponse struct {
 
 // EntityEvent represents a single event in entity history.
 type EntityEvent struct {
-	ID        *string              `json:"id,omitempty"`
+	ID        *FlexString          `json:"id,omitempty"`
 	Author    *User                `json:"author,omitempty"`
 	Date      *Timestamp           `json:"date,omitempty"`
 	Transport *string              `json:"transport,omitempty"`
@@ -975,8 +973,8 @@ type EntityEventChange struct {
 
 // EntityEventField identifies the field that changed.
 type EntityEventField struct {
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // EntityAccess represents the access settings for an entity.
@@ -1002,9 +1000,9 @@ type EntityACLEntry struct {
 
 // EntityRef is a lightweight entity reference used in access settings.
 type EntityRef struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // EntityParentEntities represents the parent entity hierarchy in access settings.
@@ -1030,14 +1028,14 @@ type EntityLinkResponse struct {
 // Trigger represents a queue trigger in Yandex Tracker.
 // Triggers automate actions when specific conditions are met on issues.
 type Trigger struct {
-	ID         *string                `json:"id,omitempty"`
+	ID         *FlexString            `json:"id,omitempty"`
 	Self       *string                `json:"self,omitempty"`
 	Queue      *Queue                 `json:"queue,omitempty"`
 	Name       *string                `json:"name,omitempty"`
 	Order      *string                `json:"order,omitempty"`
 	Actions    []*AutomationAction    `json:"actions,omitempty"`
 	Conditions []*AutomationCondition `json:"conditions,omitempty"`
-	Version    *int                   `json:"version,omitempty"`
+	Version    *FlexString            `json:"version,omitempty"`
 	Active     *bool                  `json:"active,omitempty"`
 }
 
@@ -1045,11 +1043,11 @@ type Trigger struct {
 // Auto-actions are periodic automation rules that run on a schedule,
 // filtering issues by filter/query and applying actions.
 type AutoAction struct {
-	ID                   *string             `json:"id,omitempty"`
+	ID                   *FlexString         `json:"id,omitempty"`
 	Self                 *string             `json:"self,omitempty"`
 	Queue                *Queue              `json:"queue,omitempty"`
 	Name                 *string             `json:"name,omitempty"`
-	Version              *int                `json:"version,omitempty"`
+	Version              *FlexString         `json:"version,omitempty"`
 	Active               *bool               `json:"active,omitempty"`
 	Created              *Timestamp          `json:"created,omitempty"`
 	Updated              *Timestamp          `json:"updated,omitempty"`
@@ -1065,7 +1063,7 @@ type AutoAction struct {
 
 // AutoActionCalendar represents a calendar schedule reference for an auto-action.
 type AutoActionCalendar struct {
-	ID *int `json:"id,omitempty"`
+	ID *FlexString `json:"id,omitempty"`
 }
 
 // AutomationAction represents an action in a trigger or auto-action.
@@ -1231,7 +1229,7 @@ func (c AutomationCondition) MarshalJSON() ([]byte, error) {
 // Macro represents a macro in Yandex Tracker.
 // Macros allow batch operations on issues triggered manually by users.
 type Macro struct {
-	ID          *int                `json:"id,omitempty"`
+	ID          *FlexString         `json:"id,omitempty"`
 	Self        *string             `json:"self,omitempty"`
 	Queue       *Queue              `json:"queue,omitempty"`
 	Name        *string             `json:"name,omitempty"`
@@ -1247,23 +1245,23 @@ type MacroIssueUpdate struct {
 
 // MacroIssueUpdateField represents the field metadata within a macro issue update.
 type MacroIssueUpdateField struct {
-	Self    *string `json:"self,omitempty"`
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // ExternalApplication represents an external application registered in Yandex Tracker.
 type ExternalApplication struct {
-	Self *string `json:"self,omitempty"`
-	ID   *string `json:"id,omitempty"`
-	Type *string `json:"type,omitempty"`
-	Name *string `json:"name,omitempty"`
+	Self *string     `json:"self,omitempty"`
+	ID   *FlexString `json:"id,omitempty"`
+	Type *string     `json:"type,omitempty"`
+	Name *string     `json:"name,omitempty"`
 }
 
 // ExternalLink represents an external link on an issue in Yandex Tracker.
 type ExternalLink struct {
 	Self      *string             `json:"self,omitempty"`
-	ID        *int                `json:"id,omitempty"`
+	ID        *FlexString         `json:"id,omitempty"`
 	Type      *ExternalLinkType   `json:"type,omitempty"`
 	Direction *string             `json:"direction,omitempty"`
 	Object    *ExternalLinkObject `json:"object,omitempty"`
@@ -1275,29 +1273,29 @@ type ExternalLink struct {
 
 // ExternalLinkType represents the type information of an external link.
 type ExternalLinkType struct {
-	Self *string `json:"self,omitempty"`
-	ID   *string `json:"id,omitempty"`
-	Key  *string `json:"key,omitempty"`
+	Self *string     `json:"self,omitempty"`
+	ID   *FlexString `json:"id,omitempty"`
+	Key  *string     `json:"key,omitempty"`
 }
 
 // ExternalLinkObject represents the external object referenced by an external link.
 type ExternalLinkObject struct {
 	Self        *string              `json:"self,omitempty"`
-	ID          *string              `json:"id,omitempty"`
+	ID          *FlexString          `json:"id,omitempty"`
 	Key         *string              `json:"key,omitempty"`
 	Application *ExternalApplication `json:"application,omitempty"`
 }
 
 // Dashboard represents a Yandex Tracker dashboard.
 type Dashboard struct {
-	Self      *string    `json:"self,omitempty"`
-	ID        *int       `json:"id,omitempty"`
-	Version   *int       `json:"version,omitempty"`
-	Name      *string    `json:"name,omitempty"`
-	Layout    *string    `json:"layout,omitempty"`
-	Owner     *User      `json:"owner,omitempty"`
-	CreatedBy *User      `json:"createdBy,omitempty"`
-	CreatedAt *Timestamp `json:"createdAt,omitempty"`
+	Self      *string     `json:"self,omitempty"`
+	ID        *FlexString `json:"id,omitempty"`
+	Version   *FlexString `json:"version,omitempty"`
+	Name      *string     `json:"name,omitempty"`
+	Layout    *string     `json:"layout,omitempty"`
+	Owner     *User       `json:"owner,omitempty"`
+	CreatedBy *User       `json:"createdBy,omitempty"`
+	CreatedAt *Timestamp  `json:"createdAt,omitempty"`
 }
 
 // Widget represents a widget on a Yandex Tracker dashboard.
@@ -1305,8 +1303,8 @@ type Dashboard struct {
 // type-specific fields are stored in the Parameters map.
 type Widget struct {
 	Self        *string        `json:"-"`
-	ID          *int           `json:"-"`
-	Version     *int           `json:"-"`
+	ID          *FlexString    `json:"-"`
+	Version     *FlexString    `json:"-"`
 	Description *string        `json:"-"`
 	CreatedBy   *User          `json:"-"`
 	Dashboard   *DashboardRef  `json:"-"`
@@ -1334,13 +1332,13 @@ func (w *Widget) UnmarshalJSON(data []byte) error {
 		}
 	}
 	if v, ok := raw["id"]; ok {
-		var n int
+		var n FlexString
 		if err := json.Unmarshal(v, &n); err == nil {
 			w.ID = &n
 		}
 	}
 	if v, ok := raw["version"]; ok {
-		var n int
+		var n FlexString
 		if err := json.Unmarshal(v, &n); err == nil {
 			w.Version = &n
 		}
@@ -1425,8 +1423,8 @@ func (w Widget) MarshalJSON() ([]byte, error) {
 
 // DashboardRef is a lightweight dashboard reference in widget responses.
 type DashboardRef struct {
-	ID      *string `json:"id,omitempty"`
-	Display *string `json:"display,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // DatasetInfo contains widget calculation metadata.

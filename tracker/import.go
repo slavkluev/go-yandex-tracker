@@ -109,7 +109,7 @@ func (s *ImportService) ImportFile(ctx context.Context, issueKey string, opts *I
 // Requires admin permissions in the target queue.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/import/import-attachments
-func (s *ImportService) ImportCommentFile(ctx context.Context, issueKey string, commentID int, opts *ImportFileOptions, filename string, file io.Reader) (*Attachment, *Response, error) {
+func (s *ImportService) ImportCommentFile(ctx context.Context, issueKey string, commentID string, opts *ImportFileOptions, filename string, file io.Reader) (*Attachment, *Response, error) {
 	u := fmt.Sprintf("v3/issues/%v/comments/%v/attachments/_import", issueKey, commentID)
 	u, err := addOptions(u, opts)
 	if err != nil {

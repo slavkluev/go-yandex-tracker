@@ -8,16 +8,16 @@ import (
 
 func TestAutoAction_JSONRoundTrip(t *testing.T) {
 	want := &AutoAction{
-		ID:   Ptr("1"),
+		ID:   Ptr(FlexString("1")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/autoactions/1"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
 		Name:    Ptr("Auto close stale"),
-		Version: Ptr(3),
+		Version: Ptr(FlexString("3")),
 		Active:  Ptr(true),
 		Filter: map[string]any{
 			"assignee": "user1",
@@ -29,7 +29,7 @@ func TestAutoAction_JSONRoundTrip(t *testing.T) {
 		EnableNotifications:  Ptr(false),
 		TotalIssuesProcessed: Ptr(42),
 		IntervalMillis:       Ptr(int64(3600000)),
-		Calendar:             &AutoActionCalendar{ID: Ptr(1)},
+		Calendar:             &AutoActionCalendar{ID: Ptr(FlexString("1"))},
 	}
 
 	data, err := json.Marshal(want)
@@ -49,7 +49,7 @@ func TestAutoAction_JSONRoundTrip(t *testing.T) {
 
 func TestAutoActionCalendar_JSONRoundTrip(t *testing.T) {
 	want := &AutoActionCalendar{
-		ID: Ptr(1),
+		ID: Ptr(FlexString("1")),
 	}
 
 	data, err := json.Marshal(want)
@@ -79,7 +79,7 @@ func TestAutoActionCreateRequest_JSON(t *testing.T) {
 		Active:              Ptr(true),
 		EnableNotifications: Ptr(false),
 		IntervalMillis:      Ptr(int64(3600000)),
-		Calendar:            &AutoActionCalendar{ID: Ptr(1)},
+		Calendar:            &AutoActionCalendar{ID: Ptr(FlexString("1"))},
 	}
 
 	data, err := json.Marshal(req)

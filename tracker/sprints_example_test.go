@@ -14,7 +14,7 @@ func ExampleSprintsService_List() {
 		tracker.WithOrgID("your-org-id"),
 	)
 
-	sprints, _, err := client.Sprints.List(context.Background(), 1)
+	sprints, _, err := client.Sprints.List(context.Background(), "1")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -32,7 +32,7 @@ func ExampleSprintsService_Create() {
 
 	sprint, _, err := client.Sprints.Create(context.Background(), &tracker.SprintCreateRequest{
 		Name:  tracker.Ptr("Sprint 1"),
-		Board: &tracker.BoardRef{ID: tracker.Ptr("1")},
+		Board: &tracker.BoardRef{ID: tracker.Ptr(tracker.FlexString("1"))},
 	})
 	if err != nil {
 		log.Fatal(err)

@@ -61,33 +61,33 @@ func TestFieldsService_ListLocal(t *testing.T) {
 	want := []*Field{
 		{
 			Self:     Ptr("https://api.tracker.yandex.net/v3/queues/TEST/localFields/localField1"),
-			ID:       Ptr("localField1"),
+			ID:       Ptr(FlexString("localField1")),
 			Name:     Ptr("Local Field One"),
 			Key:      Ptr("localField1"),
-			Version:  Ptr(1),
+			Version:  Ptr(FlexString("1")),
 			Schema:   &FieldSchema{Type: Ptr("string"), Required: Ptr(false)},
 			Readonly: Ptr(false),
 			Options:  Ptr(false),
 			Suggest:  Ptr(false),
 			Order:    Ptr(10),
-			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/custom"), ID: Ptr("custom"), Display: Ptr("Custom")},
+			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/custom"), ID: Ptr(FlexString("custom")), Display: Ptr("Custom")},
 			Type:     Ptr("local"),
-			Queue:    &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			Queue:    &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr(FlexString("1")), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 		},
 		{
 			Self:     Ptr("https://api.tracker.yandex.net/v3/queues/TEST/localFields/localField2"),
-			ID:       Ptr("localField2"),
+			ID:       Ptr(FlexString("localField2")),
 			Name:     Ptr("Local Field Two"),
 			Key:      Ptr("localField2"),
-			Version:  Ptr(1),
+			Version:  Ptr(FlexString("1")),
 			Schema:   &FieldSchema{Type: Ptr("integer"), Required: Ptr(false)},
 			Readonly: Ptr(false),
 			Options:  Ptr(false),
 			Suggest:  Ptr(false),
 			Order:    Ptr(20),
-			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/custom"), ID: Ptr("custom"), Display: Ptr("Custom")},
+			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/custom"), ID: Ptr(FlexString("custom")), Display: Ptr("Custom")},
 			Type:     Ptr("local"),
-			Queue:    &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			Queue:    &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr(FlexString("1")), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 		},
 	}
 
@@ -136,19 +136,19 @@ func TestFieldsService_GetLocal(t *testing.T) {
 
 	want := &Field{
 		Self:        Ptr("https://api.tracker.yandex.net/v3/queues/TEST/localFields/localField1"),
-		ID:          Ptr("localField1"),
+		ID:          Ptr(FlexString("localField1")),
 		Name:        Ptr("Local Field One"),
 		Description: Ptr("A local field for testing"),
 		Key:         Ptr("localField1"),
-		Version:     Ptr(1),
+		Version:     Ptr(FlexString("1")),
 		Schema:      &FieldSchema{Type: Ptr("string"), Required: Ptr(false)},
 		Readonly:    Ptr(false),
 		Options:     Ptr(false),
 		Suggest:     Ptr(false),
 		Order:       Ptr(10),
-		Category:    &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/custom"), ID: Ptr("custom"), Display: Ptr("Custom")},
+		Category:    &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/custom"), ID: Ptr(FlexString("custom")), Display: Ptr("Custom")},
 		Type:        Ptr("local"),
-		Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+		Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr(FlexString("1")), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 	}
 
 	if !reflect.DeepEqual(field, want) {
@@ -248,8 +248,8 @@ func TestFieldsService_EditLocal(t *testing.T) {
 	if got := *field.Description; got != "Updated local field" {
 		t.Errorf("Description = %q, want %q", got, "Updated local field")
 	}
-	if got := *field.Version; got != 2 {
-		t.Errorf("Version = %d, want %d", got, 2)
+	if got := *field.Version; got != FlexString("2") {
+		t.Errorf("Version = %q, want %q", got, FlexString("2"))
 	}
 	if got := *field.Queue.Key; got != "TEST" {
 		t.Errorf("Queue.Key = %q, want %q", got, "TEST")

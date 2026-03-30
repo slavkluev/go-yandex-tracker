@@ -52,11 +52,10 @@ func (s *IssuesService) CreateComment(ctx context.Context, issueKey string, comm
 }
 
 // EditComment updates an existing comment on an issue.
-// The commentID parameter is numeric (int) because Comment.ID is *int.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/edit-comment
-func (s *IssuesService) EditComment(ctx context.Context, issueKey string, commentID int, comment *CommentRequest) (*Comment, *Response, error) {
-	u := fmt.Sprintf("v3/issues/%v/comments/%d", issueKey, commentID)
+func (s *IssuesService) EditComment(ctx context.Context, issueKey string, commentID string, comment *CommentRequest) (*Comment, *Response, error) {
+	u := fmt.Sprintf("v3/issues/%v/comments/%s", issueKey, commentID)
 
 	req, err := s.client.NewRequest("PATCH", u, comment)
 	if err != nil {
@@ -73,12 +72,11 @@ func (s *IssuesService) EditComment(ctx context.Context, issueKey string, commen
 }
 
 // DeleteComment deletes a comment from an issue.
-// The commentID parameter is numeric (int) because Comment.ID is *int.
 // Returns (*Response, error) since 204 responses have no body.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-comment
-func (s *IssuesService) DeleteComment(ctx context.Context, issueKey string, commentID int) (*Response, error) {
-	u := fmt.Sprintf("v3/issues/%v/comments/%d", issueKey, commentID)
+func (s *IssuesService) DeleteComment(ctx context.Context, issueKey string, commentID string) (*Response, error) {
+	u := fmt.Sprintf("v3/issues/%v/comments/%s", issueKey, commentID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

@@ -23,11 +23,11 @@ func TestQueuesService_UpdatePermissions(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(QueuePermissions{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST/permissions"),
-			Version: Ptr(2),
+			Version: Ptr(FlexString("2")),
 			Create: &PermissionGroup{
 				Users: []*PermissionUser{
-					{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
-					{Self: Ptr("https://api.tracker.yandex.net/v3/users/789"), ID: Ptr("789"), Display: Ptr("New User")},
+					{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr(FlexString("123")), Display: Ptr("John Doe")},
+					{Self: Ptr("https://api.tracker.yandex.net/v3/users/789"), ID: Ptr(FlexString("789")), Display: Ptr("New User")},
 				},
 			},
 		})
@@ -46,11 +46,11 @@ func TestQueuesService_UpdatePermissions(t *testing.T) {
 
 	want := &QueuePermissions{
 		Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST/permissions"),
-		Version: Ptr(2),
+		Version: Ptr(FlexString("2")),
 		Create: &PermissionGroup{
 			Users: []*PermissionUser{
-				{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
-				{Self: Ptr("https://api.tracker.yandex.net/v3/users/789"), ID: Ptr("789"), Display: Ptr("New User")},
+				{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr(FlexString("123")), Display: Ptr("John Doe")},
+				{Self: Ptr("https://api.tracker.yandex.net/v3/users/789"), ID: Ptr(FlexString("789")), Display: Ptr("New User")},
 			},
 		},
 	}

@@ -75,8 +75,8 @@ func TestImportService_ImportComment(t *testing.T) {
 	if got := *comment.Text; got != "Imported comment" {
 		t.Errorf("Text = %q, want %q", got, "Imported comment")
 	}
-	if got := *comment.ID; got != 1 {
-		t.Errorf("ID = %d, want %d", got, 1)
+	if got := *comment.ID; got != "1" {
+		t.Errorf("ID = %s, want %s", got, "1")
 	}
 }
 
@@ -207,7 +207,7 @@ func TestImportService_ImportCommentFile(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	attachment, _, err := client.Import.ImportCommentFile(ctx, "QUEUE-1", 123, &ImportFileOptions{
+	attachment, _, err := client.Import.ImportCommentFile(ctx, "QUEUE-1", "123", &ImportFileOptions{
 		Filename:  "comment-file.txt",
 		CreatedAt: "2017-08-29T12:34:41.740+0000",
 		CreatedBy: "user1",

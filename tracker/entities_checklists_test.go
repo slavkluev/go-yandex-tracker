@@ -45,8 +45,8 @@ func TestEntitiesService_CreateChecklistItem(t *testing.T) {
 
 	want := &Entity{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/entities/project/1"),
-		ID:         Ptr("1"),
-		Version:    Ptr(2),
+		ID:         Ptr(FlexString("1")),
+		Version:    Ptr(FlexString("2")),
 		EntityType: Ptr("project"),
 		Fields: &EntityFields{
 			Summary: Ptr("Test Project"),
@@ -94,8 +94,8 @@ func TestEntitiesService_EditChecklistItem(t *testing.T) {
 
 	want := &Entity{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/entities/project/1"),
-		ID:         Ptr("1"),
-		Version:    Ptr(3),
+		ID:         Ptr(FlexString("1")),
+		Version:    Ptr(FlexString("3")),
 		EntityType: Ptr("project"),
 		Fields: &EntityFields{
 			Summary: Ptr("Test Project"),
@@ -143,8 +143,8 @@ func TestEntitiesService_MoveChecklistItem(t *testing.T) {
 
 	want := &Entity{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/entities/project/1"),
-		ID:         Ptr("1"),
-		Version:    Ptr(4),
+		ID:         Ptr(FlexString("1")),
+		Version:    Ptr(FlexString("4")),
 		EntityType: Ptr("project"),
 		Fields: &EntityFields{
 			Summary: Ptr("Test Project"),
@@ -185,8 +185,8 @@ func TestEntitiesService_DeleteChecklistItem(t *testing.T) {
 	// Verify the response body was decoded into Entity
 	want := &Entity{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/entities/project/1"),
-		ID:         Ptr("1"),
-		Version:    Ptr(5),
+		ID:         Ptr(FlexString("1")),
+		Version:    Ptr(FlexString("5")),
 		EntityType: Ptr("project"),
 		Fields: &EntityFields{
 			Summary: Ptr("Test Project"),
@@ -227,8 +227,8 @@ func TestEntitiesService_DeleteChecklist(t *testing.T) {
 	// Verify the response body was decoded into Entity
 	want := &Entity{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/entities/project/1"),
-		ID:         Ptr("1"),
-		Version:    Ptr(6),
+		ID:         Ptr(FlexString("1")),
+		Version:    Ptr(FlexString("6")),
 		EntityType: Ptr("project"),
 		Fields: &EntityFields{
 			Summary: Ptr("Test Project"),

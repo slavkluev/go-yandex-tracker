@@ -50,7 +50,7 @@ func TestBulkChangeService_Move(t *testing.T) {
 
 	want := &BulkChange{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/bulkchange/593cd211ef7e8a0000000001"),
-		ID:         Ptr("593cd211ef7e8a0000000001"),
+		ID:         Ptr(FlexString("593cd211ef7e8a0000000001")),
 		Status:     Ptr("CREATED"),
 		StatusText: Ptr("Bulk operation created"),
 	}
@@ -100,7 +100,7 @@ func TestBulkChangeService_Update(t *testing.T) {
 
 	want := &BulkChange{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/bulkchange/593cd211ef7e8a0000000002"),
-		ID:         Ptr("593cd211ef7e8a0000000002"),
+		ID:         Ptr(FlexString("593cd211ef7e8a0000000002")),
 		Status:     Ptr("CREATED"),
 		StatusText: Ptr("Bulk operation created"),
 	}
@@ -149,7 +149,7 @@ func TestBulkChangeService_Transition(t *testing.T) {
 
 	want := &BulkChange{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/bulkchange/593cd211ef7e8a0000000003"),
-		ID:         Ptr("593cd211ef7e8a0000000003"),
+		ID:         Ptr(FlexString("593cd211ef7e8a0000000003")),
 		Status:     Ptr("CREATED"),
 		StatusText: Ptr("Bulk operation created"),
 	}
@@ -184,7 +184,7 @@ func TestBulkChangeService_GetStatus(t *testing.T) {
 
 	want := &BulkChange{
 		Self:                  Ptr("https://api.tracker.yandex.net/v3/bulkchange/593cd211ef7e8a0000000001"),
-		ID:                    Ptr("593cd211ef7e8a0000000001"),
+		ID:                    Ptr(FlexString("593cd211ef7e8a0000000001")),
 		Status:                Ptr("COMPLETED"),
 		StatusText:            Ptr("Bulk edit completed"),
 		ExecutionChunkPercent: Ptr(100),

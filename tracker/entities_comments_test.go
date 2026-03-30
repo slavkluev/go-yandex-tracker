@@ -29,8 +29,8 @@ func TestEntitiesService_ListComments(t *testing.T) {
 	}
 
 	comment := comments[0]
-	if got := *comment.ID; got != 123 {
-		t.Errorf("ID = %d, want %d", got, 123)
+	if got := *comment.ID; got != "123" {
+		t.Errorf("ID = %s, want %s", got, "123")
 	}
 	if got := *comment.Text; got != "Entity comment" {
 		t.Errorf("Text = %q, want %q", got, "Entity comment")
@@ -87,8 +87,8 @@ func TestEntitiesService_CreateComment(t *testing.T) {
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("StatusCode = %d, want %d", resp.StatusCode, http.StatusCreated)
 	}
-	if got := *comment.ID; got != 456 {
-		t.Errorf("ID = %d, want %d", got, 456)
+	if got := *comment.ID; got != "456" {
+		t.Errorf("ID = %s, want %s", got, "456")
 	}
 	if got := *comment.Text; got != "New entity comment" {
 		t.Errorf("Text = %q, want %q", got, "New entity comment")
@@ -122,8 +122,8 @@ func TestEntitiesService_CreateComment_WithOptions(t *testing.T) {
 	if err != nil {
 		t.Fatalf("CreateComment returned error: %v", err)
 	}
-	if got := *comment.ID; got != 789 {
-		t.Errorf("ID = %d, want %d", got, 789)
+	if got := *comment.ID; got != "789" {
+		t.Errorf("ID = %s, want %s", got, "789")
 	}
 }
 
@@ -140,12 +140,12 @@ func TestEntitiesService_GetComment(t *testing.T) {
 		}`)
 	})
 
-	comment, _, err := client.Entities.GetComment(ctx, EntityTypeProject, "1", 123)
+	comment, _, err := client.Entities.GetComment(ctx, EntityTypeProject, "1", "123")
 	if err != nil {
 		t.Fatalf("GetComment returned error: %v", err)
 	}
-	if got := *comment.ID; got != 123 {
-		t.Errorf("ID = %d, want %d", got, 123)
+	if got := *comment.ID; got != "123" {
+		t.Errorf("ID = %s, want %s", got, "123")
 	}
 	if got := *comment.Text; got != "Single comment" {
 		t.Errorf("Text = %q, want %q", got, "Single comment")
@@ -166,20 +166,20 @@ func TestEntitiesService_EditComment(t *testing.T) {
 		}`)
 	})
 
-	comment, _, err := client.Entities.EditComment(ctx, EntityTypeProject, "1", 123, &CommentRequest{
+	comment, _, err := client.Entities.EditComment(ctx, EntityTypeProject, "1", "123", &CommentRequest{
 		Text: Ptr("Updated entity comment"),
 	}, nil)
 	if err != nil {
 		t.Fatalf("EditComment returned error: %v", err)
 	}
-	if got := *comment.ID; got != 123 {
-		t.Errorf("ID = %d, want %d", got, 123)
+	if got := *comment.ID; got != "123" {
+		t.Errorf("ID = %s, want %s", got, "123")
 	}
 	if got := *comment.Text; got != "Updated entity comment" {
 		t.Errorf("Text = %q, want %q", got, "Updated entity comment")
 	}
-	if got := *comment.Version; got != 2 {
-		t.Errorf("Version = %d, want %d", got, 2)
+	if got := *comment.Version; got != FlexString("2") {
+		t.Errorf("Version = %q, want %q", got, FlexString("2"))
 	}
 }
 
@@ -191,7 +191,7 @@ func TestEntitiesService_DeleteComment(t *testing.T) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 
-	resp, err := client.Entities.DeleteComment(ctx, EntityTypeProject, "1", 123)
+	resp, err := client.Entities.DeleteComment(ctx, EntityTypeProject, "1", "123")
 	if err != nil {
 		t.Fatalf("DeleteComment returned error: %v", err)
 	}

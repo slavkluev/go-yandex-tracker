@@ -51,22 +51,22 @@ func TestComponentsService_List(t *testing.T) {
 	want := []*Component{
 		{
 			Self:        Ptr("https://api.tracker.yandex.net/v3/components/1"),
-			ID:          Ptr(1),
-			Version:     Ptr(1),
+			ID:          Ptr(FlexString("1")),
+			Version:     Ptr(FlexString("1")),
 			Name:        Ptr("Backend"),
-			Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr(FlexString("1")), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 			Description: Ptr("Backend component"),
-			Lead:        &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/1"), ID: Ptr("1"), Display: Ptr("John")},
+			Lead:        &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/1"), ID: Ptr(FlexString("1")), Display: Ptr("John")},
 			AssignAuto:  Ptr(false),
 		},
 		{
 			Self:        Ptr("https://api.tracker.yandex.net/v3/components/2"),
-			ID:          Ptr(2),
-			Version:     Ptr(1),
+			ID:          Ptr(FlexString("2")),
+			Version:     Ptr(FlexString("1")),
 			Name:        Ptr("Frontend"),
-			Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			Queue:       &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr(FlexString("1")), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
 			Description: Ptr("Frontend component"),
-			Lead:        &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/2"), ID: Ptr("2"), Display: Ptr("Jane")},
+			Lead:        &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/2"), ID: Ptr(FlexString("2")), Display: Ptr("Jane")},
 			AssignAuto:  Ptr(true),
 		},
 	}
@@ -110,8 +110,8 @@ func TestComponentsService_Create(t *testing.T) {
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("StatusCode = %d, want %d", resp.StatusCode, http.StatusCreated)
 	}
-	if got := *component.ID; got != 1 {
-		t.Errorf("ID = %d, want %d", got, 1)
+	if got := *component.ID; got != "1" {
+		t.Errorf("ID = %s, want %s", got, "1")
 	}
 	if got := *component.Name; got != "Backend" {
 		t.Errorf("Name = %q, want %q", got, "Backend")
@@ -140,12 +140,12 @@ func TestComponentsService_Get(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	component, _, err := client.Components.Get(ctx, 1)
+	component, _, err := client.Components.Get(ctx, "1")
 	if err != nil {
 		t.Fatalf("Get returned error: %v", err)
 	}
-	if got := *component.ID; got != 1 {
-		t.Errorf("ID = %d, want %d", got, 1)
+	if got := *component.ID; got != "1" {
+		t.Errorf("ID = %s, want %s", got, "1")
 	}
 	if got := *component.Name; got != "Backend" {
 		t.Errorf("Name = %q, want %q", got, "Backend")
@@ -175,20 +175,20 @@ func TestComponentsService_Edit(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	component, _, err := client.Components.Edit(ctx, 1, &ComponentRequest{
+	component, _, err := client.Components.Edit(ctx, "1", &ComponentRequest{
 		Name: Ptr("Updated"),
 	})
 	if err != nil {
 		t.Fatalf("Edit returned error: %v", err)
 	}
-	if got := *component.ID; got != 1 {
-		t.Errorf("ID = %d, want %d", got, 1)
+	if got := *component.ID; got != "1" {
+		t.Errorf("ID = %s, want %s", got, "1")
 	}
 	if got := *component.Name; got != "Updated" {
 		t.Errorf("Name = %q, want %q", got, "Updated")
 	}
-	if got := *component.Version; got != 2 {
-		t.Errorf("Version = %d, want %d", got, 2)
+	if got := *component.Version; got != FlexString("2") {
+		t.Errorf("Version = %q, want %q", got, FlexString("2"))
 	}
 }
 
@@ -201,7 +201,7 @@ func TestComponentsService_Delete(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	resp, err := client.Components.Delete(ctx, 1)
+	resp, err := client.Components.Delete(ctx, "1")
 	if err != nil {
 		t.Fatalf("Delete returned error: %v", err)
 	}
@@ -220,7 +220,7 @@ func TestComponentsService_Get_NotFound(t *testing.T) {
 		fmt.Fprint(w, `{"errorMessages":["Object not found"],"errors":{}}`)
 	})
 
-	_, _, err := client.Components.Get(ctx, 99999)
+	_, _, err := client.Components.Get(ctx, "99999")
 	if err == nil {
 		t.Fatal("Components.Get expected error for 404, got nil")
 	}

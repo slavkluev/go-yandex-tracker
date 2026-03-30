@@ -41,7 +41,7 @@ func TestSprintsService_List(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	sprints, _, err := client.Sprints.List(ctx, 1)
+	sprints, _, err := client.Sprints.List(ctx, "1")
 	if err != nil {
 		t.Fatalf("List returned error: %v", err)
 	}
@@ -53,10 +53,10 @@ func TestSprintsService_List(t *testing.T) {
 	want := []*Sprint{
 		{
 			Self:      Ptr("https://api.tracker.yandex.net/v3/sprints/1"),
-			ID:        Ptr(1),
-			Version:   Ptr(1),
+			ID:        Ptr(FlexString("1")),
+			Version:   Ptr(FlexString("1")),
 			Name:      Ptr("Sprint 1"),
-			Board:     &BoardRef{Self: Ptr("https://api.tracker.yandex.net/v3/boards/1"), ID: Ptr("1"), Display: Ptr("Test Board")},
+			Board:     &BoardRef{Self: Ptr("https://api.tracker.yandex.net/v3/boards/1"), ID: Ptr(FlexString("1")), Display: Ptr("Test Board")},
 			Status:    Ptr("in_progress"),
 			Archived:  Ptr(false),
 			StartDate: Ptr("2024-01-01"),
@@ -64,10 +64,10 @@ func TestSprintsService_List(t *testing.T) {
 		},
 		{
 			Self:      Ptr("https://api.tracker.yandex.net/v3/sprints/2"),
-			ID:        Ptr(2),
-			Version:   Ptr(1),
+			ID:        Ptr(FlexString("2")),
+			Version:   Ptr(FlexString("1")),
 			Name:      Ptr("Sprint 2"),
-			Board:     &BoardRef{Self: Ptr("https://api.tracker.yandex.net/v3/boards/1"), ID: Ptr("1"), Display: Ptr("Test Board")},
+			Board:     &BoardRef{Self: Ptr("https://api.tracker.yandex.net/v3/boards/1"), ID: Ptr(FlexString("1")), Display: Ptr("Test Board")},
 			Status:    Ptr("draft"),
 			Archived:  Ptr(false),
 			StartDate: Ptr("2024-01-15"),
@@ -104,7 +104,7 @@ func TestSprintsService_Create(t *testing.T) {
 	ctx := context.Background()
 	sprint, resp, err := client.Sprints.Create(ctx, &SprintCreateRequest{
 		Name:      Ptr("Sprint 3"),
-		Board:     &BoardRef{ID: Ptr("1")},
+		Board:     &BoardRef{ID: Ptr(FlexString("1"))},
 		StartDate: Ptr("2024-02-01"),
 		EndDate:   Ptr("2024-02-14"),
 	})
@@ -114,8 +114,8 @@ func TestSprintsService_Create(t *testing.T) {
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("StatusCode = %d, want %d", resp.StatusCode, http.StatusCreated)
 	}
-	if got := *sprint.ID; got != 3 {
-		t.Errorf("ID = %d, want %d", got, 3)
+	if got := *sprint.ID; got != "3" {
+		t.Errorf("ID = %s, want %s", got, "3")
 	}
 	if got := *sprint.Name; got != "Sprint 3" {
 		t.Errorf("Name = %q, want %q", got, "Sprint 3")
@@ -146,12 +146,12 @@ func TestSprintsService_Get(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	sprint, _, err := client.Sprints.Get(ctx, 1)
+	sprint, _, err := client.Sprints.Get(ctx, "1")
 	if err != nil {
 		t.Fatalf("Get returned error: %v", err)
 	}
-	if got := *sprint.ID; got != 1 {
-		t.Errorf("ID = %d, want %d", got, 1)
+	if got := *sprint.ID; got != "1" {
+		t.Errorf("ID = %s, want %s", got, "1")
 	}
 	if got := *sprint.Name; got != "Sprint 1" {
 		t.Errorf("Name = %q, want %q", got, "Sprint 1")
@@ -177,7 +177,7 @@ func TestSprintsService_Get_NotFound(t *testing.T) {
 		fmt.Fprint(w, `{"errorMessages":["Object not found"],"errors":{}}`)
 	})
 
-	_, _, err := client.Sprints.Get(ctx, 99999)
+	_, _, err := client.Sprints.Get(ctx, "99999")
 	if err == nil {
 		t.Fatal("Sprints.Get expected error for 404, got nil")
 	}

@@ -324,8 +324,8 @@ func TestIssue_UnmarshalJSON(t *testing.T) {
 			t.Fatalf("UnmarshalJSON returned error: %v", err)
 		}
 
-		if got := *issue.Version; got != 7 {
-			t.Errorf("Version = %d, want 7", got)
+		if got := *issue.Version; got != FlexString("7") {
+			t.Errorf("Version = %q, want 7", got)
 		}
 		if issue.LastCommentUpdatedAt == nil {
 			t.Error("LastCommentUpdatedAt is nil")
@@ -405,7 +405,7 @@ func TestIssue_MarshalJSON(t *testing.T) {
 		issue := Issue{
 			Key:     Ptr("QUEUE-1"),
 			Summary: Ptr("Test issue"),
-			Version: Ptr(3),
+			Version: Ptr(FlexString("3")),
 			Tags:    []string{"tag1"},
 		}
 
@@ -425,7 +425,7 @@ func TestIssue_MarshalJSON(t *testing.T) {
 		if raw["summary"] != "Test issue" {
 			t.Errorf("summary = %v, want Test issue", raw["summary"])
 		}
-		if raw["version"] != float64(3) {
+		if raw["version"] != "3" {
 			t.Errorf("version = %v, want 3", raw["version"])
 		}
 	})
@@ -491,7 +491,7 @@ func TestIssue_MarshalJSON(t *testing.T) {
 		if result["key"] != "QUEUE-1" {
 			t.Errorf("key = %v, want QUEUE-1", result["key"])
 		}
-		if result["version"] != float64(5) {
+		if result["version"] != "5" {
 			t.Errorf("version = %v, want 5", result["version"])
 		}
 		if result["customField1"] != "value1" {
@@ -759,9 +759,9 @@ func TestMacro_JSON(t *testing.T) {
 		t.Fatalf("Unmarshal Macro: %v", err)
 	}
 
-	// Macro.ID is *int (not *string)
-	if macro.ID == nil || *macro.ID != 5 {
-		t.Errorf("Macro.ID = %v, want Ptr(5)", macro.ID)
+	// Macro.ID is *FlexString
+	if macro.ID == nil || *macro.ID != "5" {
+		t.Errorf("Macro.ID = %v, want Ptr(FlexString(\"5\"))", macro.ID)
 	}
 	if macro.Self == nil || *macro.Self != "https://api.tracker.yandex.net/v3/queues/TEST/macros/5" {
 		t.Errorf("Macro.Self = %v, want non-nil", macro.Self)

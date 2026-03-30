@@ -26,8 +26,8 @@ func (s *BoardsService) Create(ctx context.Context, board *BoardCreateRequest) (
 // Get fetches a board by its ID.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/get-board
-func (s *BoardsService) Get(ctx context.Context, boardID int) (*Board, *Response, error) {
-	u := fmt.Sprintf("v3/boards/%d", boardID)
+func (s *BoardsService) Get(ctx context.Context, boardID string) (*Board, *Response, error) {
+	u := fmt.Sprintf("v3/boards/%s", boardID)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -67,15 +67,15 @@ func (s *BoardsService) List(ctx context.Context) ([]*Board, *Response, error) {
 // as the If-Match header value.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/patch-board
-func (s *BoardsService) Edit(ctx context.Context, boardID int, version int, board *BoardEditRequest) (*Board, *Response, error) {
-	u := fmt.Sprintf("v3/boards/%d", boardID)
+func (s *BoardsService) Edit(ctx context.Context, boardID string, version string, board *BoardEditRequest) (*Board, *Response, error) {
+	u := fmt.Sprintf("v3/boards/%s", boardID)
 
 	req, err := s.client.NewRequest("PATCH", u, board)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	req.Header.Set("If-Match", fmt.Sprintf("%d", version))
+	req.Header.Set("If-Match", version)
 
 	b := new(Board)
 	resp, err := s.client.Do(ctx, req, b)
@@ -90,8 +90,8 @@ func (s *BoardsService) Edit(ctx context.Context, boardID int, version int, boar
 // Returns (*Response, error) since 204 responses have no body.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/delete-board
-func (s *BoardsService) Delete(ctx context.Context, boardID int) (*Response, error) {
-	u := fmt.Sprintf("v3/boards/%d", boardID)
+func (s *BoardsService) Delete(ctx context.Context, boardID string) (*Response, error) {
+	u := fmt.Sprintf("v3/boards/%s", boardID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

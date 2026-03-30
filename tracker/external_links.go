@@ -72,8 +72,8 @@ func (s *ExternalLinksService) CreateLink(ctx context.Context, issueKey string, 
 // The API returns 204 No Content on success.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/delete-external-link
-func (s *ExternalLinksService) DeleteLink(ctx context.Context, issueKey string, linkID int) (*Response, error) {
-	u := fmt.Sprintf("v3/issues/%v/remotelinks/%v", issueKey, linkID)
+func (s *ExternalLinksService) DeleteLink(ctx context.Context, issueKey string, linkID string) (*Response, error) {
+	u := fmt.Sprintf("v3/issues/%v/remotelinks/%s", issueKey, linkID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

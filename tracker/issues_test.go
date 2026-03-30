@@ -41,7 +41,7 @@ func TestIssuesService_Create(t *testing.T) {
 
 	want := &Issue{
 		Self:    Ptr("https://api.tracker.yandex.net/v3/issues/TEST-1"),
-		ID:      Ptr("1"),
+		ID:      Ptr(FlexString("1")),
 		Key:     Ptr("TEST-1"),
 		Summary: Ptr("Test issue"),
 	}
@@ -84,7 +84,7 @@ func TestIssuesService_Get(t *testing.T) {
 
 	want := &Issue{
 		Self:        Ptr("https://api.tracker.yandex.net/v3/issues/QUEUE-1"),
-		ID:          Ptr("1"),
+		ID:          Ptr(FlexString("1")),
 		Key:         Ptr("QUEUE-1"),
 		Summary:     Ptr("Test issue"),
 		Description: Ptr("A test issue"),

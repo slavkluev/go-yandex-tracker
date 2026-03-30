@@ -17,7 +17,7 @@ func TestQueuesService_ListVersions(t *testing.T) {
 		json.NewEncoder(w).Encode([]*QueueVersion{
 			{
 				Self:      Ptr("https://api.tracker.yandex.net/v3/queues/TEST/versions/1"),
-				ID:        Ptr("1"),
+				ID:        Ptr(FlexString("1")),
 				Name:      Ptr("v1.0"),
 				StartDate: Ptr("2024-01-01"),
 				DueDate:   Ptr("2024-06-30"),
@@ -26,7 +26,7 @@ func TestQueuesService_ListVersions(t *testing.T) {
 			},
 			{
 				Self:     Ptr("https://api.tracker.yandex.net/v3/queues/TEST/versions/2"),
-				ID:       Ptr("2"),
+				ID:       Ptr(FlexString("2")),
 				Name:     Ptr("v2.0"),
 				Released: Ptr(true),
 				Archived: Ptr(false),
@@ -40,13 +40,13 @@ func TestQueuesService_ListVersions(t *testing.T) {
 	}
 
 	if len(versions) != 2 {
-		t.Fatalf("Queues.ListVersions returned %d versions, want 2", len(versions))
+		t.Fatalf("Queues.ListVersions returned %q versions, want 2", len(versions))
 	}
 
 	want := []*QueueVersion{
 		{
 			Self:      Ptr("https://api.tracker.yandex.net/v3/queues/TEST/versions/1"),
-			ID:        Ptr("1"),
+			ID:        Ptr(FlexString("1")),
 			Name:      Ptr("v1.0"),
 			StartDate: Ptr("2024-01-01"),
 			DueDate:   Ptr("2024-06-30"),
@@ -55,7 +55,7 @@ func TestQueuesService_ListVersions(t *testing.T) {
 		},
 		{
 			Self:     Ptr("https://api.tracker.yandex.net/v3/queues/TEST/versions/2"),
-			ID:       Ptr("2"),
+			ID:       Ptr(FlexString("2")),
 			Name:     Ptr("v2.0"),
 			Released: Ptr(true),
 			Archived: Ptr(false),

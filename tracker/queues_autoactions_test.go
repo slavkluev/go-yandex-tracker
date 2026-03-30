@@ -49,16 +49,16 @@ func TestQueuesService_ListAutoActions(t *testing.T) {
 
 	want := []*AutoAction{
 		{
-			ID:   Ptr("1"),
+			ID:   Ptr(FlexString("1")),
 			Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/autoactions/1"),
 			Queue: &Queue{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-				ID:      Ptr("100"),
+				ID:      Ptr(FlexString("100")),
 				Key:     Ptr("TEST"),
 				Display: Ptr("Test Queue"),
 			},
 			Name:    Ptr("Close stale issues"),
-			Version: Ptr(3),
+			Version: Ptr(FlexString("3")),
 			Active:  Ptr(true),
 			Actions: []*AutomationAction{
 				{
@@ -69,7 +69,7 @@ func TestQueuesService_ListAutoActions(t *testing.T) {
 			},
 			EnableNotifications: Ptr(false),
 			IntervalMillis:      Ptr(int64(3600000)),
-			Calendar:            &AutoActionCalendar{ID: Ptr(1)},
+			Calendar:            &AutoActionCalendar{ID: Ptr(FlexString("1"))},
 		},
 	}
 
@@ -107,22 +107,22 @@ func TestQueuesService_GetAutoAction(t *testing.T) {
 		}`)
 	})
 
-	autoAction, _, err := client.Queues.GetAutoAction(ctx, "TEST", 1)
+	autoAction, _, err := client.Queues.GetAutoAction(ctx, "TEST", "1")
 	if err != nil {
 		t.Fatalf("Queues.GetAutoAction returned error: %v", err)
 	}
 
 	want := &AutoAction{
-		ID:   Ptr("1"),
+		ID:   Ptr(FlexString("1")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/autoactions/1"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
 		Name:    Ptr("Close stale issues"),
-		Version: Ptr(3),
+		Version: Ptr(FlexString("3")),
 		Active:  Ptr(true),
 		Actions: []*AutomationAction{
 			{
@@ -133,7 +133,7 @@ func TestQueuesService_GetAutoAction(t *testing.T) {
 		},
 		EnableNotifications:  Ptr(false),
 		IntervalMillis:       Ptr(int64(3600000)),
-		Calendar:             &AutoActionCalendar{ID: Ptr(1)},
+		Calendar:             &AutoActionCalendar{ID: Ptr(FlexString("1"))},
 		TotalIssuesProcessed: Ptr(42),
 	}
 
@@ -206,16 +206,16 @@ func TestQueuesService_CreateAutoAction(t *testing.T) {
 	}
 
 	want := &AutoAction{
-		ID:   Ptr("2"),
+		ID:   Ptr(FlexString("2")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/autoactions/2"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
 		Name:    Ptr("Close stale issues"),
-		Version: Ptr(1),
+		Version: Ptr(FlexString("1")),
 		Active:  Ptr(true),
 		Filter: map[string]any{
 			"assignee": "user1",
@@ -274,22 +274,22 @@ func TestQueuesService_UpdateAutoAction(t *testing.T) {
 		}`)
 	})
 
-	autoAction, _, err := client.Queues.UpdateAutoAction(ctx, "TEST", 1, input)
+	autoAction, _, err := client.Queues.UpdateAutoAction(ctx, "TEST", "1", input)
 	if err != nil {
 		t.Fatalf("Queues.UpdateAutoAction returned error: %v", err)
 	}
 
 	want := &AutoAction{
-		ID:   Ptr("1"),
+		ID:   Ptr(FlexString("1")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/autoactions/1"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
 		Name:    Ptr("Updated auto-action"),
-		Version: Ptr(4),
+		Version: Ptr(FlexString("4")),
 		Active:  Ptr(false),
 		Actions: []*AutomationAction{
 			{

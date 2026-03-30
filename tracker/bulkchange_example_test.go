@@ -24,7 +24,7 @@ func ExampleBulkChangeService_Move() {
 	}
 
 	// Poll for completion using the operation ID.
-	status, _, err := client.BulkChange.GetStatus(context.Background(), *op.ID)
+	status, _, err := client.BulkChange.GetStatus(context.Background(), string(*op.ID))
 	if err != nil {
 		log.Fatal(err)
 	}

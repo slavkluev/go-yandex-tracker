@@ -16,7 +16,7 @@ func ExampleBoardsService_Edit() {
 
 	// The version parameter is used for optimistic locking via the If-Match header.
 	// Get the current version from the board's Version field first.
-	board, _, err := client.Boards.Edit(context.Background(), 1, 5, &tracker.BoardEditRequest{
+	board, _, err := client.Boards.Edit(context.Background(), "1", "5", &tracker.BoardEditRequest{
 		Name: tracker.Ptr("Updated Board Name"),
 	})
 	if err != nil {
@@ -33,7 +33,7 @@ func ExampleBoardsService_CreateColumn() {
 	)
 
 	// Version for optimistic locking -- get from board's Version field.
-	column, _, err := client.Boards.CreateColumn(context.Background(), 1, 5, &tracker.ColumnCreateRequest{
+	column, _, err := client.Boards.CreateColumn(context.Background(), "1", "5", &tracker.ColumnCreateRequest{
 		Name: tracker.Ptr("In Progress"),
 	})
 	if err != nil {

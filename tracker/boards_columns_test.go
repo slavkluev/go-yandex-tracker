@@ -31,7 +31,7 @@ func TestBoardsService_ListColumns(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	columns, _, err := client.Boards.ListColumns(ctx, 1)
+	columns, _, err := client.Boards.ListColumns(ctx, "1")
 	if err != nil {
 		t.Fatalf("ListColumns returned error: %v", err)
 	}
@@ -43,18 +43,18 @@ func TestBoardsService_ListColumns(t *testing.T) {
 	want := []*Column{
 		{
 			Self: Ptr("https://api.tracker.yandex.net/v3/boards/1/columns/1"),
-			ID:   Ptr(1),
+			ID:   Ptr(FlexString("1")),
 			Name: Ptr("Open"),
 			Statuses: []*Status{
-				{Self: Ptr("https://api.tracker.yandex.net/v3/statuses/1"), ID: Ptr("1"), Key: Ptr("open"), Display: Ptr("Open")},
+				{Self: Ptr("https://api.tracker.yandex.net/v3/statuses/1"), ID: Ptr(FlexString("1")), Key: Ptr("open"), Display: Ptr("Open")},
 			},
 		},
 		{
 			Self: Ptr("https://api.tracker.yandex.net/v3/boards/1/columns/2"),
-			ID:   Ptr(2),
+			ID:   Ptr(FlexString("2")),
 			Name: Ptr("In Progress"),
 			Statuses: []*Status{
-				{Self: Ptr("https://api.tracker.yandex.net/v3/statuses/2"), ID: Ptr("2"), Key: Ptr("inProgress"), Display: Ptr("In Progress")},
+				{Self: Ptr("https://api.tracker.yandex.net/v3/statuses/2"), ID: Ptr(FlexString("2")), Key: Ptr("inProgress"), Display: Ptr("In Progress")},
 			},
 		},
 	}
@@ -85,7 +85,7 @@ func TestBoardsService_CreateColumn(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	column, resp, err := client.Boards.CreateColumn(ctx, 1, 5, &ColumnCreateRequest{
+	column, resp, err := client.Boards.CreateColumn(ctx, "1", "5", &ColumnCreateRequest{
 		Name:     Ptr("Done"),
 		Statuses: []string{"closed", "resolved"},
 	})
@@ -95,8 +95,8 @@ func TestBoardsService_CreateColumn(t *testing.T) {
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("StatusCode = %d, want %d", resp.StatusCode, http.StatusCreated)
 	}
-	if got := *column.ID; got != 3 {
-		t.Errorf("ID = %d, want %d", got, 3)
+	if got := *column.ID; got != "3" {
+		t.Errorf("ID = %s, want %s", got, "3")
 	}
 	if got := *column.Name; got != "Done" {
 		t.Errorf("Name = %q, want %q", got, "Done")
@@ -123,14 +123,14 @@ func TestBoardsService_EditColumn(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	column, _, err := client.Boards.EditColumn(ctx, 1, 2, 5, &ColumnEditRequest{
+	column, _, err := client.Boards.EditColumn(ctx, "1", "2", "5", &ColumnEditRequest{
 		Name: Ptr("Updated"),
 	})
 	if err != nil {
 		t.Fatalf("EditColumn returned error: %v", err)
 	}
-	if got := *column.ID; got != 2 {
-		t.Errorf("ID = %d, want %d", got, 2)
+	if got := *column.ID; got != "2" {
+		t.Errorf("ID = %s, want %s", got, "2")
 	}
 	if got := *column.Name; got != "Updated" {
 		t.Errorf("Name = %q, want %q", got, "Updated")
@@ -147,7 +147,7 @@ func TestBoardsService_DeleteColumn(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	resp, err := client.Boards.DeleteColumn(ctx, 1, 2, 5)
+	resp, err := client.Boards.DeleteColumn(ctx, "1", "2", "5")
 	if err != nil {
 		t.Fatalf("DeleteColumn returned error: %v", err)
 	}

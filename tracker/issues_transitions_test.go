@@ -28,7 +28,7 @@ func TestIssuesService_GetTransitions(t *testing.T) {
 		t.Fatalf("GetTransitions returned %d transitions, want 1", len(transitions))
 	}
 	want := &Transition{
-		ID:      Ptr("2"),
+		ID:      Ptr(FlexString("2")),
 		Display: Ptr("Close"),
 		To:      &Status{Key: Ptr("closed")},
 	}
@@ -84,7 +84,7 @@ func TestIssuesService_ExecuteTransition(t *testing.T) {
 		t.Fatalf("ExecuteTransition returned %d transitions, want 1", len(transitions))
 	}
 	want := &Transition{
-		ID:      Ptr("3"),
+		ID:      Ptr(FlexString("3")),
 		Display: Ptr("Reopen"),
 		To:      &Status{Key: Ptr("open")},
 	}

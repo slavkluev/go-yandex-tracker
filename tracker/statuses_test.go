@@ -49,10 +49,10 @@ func TestStatusesService_List(t *testing.T) {
 
 	want := &Status{
 		Self:        Ptr("https://api.tracker.yandex.net/v3/statuses/1"),
-		ID:          Ptr("1"),
+		ID:          Ptr(FlexString("1")),
 		Key:         Ptr("open"),
 		Name:        Ptr("Open"),
-		Version:     Ptr(1),
+		Version:     Ptr(FlexString("1")),
 		Description: Ptr("Issue is open"),
 		Order:       Ptr(1),
 		Type:        Ptr("new"),

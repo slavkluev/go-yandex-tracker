@@ -8,8 +8,8 @@ import (
 // List returns all sprints for a board.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/get-sprints
-func (s *SprintsService) List(ctx context.Context, boardID int) ([]*Sprint, *Response, error) {
-	u := fmt.Sprintf("v3/boards/%d/sprints", boardID)
+func (s *SprintsService) List(ctx context.Context, boardID string) ([]*Sprint, *Response, error) {
+	u := fmt.Sprintf("v3/boards/%s/sprints", boardID)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -48,8 +48,8 @@ func (s *SprintsService) Create(ctx context.Context, sprint *SprintCreateRequest
 // Get fetches a sprint by its ID.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/boards/get-sprint
-func (s *SprintsService) Get(ctx context.Context, sprintID int) (*Sprint, *Response, error) {
-	u := fmt.Sprintf("v3/sprints/%d", sprintID)
+func (s *SprintsService) Get(ctx context.Context, sprintID string) (*Sprint, *Response, error) {
+	u := fmt.Sprintf("v3/sprints/%s", sprintID)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {

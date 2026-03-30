@@ -29,22 +29,22 @@ func TestQueuesService_Create(t *testing.T) {
 		w.WriteHeader(http.StatusCreated)
 		json.NewEncoder(w).Encode(Queue{
 			Self:       Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:         Ptr("1"),
+			ID:         Ptr(FlexString("1")),
 			Key:        Ptr("TEST"),
 			Display:    Ptr("Test Queue"),
-			Version:    Ptr(1),
+			Version:    Ptr(FlexString("1")),
 			Name:       Ptr("Test Queue"),
-			Lead:       &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
+			Lead:       &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr(FlexString("123")), Display: Ptr("John Doe")},
 			AssignAuto: Ptr(false),
 			DefaultType: &IssueType{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/issuetypes/2"),
-				ID:      Ptr("2"),
+				ID:      Ptr(FlexString("2")),
 				Key:     Ptr("task"),
 				Display: Ptr("Task"),
 			},
 			DefaultPriority: &Priority{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/priorities/3"),
-				ID:      Ptr("3"),
+				ID:      Ptr(FlexString("3")),
 				Key:     Ptr("normal"),
 				Display: Ptr("Normal"),
 			},
@@ -62,22 +62,22 @@ func TestQueuesService_Create(t *testing.T) {
 
 	want := &Queue{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-		ID:         Ptr("1"),
+		ID:         Ptr(FlexString("1")),
 		Key:        Ptr("TEST"),
 		Display:    Ptr("Test Queue"),
-		Version:    Ptr(1),
+		Version:    Ptr(FlexString("1")),
 		Name:       Ptr("Test Queue"),
-		Lead:       &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
+		Lead:       &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr(FlexString("123")), Display: Ptr("John Doe")},
 		AssignAuto: Ptr(false),
 		DefaultType: &IssueType{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/issuetypes/2"),
-			ID:      Ptr("2"),
+			ID:      Ptr(FlexString("2")),
 			Key:     Ptr("task"),
 			Display: Ptr("Task"),
 		},
 		DefaultPriority: &Priority{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/priorities/3"),
-			ID:      Ptr("3"),
+			ID:      Ptr(FlexString("3")),
 			Key:     Ptr("normal"),
 			Display: Ptr("Normal"),
 		},
@@ -100,12 +100,12 @@ func TestQueuesService_Get(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("1"),
+			ID:      Ptr(FlexString("1")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
-			Version: Ptr(1),
+			Version: Ptr(FlexString("1")),
 			Name:    Ptr("Test Queue"),
-			Lead:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
+			Lead:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr(FlexString("123")), Display: Ptr("John Doe")},
 		})
 	})
 
@@ -116,12 +116,12 @@ func TestQueuesService_Get(t *testing.T) {
 
 	want := &Queue{
 		Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-		ID:      Ptr("1"),
+		ID:      Ptr(FlexString("1")),
 		Key:     Ptr("TEST"),
 		Display: Ptr("Test Queue"),
-		Version: Ptr(1),
+		Version: Ptr(FlexString("1")),
 		Name:    Ptr("Test Queue"),
-		Lead:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr("123"), Display: Ptr("John Doe")},
+		Lead:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/123"), ID: Ptr(FlexString("123")), Display: Ptr("John Doe")},
 	}
 
 	if !reflect.DeepEqual(queue, want) {
@@ -145,14 +145,14 @@ func TestQueuesService_List(t *testing.T) {
 		json.NewEncoder(w).Encode([]*Queue{
 			{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-				ID:      Ptr("1"),
+				ID:      Ptr(FlexString("1")),
 				Key:     Ptr("TEST"),
 				Display: Ptr("Test Queue"),
 				Name:    Ptr("Test Queue"),
 			},
 			{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/DEV"),
-				ID:      Ptr("2"),
+				ID:      Ptr(FlexString("2")),
 				Key:     Ptr("DEV"),
 				Display: Ptr("Dev Queue"),
 				Name:    Ptr("Dev Queue"),
@@ -174,14 +174,14 @@ func TestQueuesService_List(t *testing.T) {
 	want := []*Queue{
 		{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("1"),
+			ID:      Ptr(FlexString("1")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 			Name:    Ptr("Test Queue"),
 		},
 		{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/DEV"),
-			ID:      Ptr("2"),
+			ID:      Ptr(FlexString("2")),
 			Key:     Ptr("DEV"),
 			Display: Ptr("Dev Queue"),
 			Name:    Ptr("Dev Queue"),
@@ -219,10 +219,10 @@ func TestQueuesService_Restore(t *testing.T) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("1"),
+			ID:      Ptr(FlexString("1")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
-			Version: Ptr(2),
+			Version: Ptr(FlexString("2")),
 			Name:    Ptr("Test Queue"),
 		})
 	})
@@ -234,10 +234,10 @@ func TestQueuesService_Restore(t *testing.T) {
 
 	want := &Queue{
 		Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-		ID:      Ptr("1"),
+		ID:      Ptr(FlexString("1")),
 		Key:     Ptr("TEST"),
 		Display: Ptr("Test Queue"),
-		Version: Ptr(2),
+		Version: Ptr(FlexString("2")),
 		Name:    Ptr("Test Queue"),
 	}
 

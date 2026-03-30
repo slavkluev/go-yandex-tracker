@@ -50,11 +50,11 @@ func TestQueuesService_ListTriggers(t *testing.T) {
 
 	want := []*Trigger{
 		{
-			ID:   Ptr("1"),
+			ID:   Ptr(FlexString("1")),
 			Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/triggers/1"),
 			Queue: &Queue{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-				ID:      Ptr("100"),
+				ID:      Ptr(FlexString("100")),
 				Key:     Ptr("TEST"),
 				Display: Ptr("Test Queue"),
 			},
@@ -72,7 +72,7 @@ func TestQueuesService_ListTriggers(t *testing.T) {
 					Type: Ptr("Event.create"),
 				},
 			},
-			Version: Ptr(1),
+			Version: Ptr(FlexString("1")),
 			Active:  Ptr(true),
 		},
 	}
@@ -111,17 +111,17 @@ func TestQueuesService_GetTrigger(t *testing.T) {
 		}`)
 	})
 
-	trigger, _, err := client.Queues.GetTrigger(ctx, "TEST", 1)
+	trigger, _, err := client.Queues.GetTrigger(ctx, "TEST", "1")
 	if err != nil {
 		t.Fatalf("Queues.GetTrigger returned error: %v", err)
 	}
 
 	want := &Trigger{
-		ID:   Ptr("1"),
+		ID:   Ptr(FlexString("1")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/triggers/1"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
@@ -139,7 +139,7 @@ func TestQueuesService_GetTrigger(t *testing.T) {
 				Type: Ptr("Event.create"),
 			},
 		},
-		Version: Ptr(1),
+		Version: Ptr(FlexString("1")),
 		Active:  Ptr(true),
 	}
 
@@ -203,11 +203,11 @@ func TestQueuesService_CreateTrigger(t *testing.T) {
 	}
 
 	want := &Trigger{
-		ID:   Ptr("2"),
+		ID:   Ptr(FlexString("2")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/triggers/2"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
@@ -224,7 +224,7 @@ func TestQueuesService_CreateTrigger(t *testing.T) {
 				Type: Ptr("Event.create"),
 			},
 		},
-		Version: Ptr(1),
+		Version: Ptr(FlexString("1")),
 		Active:  Ptr(true),
 	}
 
@@ -281,17 +281,17 @@ func TestQueuesService_UpdateTrigger(t *testing.T) {
 		}`)
 	})
 
-	trigger, _, err := client.Queues.UpdateTrigger(ctx, "TEST", 1, &TriggerUpdateOptions{Version: 5}, input)
+	trigger, _, err := client.Queues.UpdateTrigger(ctx, "TEST", "1", &TriggerUpdateOptions{Version: 5}, input)
 	if err != nil {
 		t.Fatalf("Queues.UpdateTrigger returned error: %v", err)
 	}
 
 	want := &Trigger{
-		ID:   Ptr("1"),
+		ID:   Ptr(FlexString("1")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/triggers/1"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
@@ -309,7 +309,7 @@ func TestQueuesService_UpdateTrigger(t *testing.T) {
 				Type: Ptr("Event.create"),
 			},
 		},
-		Version: Ptr(6),
+		Version: Ptr(FlexString("6")),
 		Active:  Ptr(false),
 	}
 

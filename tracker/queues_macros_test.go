@@ -54,11 +54,11 @@ func TestQueuesService_ListMacros(t *testing.T) {
 
 	want := []*Macro{
 		{
-			ID:   Ptr(1),
+			ID:   Ptr(FlexString("1")),
 			Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/1"),
 			Queue: &Queue{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-				ID:      Ptr("100"),
+				ID:      Ptr(FlexString("100")),
 				Key:     Ptr("TEST"),
 				Display: Ptr("Test Queue"),
 			},
@@ -66,11 +66,11 @@ func TestQueuesService_ListMacros(t *testing.T) {
 			Body: Ptr("Closing this issue."),
 		},
 		{
-			ID:   Ptr(2),
+			ID:   Ptr(FlexString("2")),
 			Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/2"),
 			Queue: &Queue{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-				ID:      Ptr("100"),
+				ID:      Ptr(FlexString("100")),
 				Key:     Ptr("TEST"),
 				Display: Ptr("Test Queue"),
 			},
@@ -115,17 +115,17 @@ func TestQueuesService_GetMacro(t *testing.T) {
 		}`)
 	})
 
-	macro, _, err := client.Queues.GetMacro(ctx, "TEST", 5)
+	macro, _, err := client.Queues.GetMacro(ctx, "TEST", "5")
 	if err != nil {
 		t.Fatalf("Queues.GetMacro returned error: %v", err)
 	}
 
 	want := &Macro{
-		ID:   Ptr(5),
+		ID:   Ptr(FlexString("5")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/5"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
@@ -135,7 +135,7 @@ func TestQueuesService_GetMacro(t *testing.T) {
 			{
 				Field: &MacroIssueUpdateField{
 					Self:    Ptr("https://api.tracker.yandex.net/v3/fields/status"),
-					ID:      Ptr("status"),
+					ID:      Ptr(FlexString("status")),
 					Display: Ptr("Status"),
 				},
 				Update: map[string]any{"set": "closed"},
@@ -194,11 +194,11 @@ func TestQueuesService_CreateMacro(t *testing.T) {
 	}
 
 	want := &Macro{
-		ID:   Ptr(10),
+		ID:   Ptr(FlexString("10")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/10"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
@@ -246,17 +246,17 @@ func TestQueuesService_EditMacro(t *testing.T) {
 		}`)
 	})
 
-	macro, _, err := client.Queues.EditMacro(ctx, "TEST", 5, input)
+	macro, _, err := client.Queues.EditMacro(ctx, "TEST", "5", input)
 	if err != nil {
 		t.Fatalf("Queues.EditMacro returned error: %v", err)
 	}
 
 	want := &Macro{
-		ID:   Ptr(5),
+		ID:   Ptr(FlexString("5")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/macros/5"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
@@ -277,7 +277,7 @@ func TestQueuesService_DeleteMacro(t *testing.T) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 
-	resp, err := client.Queues.DeleteMacro(ctx, "TEST", 5)
+	resp, err := client.Queues.DeleteMacro(ctx, "TEST", "5")
 	if err != nil {
 		t.Fatalf("Queues.DeleteMacro returned error: %v", err)
 	}

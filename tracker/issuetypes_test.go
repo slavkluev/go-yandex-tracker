@@ -46,10 +46,10 @@ func TestIssueTypesService_List(t *testing.T) {
 
 	want := &IssueType{
 		Self:        Ptr("https://api.tracker.yandex.net/v3/issuetypes/2"),
-		ID:          Ptr("2"),
+		ID:          Ptr(FlexString("2")),
 		Key:         Ptr("task"),
 		Name:        Ptr("Task"),
-		Version:     Ptr(1),
+		Version:     Ptr(FlexString("1")),
 		Description: Ptr("General task"),
 		Deleted:     Ptr(false),
 	}

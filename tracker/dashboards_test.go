@@ -51,18 +51,18 @@ func TestDashboardsService_Create(t *testing.T) {
 
 	want := &Dashboard{
 		Self:    Ptr("https://api.tracker.yandex.net/v3/dashboards/123"),
-		ID:      Ptr(123),
-		Version: Ptr(1),
+		ID:      Ptr(FlexString("123")),
+		Version: Ptr(FlexString("1")),
 		Name:    Ptr("My Dashboard"),
 		Layout:  Ptr("two-columns"),
 		Owner: &User{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/users/1"),
-			ID:      Ptr("user1"),
+			ID:      Ptr(FlexString("user1")),
 			Display: Ptr("User One"),
 		},
 		CreatedBy: &User{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/users/1"),
-			ID:      Ptr("user1"),
+			ID:      Ptr(FlexString("user1")),
 			Display: Ptr("User One"),
 		},
 		CreatedAt: newTestTimestamp(t, "2026-03-26T12:00:00.000+0000"),
@@ -104,7 +104,7 @@ func TestDashboardsService_CreateWidget(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	widget, resp, err := client.Dashboards.CreateWidget(ctx, 123, "cycleTime", &WidgetCreateRequest{
+	widget, resp, err := client.Dashboards.CreateWidget(ctx, "123", "cycleTime", &WidgetCreateRequest{
 		Description: Ptr("Cycle Time Widget"),
 		Parameters: map[string]any{
 			"mode":          "common-lines",
@@ -121,19 +121,19 @@ func TestDashboardsService_CreateWidget(t *testing.T) {
 	if got, want := *widget.Self, "https://api.tracker.yandex.net/v3/widgets/456"; got != want {
 		t.Errorf("Widget.Self = %q, want %q", got, want)
 	}
-	if got, want := *widget.ID, 456; got != want {
-		t.Errorf("Widget.ID = %d, want %d", got, want)
+	if got, want := *widget.ID, FlexString("456"); got != want {
+		t.Errorf("Widget.ID = %s, want %s", got, want)
 	}
-	if got, want := *widget.Version, 1; got != want {
-		t.Errorf("Widget.Version = %d, want %d", got, want)
+	if got, want := *widget.Version, FlexString("1"); got != want {
+		t.Errorf("Widget.Version = %q, want %q", got, want)
 	}
 	if got, want := *widget.Description, "Cycle Time Widget"; got != want {
 		t.Errorf("Widget.Description = %q, want %q", got, want)
 	}
-	if got, want := *widget.CreatedBy.ID, "user1"; got != want {
+	if got, want := *widget.CreatedBy.ID, FlexString("user1"); got != want {
 		t.Errorf("Widget.CreatedBy.ID = %q, want %q", got, want)
 	}
-	if got, want := *widget.Dashboard.ID, "123"; got != want {
+	if got, want := *widget.Dashboard.ID, FlexString("123"); got != want {
 		t.Errorf("Widget.Dashboard.ID = %q, want %q", got, want)
 	}
 	if got, want := *widget.Dashboard.Display, "My Dashboard"; got != want {

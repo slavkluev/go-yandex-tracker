@@ -46,10 +46,10 @@ func TestPrioritiesService_List(t *testing.T) {
 
 	want := &Priority{
 		Self:    Ptr("https://api.tracker.yandex.net/v3/priorities/1"),
-		ID:      Ptr("1"),
+		ID:      Ptr(FlexString("1")),
 		Key:     Ptr("critical"),
 		Name:    Ptr("Critical"),
-		Version: Ptr(1),
+		Version: Ptr(FlexString("1")),
 		Order:   Ptr(1),
 	}
 
@@ -93,10 +93,10 @@ func TestPrioritiesService_List_Localized(t *testing.T) {
 
 	want := &Priority{
 		Self:    Ptr("https://api.tracker.yandex.net/v3/priorities/1"),
-		ID:      Ptr("1"),
+		ID:      Ptr(FlexString("1")),
 		Key:     Ptr("critical"),
 		Name:    Ptr("Critical"),
-		Version: Ptr(1),
+		Version: Ptr(FlexString("1")),
 		Order:   Ptr(1),
 	}
 

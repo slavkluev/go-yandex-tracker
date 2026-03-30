@@ -26,7 +26,7 @@ func (s *QueuesService) ListTriggers(ctx context.Context, queueKey string) ([]*T
 // GetTrigger returns a single trigger by its ID within a queue.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-trigger
-func (s *QueuesService) GetTrigger(ctx context.Context, queueKey string, triggerID int) (*Trigger, *Response, error) {
+func (s *QueuesService) GetTrigger(ctx context.Context, queueKey string, triggerID string) (*Trigger, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/triggers/%v", queueKey, triggerID)
 
 	req, err := s.client.NewRequest("GET", u, nil)
@@ -67,7 +67,7 @@ func (s *QueuesService) CreateTrigger(ctx context.Context, queueKey string, trig
 // The opts parameter must include Version for optimistic locking.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/change-trigger
-func (s *QueuesService) UpdateTrigger(ctx context.Context, queueKey string, triggerID int, opts *TriggerUpdateOptions, trigger *TriggerUpdateRequest) (*Trigger, *Response, error) {
+func (s *QueuesService) UpdateTrigger(ctx context.Context, queueKey string, triggerID string, opts *TriggerUpdateOptions, trigger *TriggerUpdateRequest) (*Trigger, *Response, error) {
 	u := fmt.Sprintf("v3/queues/%v/triggers/%v", queueKey, triggerID)
 	u, err := addOptions(u, opts)
 	if err != nil {

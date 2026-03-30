@@ -57,11 +57,11 @@ func (s *EntitiesService) CreateComment(ctx context.Context, entityType EntityTy
 	return c, resp, nil
 }
 
-// GetComment retrieves a single comment on an entity by its numeric ID.
+// GetComment retrieves a single comment on an entity by its ID.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/comments/get-comment
-func (s *EntitiesService) GetComment(ctx context.Context, entityType EntityType, id string, commentID int) (*Comment, *Response, error) {
-	u := fmt.Sprintf("v3/entities/%v/%v/comments/%d", entityType, id, commentID)
+func (s *EntitiesService) GetComment(ctx context.Context, entityType EntityType, id string, commentID string) (*Comment, *Response, error) {
+	u := fmt.Sprintf("v3/entities/%v/%v/comments/%s", entityType, id, commentID)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -78,12 +78,11 @@ func (s *EntitiesService) GetComment(ctx context.Context, entityType EntityType,
 }
 
 // EditComment updates an existing comment on an entity.
-// The commentID parameter is numeric (int) because Comment.ID is *int.
 // Use EntityCommentCreateOptions to control notification behavior.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/comments/patch-comment
-func (s *EntitiesService) EditComment(ctx context.Context, entityType EntityType, id string, commentID int, comment *CommentRequest, opts *EntityCommentCreateOptions) (*Comment, *Response, error) {
-	u := fmt.Sprintf("v3/entities/%v/%v/comments/%d", entityType, id, commentID)
+func (s *EntitiesService) EditComment(ctx context.Context, entityType EntityType, id string, commentID string, comment *CommentRequest, opts *EntityCommentCreateOptions) (*Comment, *Response, error) {
+	u := fmt.Sprintf("v3/entities/%v/%v/comments/%s", entityType, id, commentID)
 
 	u, err := addOptions(u, opts)
 	if err != nil {
@@ -105,12 +104,11 @@ func (s *EntitiesService) EditComment(ctx context.Context, entityType EntityType
 }
 
 // DeleteComment deletes a comment from an entity.
-// The commentID parameter is numeric (int) because Comment.ID is *int.
 // Returns (*Response, error) since 204 responses have no body.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/entities/comments/delete-comment
-func (s *EntitiesService) DeleteComment(ctx context.Context, entityType EntityType, id string, commentID int) (*Response, error) {
-	u := fmt.Sprintf("v3/entities/%v/%v/comments/%d", entityType, id, commentID)
+func (s *EntitiesService) DeleteComment(ctx context.Context, entityType EntityType, id string, commentID string) (*Response, error) {
+	u := fmt.Sprintf("v3/entities/%v/%v/comments/%s", entityType, id, commentID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

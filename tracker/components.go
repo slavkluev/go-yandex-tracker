@@ -43,9 +43,8 @@ func (s *ComponentsService) Create(ctx context.Context, component *ComponentRequ
 }
 
 // Get fetches a component by its ID.
-// The componentID parameter is numeric (int) because Component.ID is *int.
-func (s *ComponentsService) Get(ctx context.Context, componentID int) (*Component, *Response, error) {
-	u := fmt.Sprintf("v3/components/%d", componentID)
+func (s *ComponentsService) Get(ctx context.Context, componentID string) (*Component, *Response, error) {
+	u := fmt.Sprintf("v3/components/%s", componentID)
 
 	req, err := s.client.NewRequest("GET", u, nil)
 	if err != nil {
@@ -62,11 +61,10 @@ func (s *ComponentsService) Get(ctx context.Context, componentID int) (*Componen
 }
 
 // Edit updates an existing component.
-// The componentID parameter is numeric (int) because Component.ID is *int.
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/patch-component
-func (s *ComponentsService) Edit(ctx context.Context, componentID int, component *ComponentRequest) (*Component, *Response, error) {
-	u := fmt.Sprintf("v3/components/%d", componentID)
+func (s *ComponentsService) Edit(ctx context.Context, componentID string, component *ComponentRequest) (*Component, *Response, error) {
+	u := fmt.Sprintf("v3/components/%s", componentID)
 
 	req, err := s.client.NewRequest("PATCH", u, component)
 	if err != nil {
@@ -83,10 +81,9 @@ func (s *ComponentsService) Edit(ctx context.Context, componentID int, component
 }
 
 // Delete deletes a component by its ID.
-// The componentID parameter is numeric (int) because Component.ID is *int.
 // Returns (*Response, error) since 204 responses have no body.
-func (s *ComponentsService) Delete(ctx context.Context, componentID int) (*Response, error) {
-	u := fmt.Sprintf("v3/components/%d", componentID)
+func (s *ComponentsService) Delete(ctx context.Context, componentID string) (*Response, error) {
+	u := fmt.Sprintf("v3/components/%s", componentID)
 
 	req, err := s.client.NewRequest("DELETE", u, nil)
 	if err != nil {

@@ -31,8 +31,8 @@ func TestIssuesService_ListComments(t *testing.T) {
 	}
 
 	comment := comments[0]
-	if got := *comment.ID; got != 123 {
-		t.Errorf("ID = %d, want %d", got, 123)
+	if got := *comment.ID; got != "123" {
+		t.Errorf("ID = %s, want %s", got, "123")
 	}
 	if got := *comment.Text; got != "Test comment" {
 		t.Errorf("Text = %q, want %q", got, "Test comment")
@@ -91,8 +91,8 @@ func TestIssuesService_CreateComment(t *testing.T) {
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("StatusCode = %d, want %d", resp.StatusCode, http.StatusCreated)
 	}
-	if got := *comment.ID; got != 456 {
-		t.Errorf("ID = %d, want %d", got, 456)
+	if got := *comment.ID; got != "456" {
+		t.Errorf("ID = %s, want %s", got, "456")
 	}
 	if got := *comment.Text; got != "New comment" {
 		t.Errorf("Text = %q, want %q", got, "New comment")
@@ -114,20 +114,20 @@ func TestIssuesService_EditComment(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	comment, _, err := client.Issues.EditComment(ctx, "QUEUE-1", 123, &CommentRequest{
+	comment, _, err := client.Issues.EditComment(ctx, "QUEUE-1", "123", &CommentRequest{
 		Text: Ptr("Updated comment"),
 	})
 	if err != nil {
 		t.Fatalf("EditComment returned error: %v", err)
 	}
-	if got := *comment.ID; got != 123 {
-		t.Errorf("ID = %d, want %d", got, 123)
+	if got := *comment.ID; got != "123" {
+		t.Errorf("ID = %s, want %s", got, "123")
 	}
 	if got := *comment.Text; got != "Updated comment" {
 		t.Errorf("Text = %q, want %q", got, "Updated comment")
 	}
-	if got := *comment.Version; got != 2 {
-		t.Errorf("Version = %d, want %d", got, 2)
+	if got := *comment.Version; got != FlexString("2") {
+		t.Errorf("Version = %q, want %q", got, FlexString("2"))
 	}
 }
 
@@ -140,7 +140,7 @@ func TestIssuesService_DeleteComment(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	resp, err := client.Issues.DeleteComment(ctx, "QUEUE-1", 123)
+	resp, err := client.Issues.DeleteComment(ctx, "QUEUE-1", "123")
 	if err != nil {
 		t.Fatalf("DeleteComment returned error: %v", err)
 	}

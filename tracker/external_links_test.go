@@ -43,13 +43,13 @@ func TestExternalLinksService_ListApplications(t *testing.T) {
 	want := []*ExternalApplication{
 		{
 			Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1"),
-			ID:   Ptr("app1"),
+			ID:   Ptr(FlexString("app1")),
 			Type: Ptr("github"),
 			Name: Ptr("GitHub"),
 		},
 		{
 			Self: Ptr("https://api.tracker.yandex.net/v3/applications/app2"),
-			ID:   Ptr("app2"),
+			ID:   Ptr(FlexString("app2")),
 			Type: Ptr("bitbucket"),
 			Name: Ptr("Bitbucket"),
 		},
@@ -114,32 +114,32 @@ func TestExternalLinksService_ListLinks(t *testing.T) {
 	want := []*ExternalLink{
 		{
 			Self: Ptr("https://api.tracker.yandex.net/v3/issues/QUEUE-1/remotelinks/101"),
-			ID:   Ptr(101),
+			ID:   Ptr(FlexString("101")),
 			Type: &ExternalLinkType{
 				Self: Ptr("https://api.tracker.yandex.net/v3/linktypes/relates"),
-				ID:   Ptr("relates"),
+				ID:   Ptr(FlexString("relates")),
 				Key:  Ptr("relates"),
 			},
 			Direction: Ptr("outward"),
 			Object: &ExternalLinkObject{
 				Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1/objects/ext-1"),
-				ID:   Ptr("ext-1"),
+				ID:   Ptr(FlexString("ext-1")),
 				Key:  Ptr("PR-42"),
 				Application: &ExternalApplication{
 					Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1"),
-					ID:   Ptr("app1"),
+					ID:   Ptr(FlexString("app1")),
 					Type: Ptr("github"),
 					Name: Ptr("GitHub"),
 				},
 			},
 			CreatedBy: &User{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/users/11"),
-				ID:      Ptr("11"),
+				ID:      Ptr(FlexString("11")),
 				Display: Ptr("Ivan Ivanov"),
 			},
 			UpdatedBy: &User{
 				Self:    Ptr("https://api.tracker.yandex.net/v3/users/11"),
-				ID:      Ptr("11"),
+				ID:      Ptr(FlexString("11")),
 				Display: Ptr("Ivan Ivanov"),
 			},
 		},
@@ -215,20 +215,20 @@ func TestExternalLinksService_CreateLink(t *testing.T) {
 
 	want := &ExternalLink{
 		Self: Ptr("https://api.tracker.yandex.net/v3/issues/QUEUE-1/remotelinks/201"),
-		ID:   Ptr(201),
+		ID:   Ptr(FlexString("201")),
 		Type: &ExternalLinkType{
 			Self: Ptr("https://api.tracker.yandex.net/v3/linktypes/relates"),
-			ID:   Ptr("relates"),
+			ID:   Ptr(FlexString("relates")),
 			Key:  Ptr("relates"),
 		},
 		Direction: Ptr("outward"),
 		Object: &ExternalLinkObject{
 			Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1/objects/ext-1"),
-			ID:   Ptr("ext-1"),
+			ID:   Ptr(FlexString("ext-1")),
 			Key:  Ptr("PR-42"),
 			Application: &ExternalApplication{
 				Self: Ptr("https://api.tracker.yandex.net/v3/applications/app1"),
-				ID:   Ptr("app1"),
+				ID:   Ptr(FlexString("app1")),
 				Type: Ptr("github"),
 				Name: Ptr("GitHub"),
 			},
@@ -248,7 +248,7 @@ func TestExternalLinksService_DeleteLink(t *testing.T) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 
-	resp, err := client.ExternalLinks.DeleteLink(ctx, "QUEUE-1", 123)
+	resp, err := client.ExternalLinks.DeleteLink(ctx, "QUEUE-1", "123")
 	if err != nil {
 		t.Fatalf("ExternalLinks.DeleteLink returned error: %v", err)
 	}

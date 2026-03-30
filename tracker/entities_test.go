@@ -45,8 +45,8 @@ func TestEntitiesService_Create(t *testing.T) {
 
 	want := &Entity{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/entities/project/1"),
-		ID:         Ptr("1"),
-		Version:    Ptr(1),
+		ID:         Ptr(FlexString("1")),
+		Version:    Ptr(FlexString("1")),
 		EntityType: Ptr("project"),
 		Fields: &EntityFields{
 			Summary: Ptr("Test project"),
@@ -93,8 +93,8 @@ func TestEntitiesService_Get(t *testing.T) {
 
 	want := &Entity{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/entities/project/1"),
-		ID:         Ptr("1"),
-		Version:    Ptr(1),
+		ID:         Ptr(FlexString("1")),
+		Version:    Ptr(FlexString("1")),
 		ShortID:    Ptr(1),
 		EntityType: Ptr("project"),
 		Fields: &EntityFields{
@@ -181,8 +181,8 @@ func TestEntitiesService_Update(t *testing.T) {
 
 	want := &Entity{
 		Self:       Ptr("https://api.tracker.yandex.net/v3/entities/project/1"),
-		ID:         Ptr("1"),
-		Version:    Ptr(2),
+		ID:         Ptr(FlexString("1")),
+		Version:    Ptr(FlexString("2")),
 		EntityType: Ptr("project"),
 		Fields: &EntityFields{
 			Summary: Ptr("Updated project"),
@@ -353,7 +353,7 @@ func TestEntitiesService_BulkChange(t *testing.T) {
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("StatusCode = %d, want %d", resp.StatusCode, http.StatusCreated)
 	}
-	if got, want := *bc.ID, "1"; got != want {
+	if got, want := *bc.ID, FlexString("1"); got != want {
 		t.Errorf("ID = %q, want %q", got, want)
 	}
 	if got, want := *bc.Status, "CREATED"; got != want {
@@ -390,7 +390,7 @@ func TestEntitiesService_GetEvents(t *testing.T) {
 	if got, want := len(result.Events), 1; got != want {
 		t.Errorf("len(Events) = %d, want %d", got, want)
 	}
-	if got, want := *result.Events[0].ID, "event-1"; got != want {
+	if got, want := *result.Events[0].ID, FlexString("event-1"); got != want {
 		t.Errorf("Events[0].ID = %q, want %q", got, want)
 	}
 	if got, want := *result.HasNext, true; got != want {
@@ -430,7 +430,7 @@ func TestEntitiesService_GetEvents_CursorPagination(t *testing.T) {
 	if got, want := len(result.Events), 1; got != want {
 		t.Errorf("len(Events) = %d, want %d", got, want)
 	}
-	if got, want := *result.Events[0].ID, "event-2"; got != want {
+	if got, want := *result.Events[0].ID, FlexString("event-2"); got != want {
 		t.Errorf("Events[0].ID = %q, want %q", got, want)
 	}
 	if got, want := *result.HasNext, false; got != want {

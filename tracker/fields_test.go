@@ -57,29 +57,29 @@ func TestFieldsService_List(t *testing.T) {
 	want := []*Field{
 		{
 			Self:     Ptr("https://api.tracker.yandex.net/v3/fields/summary"),
-			ID:       Ptr("summary"),
+			ID:       Ptr(FlexString("summary")),
 			Name:     Ptr("Summary"),
 			Key:      Ptr("summary"),
-			Version:  Ptr(1),
+			Version:  Ptr(FlexString("1")),
 			Schema:   &FieldSchema{Type: Ptr("string"), Required: Ptr(true)},
 			Readonly: Ptr(false),
 			Options:  Ptr(false),
 			Suggest:  Ptr(false),
 			Order:    Ptr(1),
-			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/system"), ID: Ptr("system"), Display: Ptr("System")},
+			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/system"), ID: Ptr(FlexString("system")), Display: Ptr("System")},
 		},
 		{
 			Self:     Ptr("https://api.tracker.yandex.net/v3/fields/description"),
-			ID:       Ptr("description"),
+			ID:       Ptr(FlexString("description")),
 			Name:     Ptr("Description"),
 			Key:      Ptr("description"),
-			Version:  Ptr(1),
+			Version:  Ptr(FlexString("1")),
 			Schema:   &FieldSchema{Type: Ptr("string"), Required: Ptr(false)},
 			Readonly: Ptr(false),
 			Options:  Ptr(false),
 			Suggest:  Ptr(false),
 			Order:    Ptr(2),
-			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/system"), ID: Ptr("system"), Display: Ptr("System")},
+			Category: &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/system"), ID: Ptr(FlexString("system")), Display: Ptr("System")},
 		},
 	}
 
@@ -118,17 +118,17 @@ func TestFieldsService_Get(t *testing.T) {
 
 	want := &Field{
 		Self:        Ptr("https://api.tracker.yandex.net/v3/fields/summary"),
-		ID:          Ptr("summary"),
+		ID:          Ptr(FlexString("summary")),
 		Name:        Ptr("Summary"),
 		Description: Ptr("Issue summary field"),
 		Key:         Ptr("summary"),
-		Version:     Ptr(1),
+		Version:     Ptr(FlexString("1")),
 		Schema:      &FieldSchema{Type: Ptr("string"), Required: Ptr(true)},
 		Readonly:    Ptr(false),
 		Options:     Ptr(false),
 		Suggest:     Ptr(false),
 		Order:       Ptr(1),
-		Category:    &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/system"), ID: Ptr("system"), Display: Ptr("System")},
+		Category:    &FieldCategory{Self: Ptr("https://api.tracker.yandex.net/v3/fields/categories/system"), ID: Ptr(FlexString("system")), Display: Ptr("System")},
 	}
 
 	if !reflect.DeepEqual(field, want) {
@@ -178,8 +178,8 @@ func TestFieldsService_Create(t *testing.T) {
 	if got := *field.Name; got != "Field name" {
 		t.Errorf("Name = %q, want %q", got, "Field name")
 	}
-	if got := *field.Version; got != 1 {
-		t.Errorf("Version = %d, want %d", got, 1)
+	if got := *field.Version; got != FlexString("1") {
+		t.Errorf("Version = %q, want %q", got, FlexString("1"))
 	}
 }
 
@@ -224,8 +224,8 @@ func TestFieldsService_Edit(t *testing.T) {
 	if got := *field.Description; got != "Updated description" {
 		t.Errorf("Description = %q, want %q", got, "Updated description")
 	}
-	if got := *field.Version; got != 3 {
-		t.Errorf("Version = %d, want %d", got, 3)
+	if got := *field.Version; got != FlexString("3") {
+		t.Errorf("Version = %q, want %q", got, FlexString("3"))
 	}
 }
 

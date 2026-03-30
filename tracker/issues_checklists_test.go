@@ -39,7 +39,7 @@ func TestIssuesService_ListChecklistItems(t *testing.T) {
 	}
 
 	want := &ChecklistItem{
-		ID:                Ptr("1"),
+		ID:                Ptr(FlexString("1")),
 		Text:              Ptr("Buy groceries"),
 		Checked:           Ptr(false),
 		ChecklistItemType: Ptr("standard"),

@@ -9,11 +9,11 @@ import (
 
 func TestTrigger_JSONRoundTrip(t *testing.T) {
 	want := &Trigger{
-		ID:   Ptr("1"),
+		ID:   Ptr(FlexString("1")),
 		Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST/triggers/1"),
 		Queue: &Queue{
 			Self:    Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
-			ID:      Ptr("100"),
+			ID:      Ptr(FlexString("100")),
 			Key:     Ptr("TEST"),
 			Display: Ptr("Test Queue"),
 		},
@@ -31,7 +31,7 @@ func TestTrigger_JSONRoundTrip(t *testing.T) {
 				Type: Ptr("Event.create"),
 			},
 		},
-		Version: Ptr(1),
+		Version: Ptr(FlexString("1")),
 		Active:  Ptr(true),
 	}
 

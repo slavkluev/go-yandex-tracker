@@ -39,14 +39,14 @@ func TestBoardsService_Create(t *testing.T) {
 	if resp.StatusCode != http.StatusCreated {
 		t.Errorf("StatusCode = %d, want %d", resp.StatusCode, http.StatusCreated)
 	}
-	if got := *board.ID; got != 1 {
-		t.Errorf("ID = %d, want %d", got, 1)
+	if got := *board.ID; got != "1" {
+		t.Errorf("ID = %s, want %s", got, "1")
 	}
 	if got := *board.Name; got != "Sprint Board" {
 		t.Errorf("Name = %q, want %q", got, "Sprint Board")
 	}
-	if got := *board.Version; got != 1 {
-		t.Errorf("Version = %d, want %d", got, 1)
+	if got := *board.Version; got != FlexString("1") {
+		t.Errorf("Version = %q, want %q", got, FlexString("1"))
 	}
 	if got := *board.DefaultQueue.Key; got != "TEST" {
 		t.Errorf("DefaultQueue.Key = %q, want %q", got, "TEST")
@@ -71,18 +71,18 @@ func TestBoardsService_Get(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	board, _, err := client.Boards.Get(ctx, 1)
+	board, _, err := client.Boards.Get(ctx, "1")
 	if err != nil {
 		t.Fatalf("Get returned error: %v", err)
 	}
-	if got := *board.ID; got != 1 {
-		t.Errorf("ID = %d, want %d", got, 1)
+	if got := *board.ID; got != "1" {
+		t.Errorf("ID = %s, want %s", got, "1")
 	}
 	if got := *board.Name; got != "Test Board" {
 		t.Errorf("Name = %q, want %q", got, "Test Board")
 	}
-	if got := *board.Version; got != 5 {
-		t.Errorf("Version = %d, want %d", got, 5)
+	if got := *board.Version; got != FlexString("5") {
+		t.Errorf("Version = %q, want %q", got, FlexString("5"))
 	}
 	if got := *board.DefaultQueue.Key; got != "TEST" {
 		t.Errorf("DefaultQueue.Key = %q, want %q", got, "TEST")
@@ -137,19 +137,19 @@ func TestBoardsService_List(t *testing.T) {
 	want := []*Board{
 		{
 			Self:         Ptr("https://api.tracker.yandex.net/v3/boards/1"),
-			ID:           Ptr(1),
-			Version:      Ptr(1),
+			ID:           Ptr(FlexString("1")),
+			Version:      Ptr(FlexString("1")),
 			Name:         Ptr("Board One"),
-			DefaultQueue: &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr("1"), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
-			CreatedBy:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/1"), ID: Ptr("1"), Display: Ptr("John")},
+			DefaultQueue: &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/TEST"), ID: Ptr(FlexString("1")), Key: Ptr("TEST"), Display: Ptr("Test Queue")},
+			CreatedBy:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/1"), ID: Ptr(FlexString("1")), Display: Ptr("John")},
 		},
 		{
 			Self:         Ptr("https://api.tracker.yandex.net/v3/boards/2"),
-			ID:           Ptr(2),
-			Version:      Ptr(3),
+			ID:           Ptr(FlexString("2")),
+			Version:      Ptr(FlexString("3")),
 			Name:         Ptr("Board Two"),
-			DefaultQueue: &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/DEV"), ID: Ptr("2"), Key: Ptr("DEV"), Display: Ptr("Dev Queue")},
-			CreatedBy:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/2"), ID: Ptr("2"), Display: Ptr("Jane")},
+			DefaultQueue: &Queue{Self: Ptr("https://api.tracker.yandex.net/v3/queues/DEV"), ID: Ptr(FlexString("2")), Key: Ptr("DEV"), Display: Ptr("Dev Queue")},
+			CreatedBy:    &User{Self: Ptr("https://api.tracker.yandex.net/v3/users/2"), ID: Ptr(FlexString("2")), Display: Ptr("Jane")},
 		},
 	}
 
@@ -178,20 +178,20 @@ func TestBoardsService_Edit(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	board, _, err := client.Boards.Edit(ctx, 1, 5, &BoardEditRequest{
+	board, _, err := client.Boards.Edit(ctx, "1", "5", &BoardEditRequest{
 		Name: Ptr("Updated Board"),
 	})
 	if err != nil {
 		t.Fatalf("Edit returned error: %v", err)
 	}
-	if got := *board.ID; got != 1 {
-		t.Errorf("ID = %d, want %d", got, 1)
+	if got := *board.ID; got != "1" {
+		t.Errorf("ID = %s, want %s", got, "1")
 	}
 	if got := *board.Name; got != "Updated Board" {
 		t.Errorf("Name = %q, want %q", got, "Updated Board")
 	}
-	if got := *board.Version; got != 6 {
-		t.Errorf("Version = %d, want %d", got, 6)
+	if got := *board.Version; got != FlexString("6") {
+		t.Errorf("Version = %q, want %q", got, FlexString("6"))
 	}
 }
 
@@ -204,7 +204,7 @@ func TestBoardsService_Delete(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	resp, err := client.Boards.Delete(ctx, 1)
+	resp, err := client.Boards.Delete(ctx, "1")
 	if err != nil {
 		t.Fatalf("Delete returned error: %v", err)
 	}
@@ -223,7 +223,7 @@ func TestBoardsService_Get_NotFound(t *testing.T) {
 		fmt.Fprint(w, `{"errorMessages":["Object not found"],"errors":{}}`)
 	})
 
-	_, _, err := client.Boards.Get(ctx, 99999)
+	_, _, err := client.Boards.Get(ctx, "99999")
 	if err == nil {
 		t.Fatal("Boards.Get expected error for 404, got nil")
 	}

@@ -30,7 +30,7 @@ func (s *DashboardsService) Create(ctx context.Context, dashboard *DashboardCrea
 // Currently the only documented widget type is "cycleTime".
 //
 // Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/dashboards/create-widget
-func (s *DashboardsService) CreateWidget(ctx context.Context, dashboardID int, widgetType string, widget *WidgetCreateRequest) (*Widget, *Response, error) {
+func (s *DashboardsService) CreateWidget(ctx context.Context, dashboardID string, widgetType string, widget *WidgetCreateRequest) (*Widget, *Response, error) {
 	u := fmt.Sprintf("v3/dashboards/%v/widgets/%v", dashboardID, widgetType)
 
 	req, err := s.client.NewRequest("POST", u, widget)

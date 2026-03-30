@@ -47,10 +47,10 @@ func TestResolutionsService_List(t *testing.T) {
 
 	want := &Resolution{
 		Self:        Ptr("https://api.tracker.yandex.net/v3/resolutions/1"),
-		ID:          Ptr("1"),
+		ID:          Ptr(FlexString("1")),
 		Key:         Ptr("fixed"),
 		Name:        Ptr("Fixed"),
-		Version:     Ptr(1),
+		Version:     Ptr(FlexString("1")),
 		Description: Ptr("Issue resolved"),
 		Order:       Ptr(1),
 	}
