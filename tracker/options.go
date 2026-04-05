@@ -49,6 +49,14 @@ type ChangelogOptions struct {
 
 	// PerPage is the number of changelog entries per page.
 	PerPage int `url:"perPage,omitempty"`
+
+	// Field is the ID of the change parameter to filter by.
+	// For example, "checklistItems" or "status".
+	Field string `url:"field,omitempty"`
+
+	// Type is the key of the change type to filter by.
+	// For example, "IssueUpdated", "IssueCreated".
+	Type string `url:"type,omitempty"`
 }
 
 // IssueSearchRequest represents the request body for searching issues.

@@ -357,20 +357,56 @@ type Transition struct {
 
 // Changelog represents a change history entry for an issue.
 type Changelog struct {
-	Self      *string           `json:"self,omitempty"`
-	ID        *FlexString       `json:"id,omitempty"`
-	Issue     *Issue            `json:"issue,omitempty"`
-	UpdatedAt *Timestamp        `json:"updatedAt,omitempty"`
-	UpdatedBy *User             `json:"updatedBy,omitempty"`
-	Type      *string           `json:"type,omitempty"`
-	Fields    []*ChangelogEvent `json:"fields,omitempty"`
+	Self             *string            `json:"self,omitempty"`
+	ID               *FlexString        `json:"id,omitempty"`
+	Issue            *Issue             `json:"issue,omitempty"`
+	UpdatedAt        *Timestamp         `json:"updatedAt,omitempty"`
+	UpdatedBy        *User              `json:"updatedBy,omitempty"`
+	Transport        *string            `json:"transport,omitempty"`
+	Type             *string            `json:"type,omitempty"`
+	Fields           []*ChangelogEvent  `json:"fields,omitempty"`
+	Comments         *ChangelogComments `json:"comments,omitempty"`
+	ExecutedTriggers []*ExecutedTrigger `json:"executedTriggers,omitempty"`
 }
 
 // ChangelogEvent represents a single field change within a changelog entry.
 type ChangelogEvent struct {
-	Field *string `json:"field,omitempty"`
-	From  any     `json:"from,omitempty"`
-	To    any     `json:"to,omitempty"`
+	Field *FieldRef `json:"field,omitempty"`
+	From  any       `json:"from,omitempty"`
+	To    any       `json:"to,omitempty"`
+}
+
+// FieldRef is an embedded reference to a tracker field.
+type FieldRef struct {
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
+}
+
+// ChangelogComments represents the comments section of a changelog entry.
+type ChangelogComments struct {
+	Added []*CommentRef `json:"added,omitempty"`
+}
+
+// CommentRef is an embedded reference to a comment in a changelog entry.
+type CommentRef struct {
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
+}
+
+// ExecutedTrigger represents an executed trigger in a changelog entry.
+type ExecutedTrigger struct {
+	Trigger *TriggerRef `json:"trigger,omitempty"`
+	Success *bool       `json:"success,omitempty"`
+	Message *string     `json:"message,omitempty"`
+}
+
+// TriggerRef is an embedded reference to a trigger.
+type TriggerRef struct {
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
 }
 
 // IssueLink represents a link between two issues.

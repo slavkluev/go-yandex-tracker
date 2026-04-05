@@ -166,6 +166,8 @@ func TestAddOptions(t *testing.T) {
 		opts := &ChangelogOptions{
 			ID:      "abc123",
 			PerPage: 20,
+			Field:   "status",
+			Type:    "IssueUpdated",
 		}
 		got, err := addOptions("issues/KEY-1/changelog", opts)
 		if err != nil {
@@ -182,6 +184,12 @@ func TestAddOptions(t *testing.T) {
 		}
 		if v := u.Query().Get("perPage"); v != "20" {
 			t.Errorf("perPage = %q, want %q", v, "20")
+		}
+		if v := u.Query().Get("field"); v != "status" {
+			t.Errorf("field = %q, want %q", v, "status")
+		}
+		if v := u.Query().Get("type"); v != "IssueUpdated" {
+			t.Errorf("type = %q, want %q", v, "IssueUpdated")
 		}
 	})
 
