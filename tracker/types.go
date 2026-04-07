@@ -357,16 +357,20 @@ type Transition struct {
 
 // Changelog represents a change history entry for an issue.
 type Changelog struct {
-	Self             *string            `json:"self,omitempty"`
-	ID               *FlexString        `json:"id,omitempty"`
-	Issue            *Issue             `json:"issue,omitempty"`
-	UpdatedAt        *Timestamp         `json:"updatedAt,omitempty"`
-	UpdatedBy        *User              `json:"updatedBy,omitempty"`
-	Transport        *string            `json:"transport,omitempty"`
-	Type             *string            `json:"type,omitempty"`
-	Fields           []*ChangelogEvent  `json:"fields,omitempty"`
-	Comments         *ChangelogComments `json:"comments,omitempty"`
-	ExecutedTriggers []*ExecutedTrigger `json:"executedTriggers,omitempty"`
+	Self               *string               `json:"self,omitempty"`
+	ID                 *FlexString           `json:"id,omitempty"`
+	Issue              *Issue                `json:"issue,omitempty"`
+	UpdatedAt          *Timestamp            `json:"updatedAt,omitempty"`
+	UpdatedBy          *User                 `json:"updatedBy,omitempty"`
+	Transport          *string               `json:"transport,omitempty"`
+	Type               *string               `json:"type,omitempty"`
+	Fields             []*ChangelogEvent     `json:"fields,omitempty"`
+	Comments           *ChangelogComments    `json:"comments,omitempty"`
+	ExecutedTriggers   []*ExecutedTrigger    `json:"executedTriggers,omitempty"`
+	Links              []*ChangelogLink      `json:"links,omitempty"`
+	Attachments        *ChangelogAttachments `json:"attachments,omitempty"`
+	Worklog            []*ChangelogWorklog   `json:"worklog,omitempty"`
+	RelatedResolutions []*RelatedResolution  `json:"relatedResolutions,omitempty"`
 }
 
 // ChangelogEvent represents a single field change within a changelog entry.
@@ -385,14 +389,17 @@ type FieldRef struct {
 
 // ChangelogComments represents the comments section of a changelog entry.
 type ChangelogComments struct {
-	Added []*CommentRef `json:"added,omitempty"`
+	Added   []*CommentRef    `json:"added,omitempty"`
+	Removed []*CommentRef    `json:"removed,omitempty"`
+	Updated []*CommentUpdate `json:"updated,omitempty"`
 }
 
 // CommentRef is an embedded reference to a comment in a changelog entry.
 type CommentRef struct {
-	Self    *string     `json:"self,omitempty"`
-	ID      *FlexString `json:"id,omitempty"`
-	Display *string     `json:"display,omitempty"`
+	Self     *string     `json:"self,omitempty"`
+	ID       *FlexString `json:"id,omitempty"`
+	Display  *string     `json:"display,omitempty"`
+	ObjectID *string     `json:"objectId,omitempty"`
 }
 
 // ExecutedTrigger represents an executed trigger in a changelog entry.
@@ -407,6 +414,73 @@ type TriggerRef struct {
 	Self    *string     `json:"self,omitempty"`
 	ID      *FlexString `json:"id,omitempty"`
 	Display *string     `json:"display,omitempty"`
+}
+
+// CommentUpdate represents a comment change in a changelog entry.
+// Used for IssueCommentUpdated (with From/To text) and
+// IssueCommentReactionAdded/Removed (with AddedReaction/RemovedReaction).
+type CommentUpdate struct {
+	Comment         *CommentRef `json:"comment,omitempty"`
+	From            any         `json:"from,omitempty"`
+	To              any         `json:"to,omitempty"`
+	AddedReaction   *string     `json:"addedReaction,omitempty"`
+	RemovedReaction *string     `json:"removedReaction,omitempty"`
+}
+
+// ChangelogLink represents a link change in a changelog entry.
+// Used for IssueLinked, IssueUnlinked, and IssueLinkChanged events.
+type ChangelogLink struct {
+	From *ChangelogLinkValue `json:"from,omitempty"`
+	To   *ChangelogLinkValue `json:"to,omitempty"`
+}
+
+// ChangelogLinkValue represents a link direction/object/type in a changelog entry.
+type ChangelogLinkValue struct {
+	Direction *string        `json:"direction,omitempty"`
+	Object    *Issue         `json:"object,omitempty"`
+	Type      *IssueLinkType `json:"type,omitempty"`
+}
+
+// ChangelogAttachments represents attachment changes in a changelog entry.
+type ChangelogAttachments struct {
+	Added   []*AttachmentRef `json:"added,omitempty"`
+	Removed []*AttachmentRef `json:"removed,omitempty"`
+}
+
+// AttachmentRef is an embedded reference to an attachment in a changelog entry.
+type AttachmentRef struct {
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
+}
+
+// ChangelogWorklog represents a worklog change in a changelog entry.
+type ChangelogWorklog struct {
+	Record *WorklogRef            `json:"record,omitempty"`
+	From   *ChangelogWorklogValue `json:"from,omitempty"`
+	To     *ChangelogWorklogValue `json:"to,omitempty"`
+}
+
+// WorklogRef is an embedded reference to a worklog record.
+type WorklogRef struct {
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
+}
+
+// ChangelogWorklogValue represents a worklog from/to value.
+type ChangelogWorklogValue struct {
+	Duration *Duration  `json:"duration,omitempty"`
+	Start    *Timestamp `json:"start,omitempty"`
+}
+
+// RelatedResolution represents a resolution change of a linked issue.
+// Used for RelatedIssueResolutionChanged events.
+type RelatedResolution struct {
+	Direction     *string        `json:"direction,omitempty"`
+	Issue         *Issue         `json:"issue,omitempty"`
+	LinkType      *IssueLinkType `json:"linkType,omitempty"`
+	NewResolution *Resolution    `json:"newResolution,omitempty"`
 }
 
 // IssueLink represents a link between two issues.
