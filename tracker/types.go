@@ -1,6 +1,7 @@
 package tracker
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -838,10 +839,136 @@ type FieldCategory struct {
 }
 
 // OptionsProvider describes the dropdown options configuration for a field.
+//
+// Tracker sends the allowed values under the "values" key in one of two
+// shapes: a flat array (global and local fields), or an object that maps a
+// queue key to that queue's array (the queue fields endpoint, which also sends
+// the fallback array as "defaults"). The flat array goes to Values and the
+// object to QueueValues, so at most one of them is set.
+//
+// Each element keeps the JSON type Tracker sent: a string decodes as string,
+// a number as json.Number (0 stays distinct from "0", and large integers keep
+// their precision), and an object as map[string]any.
+//
+// The same type serves requests: set Values or QueueValues, not both, because
+// both marshal to the one "values" key.
 type OptionsProvider struct {
-	Type           *string  `json:"type,omitempty"`
-	NeedValidation *bool    `json:"needValidation,omitempty"`
-	Values         []string `json:"values,omitempty"`
+	Type           *string          `json:"-"`
+	NeedValidation *bool            `json:"-"`
+	Values         []any            `json:"-"`
+	QueueValues    map[string][]any `json:"-"`
+	Defaults       []any            `json:"-"`
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface for OptionsProvider.
+// A "values" array fills Values, an object fills QueueValues, and an absent or
+// null "values" leaves both empty; any other JSON type is an error.
+func (p *OptionsProvider) UnmarshalJSON(data []byte) error {
+	var wire struct {
+		Type           *string         `json:"type"`
+		NeedValidation *bool           `json:"needValidation"`
+		Values         json.RawMessage `json:"values"`
+		Defaults       json.RawMessage `json:"defaults"`
+	}
+	if err := json.Unmarshal(data, &wire); err != nil {
+		return err
+	}
+
+	values, queueValues, err := decodeOptionValues(wire.Values)
+	if err != nil {
+		return err
+	}
+
+	var defaults []any
+	if len(wire.Defaults) > 0 {
+		if err := unmarshalUseNumber(wire.Defaults, &defaults); err != nil {
+			return fmt.Errorf("optionsProvider.defaults: %w", err)
+		}
+	}
+
+	*p = OptionsProvider{
+		Type:           wire.Type,
+		NeedValidation: wire.NeedValidation,
+		Values:         values,
+		QueueValues:    queueValues,
+		Defaults:       defaults,
+	}
+
+	return nil
+}
+
+// MarshalJSON implements the json.Marshaler interface for OptionsProvider.
+// Values or QueueValues is written as "values"; setting both is an error
+// rather than a silent choice between them.
+func (p OptionsProvider) MarshalJSON() ([]byte, error) {
+	var values any
+	switch {
+	case len(p.Values) > 0 && len(p.QueueValues) > 0:
+		return nil, fmt.Errorf("optionsProvider: Values and QueueValues are both set, but both marshal to \"values\"; set one")
+	case len(p.Values) > 0:
+		values = p.Values
+	case len(p.QueueValues) > 0:
+		values = p.QueueValues
+	}
+
+	return json.Marshal(struct {
+		Type           *string `json:"type,omitempty"`
+		NeedValidation *bool   `json:"needValidation,omitempty"`
+		Values         any     `json:"values,omitempty"`
+		Defaults       []any   `json:"defaults,omitempty"`
+	}{
+		Type:           p.Type,
+		NeedValidation: p.NeedValidation,
+		Values:         values,
+		Defaults:       p.Defaults,
+	})
+}
+
+// decodeOptionValues decodes the raw "values" of an optionsProvider: an array
+// into a flat list, an object into per-queue lists, and absent or null into
+// neither.
+func decodeOptionValues(raw json.RawMessage) ([]any, map[string][]any, error) {
+	raw = bytes.TrimSpace(raw)
+	if len(raw) == 0 || bytes.Equal(raw, []byte("null")) {
+		return nil, nil, nil
+	}
+
+	switch raw[0] {
+	case '[':
+		var values []any
+		if err := unmarshalUseNumber(raw, &values); err != nil {
+			return nil, nil, fmt.Errorf("optionsProvider.values: %w", err)
+		}
+		return values, nil, nil
+	case '{':
+		var queueValues map[string][]any
+		if err := unmarshalUseNumber(raw, &queueValues); err != nil {
+			return nil, nil, fmt.Errorf("optionsProvider.values: %w", err)
+		}
+		return nil, queueValues, nil
+	default:
+		return nil, nil, fmt.Errorf("optionsProvider.values: got a JSON %s, want an array or an object", jsonKind(raw[0]))
+	}
+}
+
+// unmarshalUseNumber decodes data into v, keeping JSON numbers as json.Number
+// instead of converting them to float64.
+func unmarshalUseNumber(data []byte, v any) error {
+	dec := json.NewDecoder(bytes.NewReader(data))
+	dec.UseNumber()
+	return dec.Decode(v)
+}
+
+// jsonKind names the JSON type of a scalar value from its first byte.
+func jsonKind(first byte) string {
+	switch first {
+	case '"':
+		return "string"
+	case 't', 'f':
+		return "boolean"
+	default:
+		return "number"
+	}
 }
 
 // QueryProvider describes the query provider configuration for a field.
