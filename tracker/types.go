@@ -137,7 +137,9 @@ type Status struct {
 }
 
 // Queue represents a Yandex Tracker queue.
-// When returned as a full resource, all fields are populated.
+// When returned as a full resource, all fields are populated except the
+// expand payloads (TeamUsers through IssueTypesConfig), which stay nil unless
+// the queue is fetched with the matching expand value.
 // When embedded in other resources (e.g., Issue), only Self, ID, Key,
 // and Display are populated; other fields are nil.
 type Queue struct {
@@ -154,6 +156,82 @@ type Queue struct {
 	DenyVoting      *bool       `json:"denyVoting,omitempty"`
 	DefaultType     *IssueType  `json:"defaultType,omitempty"`
 	DefaultPriority *Priority   `json:"defaultPriority,omitempty"`
+
+	// Expand payloads. Each is set only when the queue is fetched with the
+	// matching expand value, or with "all". They hold references (Self, ID,
+	// Display, and Key where the resource has one), not full resources.
+
+	// TeamUsers lists the queue team members (expand=team).
+	TeamUsers []*User `json:"teamUsers,omitempty"`
+	// IssueTypes lists the queue's issue types (expand=types).
+	IssueTypes []*IssueType `json:"issueTypes,omitempty"`
+	// Versions lists the queue's versions (expand=versions).
+	Versions []*QueueVersion `json:"versions,omitempty"`
+	// Components lists the queue's components (expand=components).
+	Components []*Component `json:"components,omitempty"`
+	// Workflows maps each workflow ID to the issue types that follow that
+	// workflow (expand=workflows).
+	Workflows map[string][]*IssueType `json:"workflows,omitempty"`
+	// Fields lists the queue's fields (expand=fields). The list can differ
+	// from QueuesService.ListFields: it can include the queue's local fields.
+	Fields []*Field `json:"fields,omitempty"`
+	// IssueTypesConfig pairs each issue type with its workflow and
+	// resolutions (expand=issueTypesConfig).
+	IssueTypesConfig []*QueueIssueTypeConfig `json:"issueTypesConfig,omitempty"`
+}
+
+// QueueIssueTypeConfig is an issueTypesConfig entry of an expanded queue: an
+// issue type, the workflow it follows, and the resolutions it can be closed
+// with. Workflow is a reference (Self, ID, Display).
+type QueueIssueTypeConfig struct {
+	IssueType *IssueType `json:"issueType,omitempty"`
+	Workflow  *Workflow  `json:"workflow,omitempty"`
+	// Resolutions is nil when Tracker omits the key, which it does for some
+	// issue types.
+	Resolutions []*Resolution `json:"resolutions,omitempty"`
+}
+
+// Workflow represents a Yandex Tracker workflow: the statuses an issue moves
+// through and the actions (transitions) between them.
+// When returned as a full resource (from GET /v3/workflows/{id}), all fields
+// that Tracker sends are populated. When embedded in other resources (e.g.,
+// QueueIssueTypeConfig), only Self, ID, and Display are populated.
+//
+// Tracker omits optional fields that have no value, so Queue, CreatedBy,
+// UpdatedBy, and Type can be nil on a full resource too. Type ("visual" is
+// the only current value) is missing on workflows created before it existed.
+type Workflow struct {
+	Self    *string     `json:"self,omitempty"`
+	ID      *FlexString `json:"id,omitempty"`
+	Display *string     `json:"display,omitempty"`
+
+	// Full resource fields (from GET /v3/workflows/{id})
+	Name          *string         `json:"name,omitempty"`
+	Version       *FlexString     `json:"version,omitempty"`
+	Steps         []*WorkflowStep `json:"steps,omitempty"`
+	InitialAction *WorkflowAction `json:"initialAction,omitempty"`
+	Queue         *Queue          `json:"queue,omitempty"`
+	Created       *Timestamp      `json:"created,omitempty"`
+	Updated       *Timestamp      `json:"updated,omitempty"`
+	CreatedBy     *User           `json:"createdBy,omitempty"`
+	UpdatedBy     *User           `json:"updatedBy,omitempty"`
+	Deleted       *bool           `json:"deleted,omitempty"`
+	Type          *string         `json:"type,omitempty"`
+}
+
+// WorkflowStep is a workflow status together with the actions that lead out
+// of it.
+type WorkflowStep struct {
+	Status *Status `json:"status,omitempty"`
+	// Actions is nil for a terminal step, which has no outgoing actions.
+	Actions []*WorkflowAction `json:"actions,omitempty"`
+}
+
+// WorkflowAction is a workflow action (transition) and the status it leads to.
+type WorkflowAction struct {
+	ID     *FlexString `json:"id,omitempty"`
+	Name   *string     `json:"name,omitempty"`
+	Target *Status     `json:"target,omitempty"`
 }
 
 // Priority represents an issue priority in Yandex Tracker.
@@ -749,9 +827,12 @@ type Worklog struct {
 }
 
 // QueueVersion represents a version defined in a Yandex Tracker queue.
+// When embedded in other resources (e.g., an expanded Queue), only Self, ID,
+// and Display are populated.
 type QueueVersion struct {
 	Self        *string     `json:"self,omitempty"`
 	ID          *FlexString `json:"id,omitempty"`
+	Display     *string     `json:"display,omitempty"`
 	Version     *FlexString `json:"version,omitempty"`
 	Queue       *Queue      `json:"queue,omitempty"`
 	Name        *string     `json:"name,omitempty"`
@@ -804,9 +885,12 @@ type PermissionRole struct {
 }
 
 // Field represents an issue field in Yandex Tracker (global or local).
+// When embedded in other resources (e.g., an expanded Queue), only Self, ID,
+// and Display are populated.
 type Field struct {
 	Self            *string          `json:"self,omitempty"`
 	ID              *FlexString      `json:"id,omitempty"`
+	Display         *string          `json:"display,omitempty"`
 	Name            *string          `json:"name,omitempty"`
 	Description     *string          `json:"description,omitempty"`
 	Key             *string          `json:"key,omitempty"`
@@ -983,9 +1067,12 @@ type FieldName struct {
 }
 
 // Component represents a queue component in Yandex Tracker.
+// When embedded in other resources (e.g., an expanded Queue), only Self, ID,
+// and Display are populated.
 type Component struct {
 	Self        *string     `json:"self,omitempty"`
 	ID          *FlexString `json:"id,omitempty"`
+	Display     *string     `json:"display,omitempty"`
 	Version     *FlexString `json:"version,omitempty"`
 	Name        *string     `json:"name,omitempty"`
 	Queue       *Queue      `json:"queue,omitempty"`

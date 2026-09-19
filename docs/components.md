@@ -55,4 +55,5 @@ fmt.Println(*component.Name)
 
 - [ExampleComponentsService_List](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-ComponentsService.List)
 - [ExampleComponentsService_Create](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-ComponentsService.Create)
+- [Queues](queues.md) -- `ListComponents`: the components of one queue
 - [Error Handling](errors.md)

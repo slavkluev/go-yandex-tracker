@@ -59,6 +59,10 @@ type Client struct {
 	// of the Yandex Tracker API.
 	Statuses *StatusesService
 
+	// Workflows handles communication with the workflow related methods
+	// of the Yandex Tracker API.
+	Workflows *WorkflowsService
+
 	// Resolutions handles communication with the resolution related methods
 	// of the Yandex Tracker API.
 	Resolutions *ResolutionsService
@@ -127,6 +131,10 @@ type IssueTypesService service
 // StatusesService handles communication with the status related methods
 // of the Yandex Tracker API.
 type StatusesService service
+
+// WorkflowsService handles communication with the workflow related methods
+// of the Yandex Tracker API.
+type WorkflowsService service
 
 // ResolutionsService handles communication with the resolution related methods
 // of the Yandex Tracker API.
@@ -247,6 +255,7 @@ func (c *Client) initialize() {
 	c.Components = (*ComponentsService)(&c.common)
 	c.IssueTypes = (*IssueTypesService)(&c.common)
 	c.Statuses = (*StatusesService)(&c.common)
+	c.Workflows = (*WorkflowsService)(&c.common)
 	c.Resolutions = (*ResolutionsService)(&c.common)
 	c.Priorities = (*PrioritiesService)(&c.common)
 	c.Users = (*UsersService)(&c.common)

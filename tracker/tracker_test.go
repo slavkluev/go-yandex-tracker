@@ -161,6 +161,13 @@ func TestNewClient_StatusesServiceNotNil(t *testing.T) {
 	}
 }
 
+func TestNewClient_WorkflowsServiceNotNil(t *testing.T) {
+	c := NewClient()
+	if c.Workflows == nil {
+		t.Error("NewClient().Workflows is nil, want non-nil *WorkflowsService")
+	}
+}
+
 func TestNewClient_ResolutionsServiceNotNil(t *testing.T) {
 	c := NewClient()
 	if c.Resolutions == nil {

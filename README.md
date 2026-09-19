@@ -72,7 +72,7 @@ fmt.Println(*issue.Key)
 | Service | Description | Methods |
 |---------|-------------|---------|
 | [Issues](docs/issues.md) | Create, read, update, search issues; comments, attachments, worklogs, links, transitions, checklists | 31 |
-| [Queues](docs/queues.md) | Queue management; triggers, auto-actions, macros, access | 21 |
+| [Queues](docs/queues.md) | Queue management; fields, workflows, components, triggers, auto-actions, macros, access | 24 |
 | [Fields](docs/fields.md) | Issue field categories and configurations | 8 |
 | [Components](docs/components.md) | Queue component management | 5 |
 
@@ -99,6 +99,7 @@ fmt.Println(*issue.Key)
 | [Users](docs/users.md) | User accounts | 3 |
 | [Issue Types](docs/issuetypes.md) | Issue type definitions | 1 |
 | [Statuses](docs/statuses.md) | Workflow statuses | 1 |
+| [Workflows](docs/workflows.md) | Workflow steps and transitions | 1 |
 | [Resolutions](docs/resolutions.md) | Issue resolutions | 1 |
 | [Priorities](docs/priorities.md) | Issue priorities | 1 |
 

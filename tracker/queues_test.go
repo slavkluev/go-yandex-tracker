@@ -129,6 +129,230 @@ func TestQueuesService_Get(t *testing.T) {
 	}
 }
 
+func TestQueuesService_Get_Expand(t *testing.T) {
+	client, mux := setup(t)
+
+	mux.HandleFunc("GET /v3/queues/{key}", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		if got := r.URL.Query().Get("expand"); got != "all" {
+			t.Errorf("expand = %q, want %q", got, "all")
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, `{
+			"self": "https://api.tracker.yandex.net/v3/queues/TEST",
+			"id": "3",
+			"key": "TEST",
+			"version": 5,
+			"name": "Test",
+			"description": "Queue created for testing purposes",
+			"lead": {
+				"self": "https://api.tracker.yandex.net/v3/users/11********",
+				"id": "11********",
+				"display": "Ivan Ivanov"
+			},
+			"assignAuto": false,
+			"defaultType": {
+				"self": "https://api.tracker.yandex.net/v3/issuetypes/1",
+				"id": "1",
+				"key": "bug",
+				"display": "Error"
+			},
+			"defaultPriority": {
+				"self": "https://api.tracker.yandex.net/v3/priorities/3",
+				"id": "3",
+				"key": "normal",
+				"display": "Normal"
+			},
+			"teamUsers": [
+				{
+					"self": "https://api.tracker.yandex.net/v3/users/11********",
+					"id": "11********",
+					"display": "Ivan Ivanov"
+				}
+			],
+			"issueTypes": [
+				{
+					"self": "https://api.tracker.yandex.net/v3/issuetypes/1",
+					"id": "1",
+					"key": "bug",
+					"display": "Error"
+				}
+			],
+			"versions": [
+				{
+					"self": "https://api.tracker.yandex.net/v3/versions/4",
+					"id": "4",
+					"display": "Peek-a-boo"
+				},
+				{"self": "https://api.tracker.yandex.net/v3/versions/2", "id": "2", "display": "2023 Q1"}
+			],
+			"workflows": {
+				"dev": [
+					{
+						"self": "https://api.tracker.yandex.net/v3/issuetypes/1",
+						"id": "1",
+						"key": "bug",
+						"display": "Errror"
+					}
+				]
+			},
+			"denyVoting": false,
+			"issueTypesConfig": [
+				{
+					"issueType": {
+						"self": "https://api.tracker.yandex.net/v3/issuetypes/1",
+						"id": "1",
+						"key": "bug",
+						"display": "Error"
+					},
+					"workflow": {
+						"self": "https://api.tracker.yandex.net/v3/workflows/dev",
+						"id": "dev",
+						"display": "dev"
+					},
+					"resolutions": [
+						{
+							"self": "https://api.tracker.yandex.net/v3/resolutions/2",
+							"id": "2",
+							"key": "wontFix",
+							"display": "Won't fix"
+						}
+					]
+				}
+			],
+			"components": [{"self": "https://api.tracker.yandex.net/v3/components/56", "id": "56", "display": "Standard"}],
+			"fields": [{"self": "https://api.tracker.yandex.net/v3/queues/MTP/localFields/size", "id": "66fd07bba913292094b4403c--size", "display": "Размер задачи"}]
+		}`)
+	})
+
+	queue, _, err := client.Queues.Get(ctx, "TEST", &QueueGetOptions{Expand: "all"})
+	if err != nil {
+		t.Fatalf("Queues.Get returned error: %v", err)
+	}
+
+	ivan := &User{
+		Self:    Ptr("https://api.tracker.yandex.net/v3/users/11********"),
+		ID:      Ptr(FlexString("11********")),
+		Display: Ptr("Ivan Ivanov"),
+	}
+	bug := &IssueType{
+		Self:    Ptr("https://api.tracker.yandex.net/v3/issuetypes/1"),
+		ID:      Ptr(FlexString("1")),
+		Key:     Ptr("bug"),
+		Display: Ptr("Error"),
+	}
+	want := &Queue{
+		Self:        Ptr("https://api.tracker.yandex.net/v3/queues/TEST"),
+		ID:          Ptr(FlexString("3")),
+		Key:         Ptr("TEST"),
+		Version:     Ptr(FlexString("5")),
+		Name:        Ptr("Test"),
+		Description: Ptr("Queue created for testing purposes"),
+		Lead:        ivan,
+		AssignAuto:  Ptr(false),
+		DenyVoting:  Ptr(false),
+		DefaultType: bug,
+		DefaultPriority: &Priority{
+			Self:    Ptr("https://api.tracker.yandex.net/v3/priorities/3"),
+			ID:      Ptr(FlexString("3")),
+			Key:     Ptr("normal"),
+			Display: Ptr("Normal"),
+		},
+		TeamUsers:  []*User{ivan},
+		IssueTypes: []*IssueType{bug},
+		Versions: []*QueueVersion{
+			{Self: Ptr("https://api.tracker.yandex.net/v3/versions/4"), ID: Ptr(FlexString("4")), Display: Ptr("Peek-a-boo")},
+			{Self: Ptr("https://api.tracker.yandex.net/v3/versions/2"), ID: Ptr(FlexString("2")), Display: Ptr("2023 Q1")},
+		},
+		Components: []*Component{
+			{Self: Ptr("https://api.tracker.yandex.net/v3/components/56"), ID: Ptr(FlexString("56")), Display: Ptr("Standard")},
+		},
+		Workflows: map[string][]*IssueType{
+			"dev": {
+				{
+					Self:    Ptr("https://api.tracker.yandex.net/v3/issuetypes/1"),
+					ID:      Ptr(FlexString("1")),
+					Key:     Ptr("bug"),
+					Display: Ptr("Errror"),
+				},
+			},
+		},
+		Fields: []*Field{
+			{
+				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/MTP/localFields/size"),
+				ID:      Ptr(FlexString("66fd07bba913292094b4403c--size")),
+				Display: Ptr("Размер задачи"),
+			},
+		},
+		IssueTypesConfig: []*QueueIssueTypeConfig{
+			{
+				IssueType: bug,
+				Workflow: &Workflow{
+					Self:    Ptr("https://api.tracker.yandex.net/v3/workflows/dev"),
+					ID:      Ptr(FlexString("dev")),
+					Display: Ptr("dev"),
+				},
+				Resolutions: []*Resolution{
+					{
+						Self:    Ptr("https://api.tracker.yandex.net/v3/resolutions/2"),
+						ID:      Ptr(FlexString("2")),
+						Key:     Ptr("wontFix"),
+						Display: Ptr("Won't fix"),
+					},
+				},
+			},
+		},
+	}
+
+	if !reflect.DeepEqual(queue, want) {
+		t.Errorf("Queues.Get returned %+v, want %+v", queue, want)
+	}
+}
+
+func TestQueuesService_Get_IssueTypesConfigWithoutResolutions(t *testing.T) {
+	client, mux := setup(t)
+
+	mux.HandleFunc("GET /v3/queues/{key}", func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, `{
+			"key": "RECYCLEBIN",
+			"issueTypesConfig": [
+				{"issueType": {"self": "https://api.tracker.yandex.net/v3/issuetypes/21", "id": "21", "key": "milestone", "display": "Веха"},
+				 "workflow": {"self": "https://api.tracker.yandex.net/v3/workflows/W109", "id": "W109", "display": "W109"}}
+			]
+		}`)
+	})
+
+	queue, _, err := client.Queues.Get(ctx, "RECYCLEBIN", &QueueGetOptions{Expand: "issueTypesConfig"})
+	if err != nil {
+		t.Fatalf("Queues.Get returned error: %v", err)
+	}
+
+	want := []*QueueIssueTypeConfig{
+		{
+			IssueType: &IssueType{
+				Self:    Ptr("https://api.tracker.yandex.net/v3/issuetypes/21"),
+				ID:      Ptr(FlexString("21")),
+				Key:     Ptr("milestone"),
+				Display: Ptr("Веха"),
+			},
+			Workflow: &Workflow{
+				Self:    Ptr("https://api.tracker.yandex.net/v3/workflows/W109"),
+				ID:      Ptr(FlexString("W109")),
+				Display: Ptr("W109"),
+			},
+		},
+	}
+
+	if !reflect.DeepEqual(queue.IssueTypesConfig, want) {
+		t.Fatalf("Queue.IssueTypesConfig = %+v, want %+v", queue.IssueTypesConfig, want)
+	}
+	if got := queue.IssueTypesConfig[0].Resolutions; got != nil {
+		t.Errorf("Queue.IssueTypesConfig[0].Resolutions = %+v, want nil", got)
+	}
+}
+
 func TestQueuesService_List(t *testing.T) {
 	client, mux := setup(t)
 

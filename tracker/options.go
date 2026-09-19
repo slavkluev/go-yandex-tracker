@@ -247,6 +247,10 @@ type IssueTypeConfig struct {
 
 // QueueGetOptions specifies optional parameters for getting a queue.
 type QueueGetOptions struct {
+	// Expand names additional data to include in the response: "all",
+	// "projects", "components", "versions", "types", "team", "workflows",
+	// "fields", or "issueTypesConfig". Each value fills the matching Queue
+	// field ("all" fills every one); "projects" is sent but not decoded.
 	Expand string `url:"expand,omitempty"`
 }
 
@@ -254,7 +258,19 @@ type QueueGetOptions struct {
 type QueueListOptions struct {
 	ListOptions
 
+	// Expand names additional data to include for each queue: "projects",
+	// "components", "versions", "types", "team", or "workflows". Each value
+	// fills the matching Queue field; "projects" is sent but not decoded.
 	Expand string `url:"expand,omitempty"`
+}
+
+// QueueComponentsListOptions specifies optional parameters for listing the
+// components of a queue.
+type QueueComponentsListOptions struct {
+	// Fields is a comma-separated list of the component fields to return:
+	// "version", "name", "queue", "description", "lead", "assignAuto".
+	// Self and ID are always returned. Empty returns every field.
+	Fields string `url:"fields,omitempty"`
 }
 
 // QueuePermissionsUpdateRequest represents the request body for updating queue permissions.

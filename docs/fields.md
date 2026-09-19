@@ -88,4 +88,5 @@ for _, field := range fields {
 
 - [ExampleFieldsService_List](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-FieldsService.List)
 - [ExampleFieldsService_Create](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-FieldsService.Create)
+- [Queues](queues.md) -- `ListFields`: a queue's fields with per-queue `required` and options, distinct from `ListLocal` and from `expand=fields`
 - [Error Handling](errors.md)
