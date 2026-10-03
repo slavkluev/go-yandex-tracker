@@ -118,6 +118,31 @@ type User struct {
 	WelcomeMailSent      *bool      `json:"welcomeMailSent,omitempty"`
 }
 
+// DisplayOr returns the first non-empty of the user's Display, Login and ID,
+// or fallback when all three are empty or u is nil. Embedded references such
+// as Queue.Lead often carry only an ID.
+func (u *User) DisplayOr(fallback string) string {
+	if u == nil {
+		return fallback
+	}
+	if u.Display != nil && *u.Display != "" {
+		return *u.Display
+	}
+	if u.Login != nil && *u.Login != "" {
+		return *u.Login
+	}
+	return u.IDOr(fallback)
+}
+
+// IDOr returns the user's ID, or fallback when it is empty or u is nil. Unlike
+// a display name, the ID tells apart two users who share a name.
+func (u *User) IDOr(fallback string) string {
+	if u == nil || u.ID == nil || *u.ID == "" {
+		return fallback
+	}
+	return string(*u.ID)
+}
+
 // Status represents an issue status in Yandex Tracker.
 // When returned as a full resource (from GET /v3/statuses), all fields are
 // populated. When embedded in other resources, only Self, ID, Key, and

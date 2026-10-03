@@ -35,3 +35,14 @@ func ExampleUsersService_Get() {
 
 	fmt.Println(*user.Display)
 }
+
+func ExampleUser_DisplayOr() {
+	lead := &tracker.User{ID: tracker.Ptr(tracker.FlexString("1234567890"))}
+	var nobody *tracker.User
+
+	fmt.Println(lead.DisplayOr("-"))
+	fmt.Println(nobody.DisplayOr("-"))
+	// Output:
+	// 1234567890
+	// -
+}

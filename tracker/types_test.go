@@ -905,3 +905,35 @@ func TestMacroCreateRequest_JSON(t *testing.T) {
 
 // Suppress unused import warning - reflect is used for DeepEqual in other test files.
 var _ = reflect.DeepEqual
+
+func TestUser_DisplayOrAndIDOr(t *testing.T) {
+	tests := []struct {
+		name        string
+		user        *User
+		wantDisplay string
+		wantID      string
+	}{
+		{name: "nil", user: nil, wantDisplay: "-", wantID: "-"},
+		{
+			name:        "display set",
+			user:        &User{ID: Ptr(FlexString("1")), Display: Ptr("Jane Doe"), Login: Ptr("jane")},
+			wantDisplay: "Jane Doe",
+			wantID:      "1",
+		},
+		{name: "login only", user: &User{Display: Ptr(""), Login: Ptr("jane")}, wantDisplay: "jane", wantID: "-"},
+		{name: "login before ID", user: &User{ID: Ptr(FlexString("1")), Display: Ptr(""), Login: Ptr("jane")}, wantDisplay: "jane", wantID: "1"},
+		{name: "ID only", user: &User{ID: Ptr(FlexString("1")), Display: Ptr(""), Login: Ptr("")}, wantDisplay: "1", wantID: "1"},
+		{name: "all empty", user: &User{ID: Ptr(FlexString("")), Display: Ptr(""), Login: Ptr("")}, wantDisplay: "-", wantID: "-"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.user.DisplayOr("-"); got != tt.wantDisplay {
+				t.Errorf("DisplayOr(-) = %q, want %q", got, tt.wantDisplay)
+			}
+			if got := tt.user.IDOr("-"); got != tt.wantID {
+				t.Errorf("IDOr(-) = %q, want %q", got, tt.wantID)
+			}
+		})
+	}
+}
