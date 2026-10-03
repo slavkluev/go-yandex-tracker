@@ -399,8 +399,8 @@ func TestIssuesService_GetChangelog_Worklog(t *testing.T) {
 	if wl.To == nil {
 		t.Fatal("Worklog[0].To is nil")
 	}
-	if got := wl.To.Duration.String(); got != "30m0s" {
-		t.Errorf("Worklog[0].To.Duration = %q, want %q", got, "30m0s")
+	if got := wl.To.Duration.String(); got != "PT30M" {
+		t.Errorf("Worklog[0].To.Duration = %q, want %q", got, "PT30M")
 	}
 }
 
@@ -427,11 +427,11 @@ func TestIssuesService_GetChangelog_WorklogUpdated(t *testing.T) {
 	}
 
 	wl := changelog[0].Worklog[0]
-	if got := wl.From.Duration.String(); got != "30m0s" {
-		t.Errorf("From.Duration = %q, want %q", got, "30m0s")
+	if got := wl.From.Duration.String(); got != "PT30M" {
+		t.Errorf("From.Duration = %q, want %q", got, "PT30M")
 	}
-	if got := wl.To.Duration.String(); got != "1h0m0s" {
-		t.Errorf("To.Duration = %q, want %q", got, "1h0m0s")
+	if got := wl.To.Duration.String(); got != "PT1H" {
+		t.Errorf("To.Duration = %q, want %q", got, "PT1H")
 	}
 }
 

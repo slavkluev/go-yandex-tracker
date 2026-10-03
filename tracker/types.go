@@ -585,6 +585,8 @@ type IssueLinkType struct {
 
 // Duration represents an ISO 8601 duration value (e.g., "PT1H30M", "P5D").
 // It wraps time.Duration and handles JSON marshal/unmarshal in ISO 8601 format.
+//
+//nolint:recvcheck // UnmarshalJSON must set the receiver, while String and MarshalJSON need value receivers so that fmt and encoding/json find them on a Duration value.
 type Duration struct {
 	time.Duration
 }
@@ -703,12 +705,13 @@ func parseTimePart(s string) (time.Duration, error) {
 	return total, nil
 }
 
-// MarshalJSON implements the json.Marshaler interface.
-// It converts the duration to ISO 8601 format (e.g., "PT1H30M", "P5D", "P1W").
-func (d Duration) MarshalJSON() ([]byte, error) {
+// String returns the duration in ISO 8601 format (e.g., "PT1H30M", "P5D",
+// "P1W"), the text MarshalJSON writes. Whole weeks print as W, other whole
+// days as D, and anything shorter than a second is dropped.
+func (d Duration) String() string {
 	dur := d.Duration
 	if dur == 0 {
-		return []byte(`"PT0S"`), nil
+		return "PT0S"
 	}
 
 	var b strings.Builder
@@ -752,7 +755,13 @@ func (d Duration) MarshalJSON() ([]byte, error) {
 		b.WriteString("T0S")
 	}
 
-	return []byte(`"` + b.String() + `"`), nil
+	return b.String()
+}
+
+// MarshalJSON implements the json.Marshaler interface.
+// It writes String as a JSON string.
+func (d Duration) MarshalJSON() ([]byte, error) {
+	return []byte(`"` + d.String() + `"`), nil
 }
 
 // Comment represents a comment on a Yandex Tracker issue.

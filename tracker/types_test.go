@@ -2,8 +2,10 @@ package tracker
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 )
@@ -698,6 +700,12 @@ func TestDuration_MarshalJSON(t *testing.T) {
 			}
 			if got := string(data); got != tt.want {
 				t.Errorf("MarshalJSON(%v) = %s, want %s", tt.input, got, tt.want)
+			}
+			if got, want := d.String(), strings.Trim(tt.want, `"`); got != want {
+				t.Errorf("String(%v) = %s, want %s", tt.input, got, want)
+			}
+			if got, want := fmt.Sprint(d), strings.Trim(tt.want, `"`); got != want {
+				t.Errorf("fmt.Sprint(%v) = %s, want %s", tt.input, got, want)
 			}
 		})
 	}
