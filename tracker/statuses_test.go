@@ -38,7 +38,7 @@ func TestStatusesService_List(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	statuses, _, err := client.Statuses.List(ctx)
+	statuses, _, err := client.Statuses.List(ctx, nil)
 	if err != nil {
 		t.Fatalf("List returned error: %v", err)
 	}

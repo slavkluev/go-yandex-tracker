@@ -14,7 +14,7 @@ func ExampleResolutionsService_List() {
 		tracker.WithOrgID("your-org-id"),
 	)
 
-	resolutions, _, err := client.Resolutions.List(context.Background())
+	resolutions, _, err := client.Resolutions.List(context.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}

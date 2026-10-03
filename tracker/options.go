@@ -338,6 +338,8 @@ type ComponentRequest struct {
 
 // PriorityListOptions specifies the optional parameters for listing priorities.
 type PriorityListOptions struct {
+	ListOptions
+
 	Localized *bool `url:"localized,omitempty"`
 }
 

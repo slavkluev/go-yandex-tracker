@@ -92,6 +92,27 @@ func ExampleIssuesService_Search_pagination() {
 	}
 }
 
+func ExampleIssuesService_SearchIter() {
+	client := tracker.NewClient(
+		tracker.WithOAuthToken("your-oauth-token"),
+		tracker.WithOrgID("your-org-id"),
+	)
+
+	req := &tracker.IssueSearchRequest{
+		Filter: map[string]any{"queue": "QUEUE"},
+	}
+	opts := &tracker.IssueSearchOptions{
+		ListOptions: tracker.ListOptions{PerPage: 100},
+	}
+
+	for issue, err := range client.Issues.SearchIter(context.Background(), req, opts) {
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(*issue.Key)
+	}
+}
+
 func ExampleIssuesService_ListComments() {
 	client := tracker.NewClient(
 		tracker.WithOAuthToken("your-oauth-token"),

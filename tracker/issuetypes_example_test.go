@@ -14,7 +14,7 @@ func ExampleIssueTypesService_List() {
 		tracker.WithOrgID("your-org-id"),
 	)
 
-	issueTypes, _, err := client.IssueTypes.List(context.Background())
+	issueTypes, _, err := client.IssueTypes.List(context.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}

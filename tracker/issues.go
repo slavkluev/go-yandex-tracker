@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"iter"
 	"strconv"
 	"strings"
 )
@@ -107,6 +108,18 @@ func (s *IssuesService) Search(ctx context.Context, search *IssueSearchRequest, 
 	}
 
 	return issues, resp, nil
+}
+
+// SearchIter yields the issues of every page Search finds, starting with the
+// page Search returns for search and opts. It copies opts when called and
+// sends search unchanged with every page. On an error it yields the error once
+// and stops.
+//
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/search-issues
+func (s *IssuesService) SearchIter(ctx context.Context, search *IssueSearchRequest, opts *IssueSearchOptions) iter.Seq2[*Issue, error] {
+	return pageIter(ctx, opts, func(ctx context.Context, o *IssueSearchOptions) ([]*Issue, *Response, error) {
+		return s.Search(ctx, search, o)
+	})
 }
 
 // ScrollSearch starts a scroll-based search for issues.

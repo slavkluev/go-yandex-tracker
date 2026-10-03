@@ -3,6 +3,7 @@ package tracker
 import (
 	"context"
 	"fmt"
+	"iter"
 )
 
 // Myself returns information about the currently authenticated user.
@@ -66,4 +67,13 @@ func (s *UsersService) List(ctx context.Context, opts *UserListOptions) ([]*User
 	}
 
 	return users, resp, nil
+}
+
+// ListIter yields the users of every page, starting with the page List
+// returns for opts, which it copies when called. On an error it yields the
+// error once and stops.
+//
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/users/get-users
+func (s *UsersService) ListIter(ctx context.Context, opts *UserListOptions) iter.Seq2[*User, error] {
+	return pageIter(ctx, opts, s.List)
 }

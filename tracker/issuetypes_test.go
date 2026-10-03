@@ -35,7 +35,7 @@ func TestIssueTypesService_List(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	issueTypes, _, err := client.IssueTypes.List(ctx)
+	issueTypes, _, err := client.IssueTypes.List(ctx, nil)
 	if err != nil {
 		t.Fatalf("List returned error: %v", err)
 	}

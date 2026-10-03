@@ -3,6 +3,7 @@ package tracker
 import (
 	"context"
 	"fmt"
+	"iter"
 )
 
 // Create creates a new queue.
@@ -69,6 +70,15 @@ func (s *QueuesService) List(ctx context.Context, opts *QueueListOptions) ([]*Qu
 	}
 
 	return queues, resp, nil
+}
+
+// ListIter yields the queues of every page, starting with the page List
+// returns for opts, which it copies when called. On an error it yields the
+// error once and stops.
+//
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/queues/get-queues
+func (s *QueuesService) ListIter(ctx context.Context, opts *QueueListOptions) iter.Seq2[*Queue, error] {
+	return pageIter(ctx, opts, s.List)
 }
 
 // Delete deletes a queue.

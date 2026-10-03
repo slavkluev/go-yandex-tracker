@@ -3,6 +3,7 @@ package tracker
 import (
 	"context"
 	"fmt"
+	"iter"
 )
 
 // ListComments returns the comments for an issue.
@@ -29,6 +30,24 @@ func (s *IssuesService) ListComments(ctx context.Context, issueKey string, opts 
 	}
 
 	return comments, resp, nil
+}
+
+// ListCommentsIter yields the comments of every page, starting with the page
+// ListComments returns for opts, which it copies when called. Each next page
+// starts after the ID of the previous page's last comment. On an error it
+// yields the error once and stops.
+//
+// Yandex Tracker API docs: https://yandex.ru/support/tracker/en/api-ref/issues/get-comments
+func (s *IssuesService) ListCommentsIter(ctx context.Context, issueKey string, opts *CommentListOptions) iter.Seq2[*Comment, error] {
+	id := func(c *Comment) string {
+		if c == nil || c.ID == nil {
+			return ""
+		}
+		return string(*c.ID)
+	}
+	return cursorIter(ctx, opts, id, func(ctx context.Context, o *CommentListOptions) ([]*Comment, *Response, error) {
+		return s.ListComments(ctx, issueKey, o)
+	})
 }
 
 // CreateComment adds a new comment to an issue.

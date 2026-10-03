@@ -36,7 +36,7 @@ func TestResolutionsService_List(t *testing.T) {
 	})
 
 	ctx := context.Background()
-	resolutions, _, err := client.Resolutions.List(ctx)
+	resolutions, _, err := client.Resolutions.List(ctx, nil)
 	if err != nil {
 		t.Fatalf("List returned error: %v", err)
 	}

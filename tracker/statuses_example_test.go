@@ -14,7 +14,7 @@ func ExampleStatusesService_List() {
 		tracker.WithOrgID("your-org-id"),
 	)
 
-	statuses, _, err := client.Statuses.List(context.Background())
+	statuses, _, err := client.Statuses.List(context.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
