@@ -11,7 +11,8 @@ Go client library for the [Yandex Tracker API](https://yandex.ru/support/tracker
 - Zero dependencies -- only Go standard library
 - 17 services covering 109+ API endpoints
 - Idiomatic Go: `context.Context` on every call, typed errors, pointer fields with `Ptr[T]()` helper
-- Page-based and scroll-token pagination
+- Page-based, cursor and scroll-token pagination, plus `iter.Seq2` iterators that walk every page of a list
+- ISO 8601 durations (`Duration.String`) and nil-safe user display helpers (`User.DisplayOr`, `User.IDOr`)
 - Two auth modes: OAuth token and IAM token
 
 ## Installation
@@ -113,7 +114,7 @@ fmt.Println(*issue.Key)
 
 - [Authentication](docs/auth.md) -- OAuth and IAM token setup
 - [Error Handling](docs/errors.md) -- typed errors and status codes
-- [Pagination](docs/pagination.md) -- page-based and scroll-token patterns
+- [Pagination](docs/pagination.md) -- iterators, page-based, cursor and scroll-token patterns
 
 For full API reference, see the [Go documentation](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker).
 

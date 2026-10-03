@@ -12,25 +12,25 @@ client := tracker.NewClient(
     tracker.WithOrgID("your-org-id"),
 )
 
-priorities, _, err := client.Priorities.List(context.Background(), nil)
-if err != nil {
-    log.Fatal(err)
-}
-
-for _, p := range priorities {
+for p, err := range client.Priorities.ListIter(context.Background(), nil) {
+    if err != nil {
+        log.Fatal(err)
+    }
     fmt.Println(*p.Key, *p.Name)
 }
 ```
 
-Note: `List` accepts an optional `*PriorityListOptions` parameter (pass `nil` for defaults).
+`List` returns one page. `*PriorityListOptions` chooses it through the embedded `ListOptions` and sets `Localized`; `nil` gets the first page at the server's default size.
 
 ## Methods
 
 | Method | Description |
 |--------|-------------|
-| `List` | List all issue priorities |
+| `List` | List one page of issue priorities |
+| `ListIter` | Iterate over the issue priorities of every page |
 
 ## See Also
 
 - [ExamplePrioritiesService_List](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-PrioritiesService.List)
 - [Error Handling](errors.md)
+- [Pagination](pagination.md)

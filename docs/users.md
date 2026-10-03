@@ -42,7 +42,8 @@ fmt.Println(*user.Display)
 |--------|-------------|
 | `Myself` | Get the authenticated user |
 | `Get` | Get a user by ID or login |
-| `List` | List users in the organization |
+| `List` | List one page of users in the organization |
+| `ListIter` | Iterate over the users of every page |
 
 ## See Also
 

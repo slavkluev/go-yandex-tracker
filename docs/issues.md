@@ -107,12 +107,14 @@ for _, comment := range comments {
 | `Get` | Get an issue by key |
 | `Edit` | Update an issue |
 | `Search` | Search issues with filters |
+| `SearchIter` | Iterate over every page of a search |
 | `ScrollSearch` | Start scroll-based search for large result sets |
 | `ScrollNext` | Continue scroll-based search with token |
 | `Count` | Count issues matching a filter |
 | `Move` | Move an issue to another queue |
 | **Comments** | |
 | `ListComments` | List comments on an issue |
+| `ListCommentsIter` | Iterate over every comment on an issue |
 | `CreateComment` | Add a comment to an issue |
 | `EditComment` | Edit an issue comment |
 | `DeleteComment` | Delete an issue comment |
@@ -141,6 +143,7 @@ for _, comment := range comments {
 | `DeleteWorklog` | Delete a worklog entry |
 | **Changelog** | |
 | `GetChangelog` | Get the change history of an issue |
+| `GetChangelogIter` | Iterate over the whole change history of an issue |
 
 ## See Also
 
@@ -148,6 +151,7 @@ for _, comment := range comments {
 - [ExampleIssuesService_Create](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-IssuesService.Create)
 - [ExampleIssuesService_Search](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-IssuesService.Search)
 - [ExampleIssuesService_Search (pagination)](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-IssuesService.Search-pagination)
+- [ExampleIssuesService_SearchIter](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-IssuesService.SearchIter)
 - [ExampleIssuesService_ListComments](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-IssuesService.ListComments)
 - [ExampleIssuesService_UploadAttachment](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-IssuesService.UploadAttachment)
 - [Authentication](auth.md)

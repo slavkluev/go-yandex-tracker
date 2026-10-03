@@ -12,23 +12,25 @@ client := tracker.NewClient(
     tracker.WithOrgID("your-org-id"),
 )
 
-resolutions, _, err := client.Resolutions.List(context.Background())
-if err != nil {
-    log.Fatal(err)
-}
-
-for _, r := range resolutions {
+for r, err := range client.Resolutions.ListIter(context.Background(), nil) {
+    if err != nil {
+        log.Fatal(err)
+    }
     fmt.Println(*r.Key, *r.Name)
 }
 ```
+
+`List` returns one page: `&tracker.ListOptions{Page: 2}` chooses which and `PerPage` its size, while `nil` gets the first page at the server's default size.
 
 ## Methods
 
 | Method | Description |
 |--------|-------------|
-| `List` | List all issue resolutions |
+| `List` | List one page of resolutions |
+| `ListIter` | Iterate over the resolutions of every page |
 
 ## See Also
 
 - [ExampleResolutionsService_List](https://pkg.go.dev/github.com/slavkluev/go-yandex-tracker/tracker#example-ResolutionsService.List)
 - [Error Handling](errors.md)
+- [Pagination](pagination.md)

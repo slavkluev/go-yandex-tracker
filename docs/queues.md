@@ -131,7 +131,8 @@ for _, m := range macros {
 | **Core** | |
 | `Create` | Create a new queue |
 | `Get` | Get a queue by key; `expand` adds team, types, versions, components, workflows, fields, and issue type config |
-| `List` | List all queues |
+| `List` | List one page of queues |
+| `ListIter` | Iterate over the queues of every page |
 | `Delete` | Delete a queue |
 | `Restore` | Restore a deleted queue |
 | **Auto-actions** | |
