@@ -23,6 +23,9 @@ func TestIssuesService_Create(t *testing.T) {
 		if body["queue"] != "TEST" {
 			t.Errorf("Request body queue = %v, want %q", body["queue"], "TEST")
 		}
+		if v, ok := body["markupType"]; ok {
+			t.Errorf("Request body markupType = %v, want it omitted", v)
+		}
 
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `{"self":"https://api.tracker.yandex.net/v3/issues/TEST-1","id":"1","key":"TEST-1","summary":"Test issue"}`)
@@ -47,6 +50,27 @@ func TestIssuesService_Create(t *testing.T) {
 	}
 	if !reflect.DeepEqual(issue, want) {
 		t.Errorf("Issues.Create = %+v, want %+v", issue, want)
+	}
+}
+
+func TestIssuesService_Create_WithMarkupType(t *testing.T) {
+	client, mux := setup(t)
+
+	mux.HandleFunc("POST /v3/issues/", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "POST")
+		testBody(t, r, `{"summary":"Release","description":"[ ] tag","markupType":"md","queue":"TEST"}`)
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, `{"key":"TEST-1"}`)
+	})
+
+	_, _, err := client.Issues.Create(ctx, &IssueRequest{
+		Summary:     Ptr("Release"),
+		Description: Ptr("[ ] tag"),
+		MarkupType:  Ptr("md"),
+		Queue:       Ptr("TEST"),
+	})
+	if err != nil {
+		t.Fatalf("Issues.Create returned error: %v", err)
 	}
 }
 
@@ -185,6 +209,25 @@ func TestIssuesService_Edit_WithVersion(t *testing.T) {
 	_, _, err := client.Issues.Edit(ctx, "QUEUE-1", &IssueRequest{
 		Summary: Ptr("Updated"),
 	}, &IssueEditOptions{Version: 2})
+	if err != nil {
+		t.Fatalf("Issues.Edit returned error: %v", err)
+	}
+}
+
+func TestIssuesService_Edit_WithMarkupType(t *testing.T) {
+	client, mux := setup(t)
+
+	mux.HandleFunc("PATCH /v3/issues/{key}", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "PATCH")
+		testBody(t, r, `{"description":"[x] tag","markupType":"md"}`)
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, `{"key":"QUEUE-1"}`)
+	})
+
+	_, _, err := client.Issues.Edit(ctx, "QUEUE-1", &IssueRequest{
+		Description: Ptr("[x] tag"),
+		MarkupType:  Ptr("md"),
+	}, nil)
 	if err != nil {
 		t.Fatalf("Issues.Edit returned error: %v", err)
 	}

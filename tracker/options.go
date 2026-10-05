@@ -85,6 +85,10 @@ type IssueRequest struct {
 	// Description is the issue description.
 	Description *string `json:"description,omitempty"`
 
+	// MarkupType is the markup of Description. Set it to "md" when the
+	// description is Yandex Flavored Markdown.
+	MarkupType *string `json:"markupType,omitempty"`
+
 	// Queue is the queue key to create the issue in.
 	Queue *string `json:"queue,omitempty"`
 
@@ -190,6 +194,11 @@ type CommentRequest struct {
 
 	// MaillistSummonees is a list of mailing list addresses to notify.
 	MaillistSummonees []string `json:"maillistSummonees,omitempty"`
+
+	// MarkupType is the markup of Text. Set it to "md" when the text is
+	// Yandex Flavored Markdown. Tracker documents it for issue comments
+	// but not for entity comments.
+	MarkupType *string `json:"markupType,omitempty"`
 }
 
 // LinkRequest represents the request body for creating a link between issues.

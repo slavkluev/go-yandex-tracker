@@ -39,6 +39,29 @@ if err != nil {
 fmt.Println(*issue.Key)
 ```
 
+### Create an Issue with a Markdown Description
+
+Set `MarkupType` to `"md"` when the description is Yandex Flavored Markdown. `CommentRequest` takes the same field for the text of an issue comment.
+
+```go
+client := tracker.NewClient(
+    tracker.WithOAuthToken("your-oauth-token"),
+    tracker.WithOrgID("your-org-id"),
+)
+
+issue, _, err := client.Issues.Create(context.Background(), &tracker.IssueRequest{
+    Summary:     tracker.Ptr("Release 1.2"),
+    Description: tracker.Ptr("[ ] Tag the release\n\n[ ] Publish the notes"),
+    MarkupType:  tracker.Ptr("md"),
+    Queue:       tracker.Ptr("QUEUE"),
+})
+if err != nil {
+    log.Fatal(err)
+}
+
+fmt.Println(*issue.Key)
+```
+
 ### Search Issues
 
 ```go

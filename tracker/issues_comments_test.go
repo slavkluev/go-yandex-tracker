@@ -99,6 +99,27 @@ func TestIssuesService_CreateComment(t *testing.T) {
 	}
 }
 
+func TestIssuesService_CreateComment_WithMarkupType(t *testing.T) {
+	client, mux := setup(t)
+
+	mux.HandleFunc("POST /v3/issues/{key}/comments", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "POST")
+		testBody(t, r, `{"text":"**Done**","markupType":"md"}`)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		fmt.Fprint(w, `{"id": 456}`)
+	})
+
+	ctx := context.Background()
+	_, _, err := client.Issues.CreateComment(ctx, "QUEUE-1", &CommentRequest{
+		Text:       Ptr("**Done**"),
+		MarkupType: Ptr("md"),
+	})
+	if err != nil {
+		t.Fatalf("CreateComment returned error: %v", err)
+	}
+}
+
 func TestIssuesService_EditComment(t *testing.T) {
 	client, mux := setup(t)
 
@@ -128,6 +149,26 @@ func TestIssuesService_EditComment(t *testing.T) {
 	}
 	if got := *comment.Version; got != FlexString("2") {
 		t.Errorf("Version = %q, want %q", got, FlexString("2"))
+	}
+}
+
+func TestIssuesService_EditComment_WithMarkupType(t *testing.T) {
+	client, mux := setup(t)
+
+	mux.HandleFunc("PATCH /v3/issues/{key}/comments/{id}", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "PATCH")
+		testBody(t, r, `{"text":"**Done**","markupType":"md"}`)
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprint(w, `{"id": 123}`)
+	})
+
+	ctx := context.Background()
+	_, _, err := client.Issues.EditComment(ctx, "QUEUE-1", "123", &CommentRequest{
+		Text:       Ptr("**Done**"),
+		MarkupType: Ptr("md"),
+	})
+	if err != nil {
+		t.Fatalf("EditComment returned error: %v", err)
 	}
 }
 
