@@ -222,7 +222,7 @@ func TestQueuesService_Get_Expand(t *testing.T) {
 				}
 			],
 			"components": [{"self": "https://api.tracker.yandex.net/v3/components/56", "id": "56", "display": "Standard"}],
-			"fields": [{"self": "https://api.tracker.yandex.net/v3/queues/MTP/localFields/size", "id": "66fd07bba913292094b4403c--size", "display": "Размер задачи"}]
+			"fields": [{"self": "https://api.tracker.yandex.net/v3/queues/APP/localFields/size", "id": "5d0e4f1a2b3c4d5e6f708192--size", "display": "Размер"}]
 		}`)
 	})
 
@@ -280,9 +280,9 @@ func TestQueuesService_Get_Expand(t *testing.T) {
 		},
 		Fields: []*Field{
 			{
-				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/MTP/localFields/size"),
-				ID:      Ptr(FlexString("66fd07bba913292094b4403c--size")),
-				Display: Ptr("Размер задачи"),
+				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/APP/localFields/size"),
+				ID:      Ptr(FlexString("5d0e4f1a2b3c4d5e6f708192--size")),
+				Display: Ptr("Размер"),
 			},
 		},
 		IssueTypesConfig: []*QueueIssueTypeConfig{
@@ -316,15 +316,15 @@ func TestQueuesService_Get_IssueTypesConfigWithoutResolutions(t *testing.T) {
 	mux.HandleFunc("GET /v3/queues/{key}", func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprint(w, `{
-			"key": "RECYCLEBIN",
+			"key": "RESTRICTED",
 			"issueTypesConfig": [
 				{"issueType": {"self": "https://api.tracker.yandex.net/v3/issuetypes/21", "id": "21", "key": "milestone", "display": "Веха"},
-				 "workflow": {"self": "https://api.tracker.yandex.net/v3/workflows/W109", "id": "W109", "display": "W109"}}
+				 "workflow": {"self": "https://api.tracker.yandex.net/v3/workflows/W100", "id": "W100", "display": "W100"}}
 			]
 		}`)
 	})
 
-	queue, _, err := client.Queues.Get(ctx, "RECYCLEBIN", &QueueGetOptions{Expand: "issueTypesConfig"})
+	queue, _, err := client.Queues.Get(ctx, "RESTRICTED", &QueueGetOptions{Expand: "issueTypesConfig"})
 	if err != nil {
 		t.Fatalf("Queues.Get returned error: %v", err)
 	}
@@ -338,9 +338,9 @@ func TestQueuesService_Get_IssueTypesConfigWithoutResolutions(t *testing.T) {
 				Display: Ptr("Веха"),
 			},
 			Workflow: &Workflow{
-				Self:    Ptr("https://api.tracker.yandex.net/v3/workflows/W109"),
-				ID:      Ptr(FlexString("W109")),
-				Display: Ptr("W109"),
+				Self:    Ptr("https://api.tracker.yandex.net/v3/workflows/W100"),
+				ID:      Ptr(FlexString("W100")),
+				Display: Ptr("W100"),
 			},
 		},
 	}

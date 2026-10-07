@@ -147,7 +147,7 @@ func TestQueuesService_ListFields_Empty(t *testing.T) {
 		fmt.Fprint(w, `[]`)
 	})
 
-	fields, _, err := client.Queues.ListFields(ctx, "RPA")
+	fields, _, err := client.Queues.ListFields(ctx, "SUP")
 	if err != nil {
 		t.Fatalf("Queues.ListFields returned error: %v", err)
 	}

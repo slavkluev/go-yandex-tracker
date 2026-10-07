@@ -64,12 +64,12 @@ func TestQueuesService_ListComponents_NoOptions(t *testing.T) {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, `[{"self": "https://api.tracker.yandex.net/v3/components/55", "id": 55, "version": 1, "name": "Expedite",
-		  "queue": {"self": "https://api.tracker.yandex.net/v3/queues/MTP", "id": "140", "key": "MTP", "display": "Metal trading platform"},
+		fmt.Fprint(w, `[{"self": "https://api.tracker.yandex.net/v3/components/55", "id": 55, "version": 1, "name": "Hotfix",
+		  "queue": {"self": "https://api.tracker.yandex.net/v3/queues/APP", "id": "140", "key": "APP", "display": "Demo application"},
 		  "assignAuto": false}]`)
 	})
 
-	components, _, err := client.Queues.ListComponents(ctx, "MTP", nil)
+	components, _, err := client.Queues.ListComponents(ctx, "APP", nil)
 	if err != nil {
 		t.Fatalf("Queues.ListComponents returned error: %v", err)
 	}
@@ -79,12 +79,12 @@ func TestQueuesService_ListComponents_NoOptions(t *testing.T) {
 			Self:    Ptr("https://api.tracker.yandex.net/v3/components/55"),
 			ID:      Ptr(FlexString("55")),
 			Version: Ptr(FlexString("1")),
-			Name:    Ptr("Expedite"),
+			Name:    Ptr("Hotfix"),
 			Queue: &Queue{
-				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/MTP"),
+				Self:    Ptr("https://api.tracker.yandex.net/v3/queues/APP"),
 				ID:      Ptr(FlexString("140")),
-				Key:     Ptr("MTP"),
-				Display: Ptr("Metal trading platform"),
+				Key:     Ptr("APP"),
+				Display: Ptr("Demo application"),
 			},
 			AssignAuto: Ptr(false),
 		},
